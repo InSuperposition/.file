@@ -1,0 +1,11 @@
+import = ["~/.config/alacritty/theme/themes/Cobalt2.toml"]
+
+[font]
+bold = { family = "MesloLGS NF", style = "Bold" }
+bold_italic = { family = "MesloLGS NF", style = "Bold Italic" }
+italic = { family = "MesloLGS NF", style = "Italic" }
+normal = { family = "MesloLGS NF", style = "Regular" }
+size = 18
+
+[env]
+term = "xterm-256color"
