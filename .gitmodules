@@ -1,0 +1,6 @@
+[submodule ".config/alacritty/theme"]
+	path = .config/alacritty/theme
+	url = https://github.com/alacritty/alacritty-theme.git
+[submodule ".config/kitty/themes/kitty-cobalt2"]
+	path = .config/kitty/themes/kitty-cobalt2
+	url = https://github.com/lalitmee/kitty-cobalt2.git

@@ -1,0 +1,10 @@
+.git
+.gitmodules
+
+readme.md
+
+containerfile
+dockerfile
+
+\.devcontainer
+
