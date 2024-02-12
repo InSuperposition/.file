@@ -1,0 +1,23 @@
+[init]
+	defaultBranch = main
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[diff]
+	tool = code-difftool
+[difftool "code-difftool"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+	tool = code-mergetool
+[mergetool "code-mergetool"]
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[core]
+	editor = code --wait
+
+[user]
+	name = InSuperposition
+	email = f.galloway@gmail.com
