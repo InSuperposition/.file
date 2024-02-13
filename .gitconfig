@@ -17,6 +17,14 @@
 	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [core]
 	editor = code --wait
+[alias]
+	br = branch
+	bl = blame -w -C -C -C -L
+	cm = commit
+	co = checkout
+	lg = log --oneline --decorate --all --graph
+	st = status
+	sh =	stash --all
 
 [user]
 	name = InSuperposition
