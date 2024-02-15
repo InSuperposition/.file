@@ -2,3 +2,6 @@
 .gitmodules
 
 readme.md
+
+dockerfile
+\.devcontainer

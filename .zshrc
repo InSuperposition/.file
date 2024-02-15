@@ -1,3 +1,4 @@
+#!/bin/zsh
 eval "$(starship init zsh)"
 
 # environment managers
@@ -19,7 +20,7 @@ else
 fi
 
 # OS applications
-. .script/osx/homebrew.sh
+source .script/osx/homebrew.sh
 
 # zsh plugins and tools
-. .script/zsh/plugin.zsh
+source .script/zsh/plugin.zsh

@@ -1,14 +1,57 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# Inserts a blank line between shell prompts
-add_newline = true
+format = """\
+[](bg:#030B16 fg:#7DF9AA)\
+[🍎💻](bg:#7DF9AA fg:#090c0c)\
+[](bg:#1C3A5E fg:#7DF9AA )\
+[](bg:#FCF392 fg:#1C3A5E )\
+$git_branch\
+$git_status\
+$git_metrics\
+[](bg:#1C3A5E fg:#FCF392 )\
+[](bg:#3B76F0 fg:#1C3A5E )\
+$directory\
+[](bg:#1C3A5E fg:#3B76F0 )\
+$time\
+[](bg:#1C3A5E fg:#8DFBD2)
+$character
+"""
 
-# Replace the '❯' symbol in the prompt with '➜'
-[character] # The name of the module we are configuring is 'character'
+[directory]
+format = "[ 📁 $path ]($style)"
+style = "fg:#E4E4E4 bg:#3B76F0"
+
+[git_branch]
+format = '[ $symbol$branch(:$remote_branch) ]($style)'
+symbol = "  "
+style = "fg:#1C3A5E bg:#FCF392"
+
+[git_status]
+format = '[$all_status]($style)'
+style = "fg:#1C3A5E bg:#FCF392"
+
+[git_metrics]
+format = "([+$added]($added_style))[]($added_style)"
+added_style = "fg:#1C3A5E bg:#FCF392"
+deleted_style = "fg:bright-red bg:235"
+disabled = false
+
+[hg_branch]
+format = "[ $symbol$branch ]($style)"
+symbol = " "
+
+[cmd_duration]
+format = "[  $duration ]($style)"
+style = "fg:bright-white bg:18"
+
+[character]
 error_symbol = '[🚨](bold red)'
 success_symbol = '[🍻](bold green)'
 
-# Disable the package module, hiding it from the prompt completely
-# [package]
-# disabled = true
+
+[time]
+disabled = false
+time_format = "%R"                                                                   # Hour:Minute Format
+style = "bg:#8DFBD2"
+format = '[](bg:#8DFBD2 fg:#1C3A5E )[[ 🕰️  $time ](fg:#1C3A5E bg:#8DFBD2)]($style)'

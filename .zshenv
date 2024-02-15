@@ -1,1 +1,2 @@
-. .script/setup.sh
+#!/bin/zsh
+source .script/setup.sh

@@ -1,31 +1,46 @@
-[init]
-	defaultBranch = main
-
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-
-[diff]
-	tool = code-difftool
-[difftool "code-difftool"]
-	cmd = code --wait --diff $LOCAL $REMOTE
-[merge]
-	tool = code-mergetool
-[mergetool "code-mergetool"]
-	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
-[core]
-	editor = code --wait
 [alias]
 	br = branch
 	bl = blame -w -C -C -C -L
 	cm = commit
 	co = checkout
 	lg = log --oneline --decorate --all --graph
+	pf =	push --force-with-lease
+	ps = push --signed
 	st = status
 	sh =	stash --all
+[branch]
+sort = -committerdate
+[core]
+	editor = code --wait
+	fsmonitor = true
+	# cachetree = true
+	untrackedCache = true
+[coluor]
+	ui = true
+[diff]
+	tool = code-difftool
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[init]
+	defaultBranch = main
+# [maintenance]
+# 	repo = /Users/fgalloway/dotfile
+[merge]
+	tool = code-mergetool
+[rerere]
+	enabled = true
+
+# config
+[difftool "code-difftool"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+
+[mergetool "code-mergetool"]
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [user]
 	name = InSuperposition
 	email = f.galloway@gmail.com
+

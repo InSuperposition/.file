@@ -1,10 +1,10 @@
 import = ["~/.config/alacritty/theme/themes/Cobalt2.toml"]
 
 [font]
-bold = { family = "MesloLGS NF", style = "Bold" }
-bold_italic = { family = "MesloLGS NF", style = "Bold Italic" }
-italic = { family = "MesloLGS NF", style = "Italic" }
-normal = { family = "MesloLGS NF", style = "Regular" }
+bold = { family = "Hasklug Nerd Font Mono", style = "Bold" }
+bold_italic = { family = "Hasklug Nerd Font Mono", style = "Bold Italic" }
+italic = { family = "Hasklug Nerd Font Mono", style = "Italic" }
+normal = { family = "Hasklug Nerd Font Mono", style = "Regular" }
 size = 18
 
 [env]
