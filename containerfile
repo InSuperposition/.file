@@ -5,7 +5,7 @@ FROM debian:stable-slim
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install required system dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install --assume-yes --no-install-recommends \
  curl \
  sudo \
  xz-utils \
@@ -15,30 +15,34 @@ RUN apt-get update && apt-get install -y \
  rm -rf /var/lib/apt/lists/*
 
 # Add a non-root user for Nix multi-user installation
-RUN adduser --disabled-password --gecos '' nixuser && \
- adduser nixuser sudo && \
- echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN adduser --disabled-password --gecos '' nixuser 
+USER nixuser
+# && \
+#  adduser nixuser sudo && \
+#  echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+USER root
 # Install Nix in multi-user mode
 RUN curl -L https://nixos.org/nix/install | sh -s -- --daemon
 
-# Copy the flake.nix and nix.conf to the container with correct permissions
-COPY --chown=nixuser:nixuser flake.nix /home/nixuser/flake.nix
-COPY --chown=nixuser:nixuser .config/nix/nix.conf /home/nixuser/.config/nix/nix.conf
-
 # Switch to nixuser to perform Nix operations
-USER nixuser
-WORKDIR /home/nixuser
 
 # Activate the Nix environment and install packages via flakes
-RUN . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && \
- nix-env -iA nixpkgs.git nixpkgs.git-lfs nixpkgs.starship
+RUN . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
-# Setup starship for the nixuser
-RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
+
+USER nixuser
+# && \
+# RUN nix-env -iA nixpkgs.git nixpkgs.git-lfs nixpkgs.starship
 
 # Switch back to a dialog frontend
 ENV DEBIAN_FRONTEND=dialog
+
+
+# Copy the flake.nix and nix.conf to the container with correct permissions
+COPY . /home/nixuser/
+# COPY --chown=nixuser:nixuser .config/nix/nix.conf /home/nixuser/.config/nix/nix.conf
+WORKDIR /home/nixuser
 
 # Set the default shell to bash and start it
 CMD ["bash"]
