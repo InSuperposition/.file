@@ -1,15 +1,9 @@
-#!/bin/zsh
 
-# Get the directory of the current script
-SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
-# echo ${SCRIPT_DIR}
 # OS applications
-source ${SCRIPT_DIR}/script/osx/homebrew.sh
+source ~/.config/script/osx/homebrew.sh
 
 # zsh plugins and tools
-source ${SCRIPT_DIR}/script/zsh/plugin.zsh
-
-eval "$(starship init zsh)"
+source ~/.config/script/zsh/plugin.zsh
 
 # environment managers
 
@@ -28,4 +22,6 @@ if command -v fnm >/dev/null 2>&1; then
 else
   echo "fnm is not installed."
 fi
+
+eval "$(starship init zsh)"
 
