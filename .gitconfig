@@ -12,7 +12,7 @@
 sort = -committerdate
 [core]
 	editor = code --wait
-	fsmonitor = true
+	# fsmonitor = true
 	# cachetree = true
 	untrackedCache = true
 [coluor]

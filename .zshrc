@@ -1,6 +1,4 @@
 
-# OS applications
-source ~/.config/script/osx/homebrew.sh
 
 # zsh plugins and tools
 source ~/.config/script/zsh/plugin.zsh
@@ -25,3 +23,7 @@ fi
 
 eval "$(starship init zsh)"
 
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/fgalloway/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

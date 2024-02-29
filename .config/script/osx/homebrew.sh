@@ -1,3 +1,3 @@
 #!/bin/sh
 
-export PATH="/usr/local/sbin:$PATH"
+eval "$(/usr/local/bin/brew shellenv)"
