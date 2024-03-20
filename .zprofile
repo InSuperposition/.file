@@ -1,3 +1,3 @@
 
 # OS applications
-source ~/.config/script/osx/homebrew.sh
+source ~/config/script/osx/homebrew.sh

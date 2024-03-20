@@ -1,1 +1,1 @@
-source ~/.config/script/setup.sh
+source ~/config/script/init.sh

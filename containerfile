@@ -41,7 +41,7 @@ ENV DEBIAN_FRONTEND=dialog
 
 # Copy the flake.nix and nix.conf to the container with correct permissions
 COPY . /home/nixuser/
-# COPY --chown=nixuser:nixuser .config/nix/nix.conf /home/nixuser/.config/nix/nix.conf
+# COPY --chown=nixuser:nixuser config/nix/nix.conf /home/nixuser/config/nix/nix.conf
 WORKDIR /home/nixuser
 
 # Set the default shell to bash and start it
@@ -77,7 +77,7 @@ CMD ["bash"]
 
 # # Copy the flake.nix to the container and ensure the directory and file have the correct permissions
 # COPY --chown=nixuser:nixuser flake.nix /home/nixuser/flake.nix
-# COPY --chown=nixuser:nixuser .config/nix/nix.conf /home/nixuser/.config/nix/nix.conf
+# COPY --chown=nixuser:nixuser config/nix/nix.conf /home/nixuser/config/nix/nix.conf
 # # Switch to nixuser to perform Nix operations
 # USER nixuser
 # WORKDIR /home/nixuser
@@ -122,7 +122,7 @@ CMD ["bash"]
 # RUN curl -L https://nixos.org/nix/install | sh -s -- --daemon
 
 # # Enable Flakes as nixuser
-# RUN echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf
+# RUN echo 'experimental-features = nix-command flakes' >> ~/config/nix/nix.conf
 
 # # Switch back to root to perform operations that require elevated permissions
 # USER root
@@ -179,8 +179,8 @@ CMD ["bash"]
 # USER root
 # RUN . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && \
 #  nix-env -iA nixpkgs.nixFlakes && \
-#  mkdir -p /home/nixuser/.config/nix && \
-#  echo 'experimental-features = nix-command flakes' >> /home/nixuser/.config/nix/nix.conf
+#  mkdir -p /home/nixuser/config/nix && \
+#  echo 'experimental-features = nix-command flakes' >> /home/nixuser/config/nix/nix.conf
 
 # # Copy the flake.nix file
 # COPY flake.nix /home/nixuser/flake.nix
