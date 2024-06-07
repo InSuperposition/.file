@@ -11,6 +11,7 @@ tap "teamookla/speedtest"
 tap "tilt-dev/tap"
 brew "awscli"
 brew "bat"
+brew "caddy"
 brew "python@3.12"
 brew "clojure"
 brew "cocoapods"
@@ -35,6 +36,7 @@ brew "leiningen"
 brew "libimobiledevice"
 brew "lightgbm"
 brew "linkerd"
+brew "mas"
 brew "maven"
 brew "mkcert"
 brew "neovim"
@@ -146,6 +148,28 @@ cask "warp"
 cask "wolfram-engine"
 cask "xquartz"
 cask "zed"
+mas "BetterSnapTool", id: 417375580
+mas "Developer", id: 640199958
+mas "Flycut", id: 442160987
+mas "GarageBand", id: 682658836
+mas "GIF Brewery 3", id: 1081413713
+mas "GIPHY CAPTURE", id: 668208984
+mas "Grammarly for Safari", id: 1462114288
+mas "Hidden File Manager", id: 670949956
+mas "HP Smart", id: 1474276998
+mas "iMovie", id: 408981434
+mas "iReal Pro", id: 409035833
+mas "Keynote", id: 409183694
+mas "Kindle Classic", id: 405399194
+mas "Magnet", id: 441258766
+mas "NordVPN", id: 905953485
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Photomator", id: 1444636541
+mas "Pluralsight", id: 431748264
+mas "Shazam", id: 897118787
+mas "WireGuard", id: 1451685025
+mas "Xcode", id: 497799835
 vscode "aaron-bond.better-comments"
 vscode "adpyke.codesnap"
 vscode "ahmadalli.vscode-nginx-conf"
@@ -160,6 +184,7 @@ vscode "chrmarti.regex"
 vscode "codezombiech.gitignore"
 vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
+vscode "dioxuslabs.dioxus"
 vscode "dline.cobaltnext"
 vscode "dotjoshjohnson.xml"
 vscode "editorconfig.editorconfig"
