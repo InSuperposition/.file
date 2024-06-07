@@ -4,9 +4,9 @@
 [submodule ".config/kitty/themes/kitty-cobalt2"]
 	path = .config/kitty/themes/kitty-cobalt2
 	url = https://github.com/lalitmee/kitty-cobalt2.git
-[submodule ".config/nvim"]
-	path = .config/nvim
-	url = https://github.com/InSuperposition/nvim.file
 [submodule ".clojure"]
 	path = .clojure
 	url = https://github.com/InSuperposition/.clojure.git
+[submodule ".config/nvim"]
+	path = .config/nvim
+	url = https://github.com/InSuperposition/nvim.file.git
