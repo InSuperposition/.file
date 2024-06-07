@@ -1,14 +1,14 @@
 #!/bin/sh
 
 # Containers
-. ~/.config/container/env_var.sh
+. ~/.config/container/init.sh
 
 # Runtime / Language
-. ~/.config/java/env_var.sh
-. ~/.config/javascript/env_var.sh
-. ~/.config/python/env_var.sh
-. ~/.config/rust/env_var.sh
+. ~/.config/java/init.sh
+. ~/.config/javascript/init.sh
+. ~/.config/python/init.sh
+. ~/.config/rust/init.sh
 
 # shell
-. ~/.config/starship/env_var.sh
+. ~/.config/starship/init.sh
 . ~/.config/shell/alias.sh
