@@ -1,7 +1,7 @@
 
 
 # zsh plugins and tools
-source ~/.config/zsh/plugin.zsh
+source ~/.config/zsh/init.zsh
 
 # environment managers
 

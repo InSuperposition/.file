@@ -1,3 +1,3 @@
 
 # OS applications
-source ~/.config/homebrew/env_var.sh
+source ~/.config/homebrew/init.sh
