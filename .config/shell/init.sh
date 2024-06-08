@@ -3,12 +3,14 @@
 # Containers
 . ~/.config/container/init.sh
 
-# Runtime / Language
+# Language
+. ~/.config/clojure/init.sh
 . ~/.config/java/init.sh
 . ~/.config/javascript/init.sh
 . ~/.config/python/init.sh
 . ~/.config/rust/init.sh
 
-# shell
 . ~/.config/starship/init.sh
 . ~/.config/shell/alias.sh
+
+export XDG_CONFIG_HOME=~/.config
