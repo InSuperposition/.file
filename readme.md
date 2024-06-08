@@ -37,6 +37,9 @@ export XDG_CACHE_HOME=~/.cache
 export XDG_DATA_HOME=~/.local/share
 export XDG_STATE_HOME=~/.local/state
 
-Took some liberties with .config/shell, .config/zsh
+Took some liberties with .config/shell
 
-See `.config/git/ignore`
+<https://github.com/Homebrew/homebrew-bundle>
+<https://github.com/mas-cli/mas>
+
+See `.config/git/ignore` if files are being ingorned globally
