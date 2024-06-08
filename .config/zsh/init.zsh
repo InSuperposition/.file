@@ -1,6 +1,7 @@
 #!/bin/zsh
+source ~/.config/shell/init.sh
 
-fpath+=~/.zfunc
+fpath+=.zfunc
 # autoload -Uz compinit && compinit
 # autoload -U bashcompinit && bashcompinit
 
