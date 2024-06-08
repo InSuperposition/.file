@@ -1,9 +1,9 @@
 #!/bin/zsh
 source ~/.config/shell/init.sh
 
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
+
 fpath+=.zfunc
-# autoload -Uz compinit && compinit
-# autoload -U bashcompinit && bashcompinit
 
 # ZSH plugins (via homebrew)
 source /usr/local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
