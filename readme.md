@@ -1,36 +1,34 @@
 # `.file/` (dotfile) repository
 
-## Target
+## Setup
 
-### OS
+### Shell Configuration
 
-- [ ] 🐧 Linux
-- [x] 🍎 MacOS
-- [ ] 🪟 Windows
+#### `zsh` on 󰀵
 
-### Shell
+1. `/etc/zshenv` <- create/edit file
+1. Add the following line:
 
-- [ ] `bash`
-- [ ] `fish`
-- [x] `zsh`
+```sh
+export ZDOTDIR=$HOME/.config/zsh
+```
 
-## Installation
+### Installation
 
-This repo uses [gnu `stow`](https://www.gnu.org/software/stow/manual/stow.html) to symlink the contents of the folder in the user's `$HOME` (`~`) folder by default.
-
-`stow` is a symlink farm manager which is used to manage dotfiles. This repository contains instructions on how to use stow to manage dotfiles.
-
-- file moved or renamed, rerun stow command
-
-- Symlinks
-- submodules
+1. Clone this repo to `$HOME/.file` directory
+1. In repo folder, install submodules: `git submodule update --init --recursive`
+1. Run `$ . install.sh`
+1. Change files
 
 - change git config
-- user/email
-- vs code default tool
+  - user/email
+  - vs code default tool
 
-- [uses XDG Base Directory for `$HOME/.config`](https://wiki.archlinux.org/title/XDG_Base_Directory)
-- [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+## How It Works
+
+### XDG Base Directory
+
+`.config/init.sh` exports the following environment variables, other `init.sh` files in this repo **depend** on these variables as well.
 
 ```sh
 export XDG_CONFIG_HOME=$HOME/.config
@@ -39,15 +37,28 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 ```
 
-Create and add one line to `/etc/zshenv`
+Find out more about these variables (and others)
 
-```sh
-export ZDOTDIR=$HOME/.config/zsh
-```
+- [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+- [XDG Base Directory Summary and list of supported applications](https://wiki.archlinux.org/title/XDG_Base_Directory)
 
-Took some liberties with .config/shell
+### Git
+
+See `.config/git/ignore` if files are being ingorned globally
+
+### Homebrew
 
 <https://github.com/Homebrew/homebrew-bundle>
 <https://github.com/mas-cli/mas>
 
-See `.config/git/ignore` if files are being ingorned globally
+### Stow
+
+[gnu `stow`](<https://www.gnu.org/software/stow/manual/stow.html>) to symlink the contents of the folder in the user's `$HOME` (`~`) folder by default.
+
+## Debug / Cleanup
+
+Cleanup dead symlinks
+
+```console
+symlinks -dvr ~/.config
+```
