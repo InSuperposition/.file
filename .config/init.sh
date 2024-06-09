@@ -1,5 +1,12 @@
 #!/bin/sh
 
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+
+export GNUPGHOME=$XDG_CONFIG_HOME/gnupg
+
 # Android
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export ANDROID_JVM="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
@@ -14,3 +21,16 @@ export JAVA_BIN_PATH="$JAVA_HOME/bin"
 
 export PATH="$JAVA_BIN_PATH:$ANDROID_CLI_TOOL_PATH:$PATH"
 
+# pyenv
+export PYENV_ROOT="$XDG_CONFIG_HOME/pyenv"
+
+# Check if $PYENV_ROOT/bin exists and if so, add it to the PATH
+if [ -d "$PYENV_ROOT/bin" ]; then
+  export PATH="$PYENV_ROOT/bin:$PATH"
+fi
+
+# rust
+. $XDG_CONFIG_HOME/cargo/env
+
+. $XDG_CONFIG_HOME/starship/init.sh
+. $XDG_CONFIG_HOME/alias.sh
