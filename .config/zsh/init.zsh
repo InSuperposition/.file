@@ -1,7 +1,6 @@
 #!/bin/zsh
-source ~/.config/shell/init.sh
-
-export HISTFILE="$XDG_STATE_HOME"/zsh/history
+source ~/.config/init.sh
+export HISTFILE=$XDG_STATE_HOME/zsh/history
 
 fpath+=.zfunc
 
