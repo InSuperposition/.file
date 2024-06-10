@@ -7,7 +7,7 @@
 #### `zsh` on 󰀵
 
 1. `/etc/zshenv` <- create/edit file
-1. Add the following line:
+1. Add the following line for for zsh to use
 
 ```sh
 export ZDOTDIR=$HOME/.config/zsh
@@ -17,12 +17,13 @@ export ZDOTDIR=$HOME/.config/zsh
 
 1. Clone this repo to `$HOME/.file` directory
 1. In repo folder, install submodules: `git submodule update --init --recursive`
-1. Run `$ . install.sh`
-1. Change files
+1. [install `homebrew`](https://docs.brew.sh/Installation)
+1. `brew install stow`
+1. `stow .`
+1. Change git config [.config/git/config](.config/git/config)
 
-- change git config
-  - user/email
-  - vs code default tool
+- user name/email
+- merge/diff tools (VS Code is default)
 
 ## How It Works
 
@@ -44,20 +45,29 @@ Find out more about these variables (and others)
 
 ### Git
 
-See `.config/git/ignore` if files are being ingorned globally
+[`.config/git`](.config/git)
 
-### Homebrew
+- attributes [📕🗎🗎🗎](https://git-scm.com/docs/gitattributes)
+- config🗎🗎 [📕🗎🗎🗎](https://git-scm.com/docs/git-config)
+- ignore [📕🗎🗎🗎](https://git-scm.com/docs/gitignore)
+
+### Homebrew - `.config/homebrew`
+
+```console
+// install
+brew bundle
+```
 
 <https://github.com/Homebrew/homebrew-bundle>
 <https://github.com/mas-cli/mas>
 
-### Stow
+### Stow - `.stow-local-ignore`
 
 [gnu `stow`](<https://www.gnu.org/software/stow/manual/stow.html>) to symlink the contents of the folder in the user's `$HOME` (`~`) folder by default.
 
 ## Debug / Cleanup
 
-Cleanup dead symlinks
+Recursively cleanup dead symlinks
 
 ```console
 symlinks -dvr ~/.config
