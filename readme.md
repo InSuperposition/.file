@@ -4,7 +4,7 @@
 
 ### Shell Configuration
 
-#### `zsh` on 󰀵
+#### `zsh` on 󰀵 (OS X)
 
 1. `/etc/zshenv` <- create/edit file
 1. Add the following line for for zsh to use
