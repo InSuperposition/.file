@@ -45,13 +45,17 @@ Find out more about these variables (and others)
 
 ### Git
 
-[`.config/git`](.config/git)
+[`.config/git`](.config/git) - user's git config folder
 
-- attributes [📕🗎🗎🗎](https://git-scm.com/docs/gitattributes)
-- config🗎🗎 [📕🗎🗎🗎](https://git-scm.com/docs/git-config)
-- ignore [📕🗎🗎🗎](https://git-scm.com/docs/gitignore)
+- [attributes](.config/git/attributes) - [docs 📕🗎🗎🗎](https://git-scm.com/docs/gitattributes)
+- [config](.config/git/config) - [docs 📕🗎🗎🗎](https://git-scm.com/docs/git-config)
+- [ignore](.config/git/ignore) - [docs 📕🗎🗎🗎](https://git-scm.com/docs/gitignore)
 
-### Homebrew - `.config/homebrew`
+[.gitmodules] - repository's [git submodules](https://git-scm.com/docs/submodule)
+
+### Homebrew
+
+[`.config/homebrew`](.config/homebrew)
 
 ```console
 // install
