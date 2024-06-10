@@ -57,9 +57,16 @@ Find out more about these variables (and others)
 
 [`.config/homebrew`](.config/homebrew)
 
+Install brew packages and casks and generate/update [.config/homebrew/Brewfile.lock.json](.config/homebrew/Brewfile.lock.json)
+
 ```console
-// install
 brew bundle
+```
+
+Update [.config/homebrew/Brewfile](.config/homebrew/Brewfile) with installed packages
+
+```console
+brew bundle dump --force
 ```
 
 <https://github.com/Homebrew/homebrew-bundle>
