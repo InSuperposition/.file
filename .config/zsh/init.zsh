@@ -3,7 +3,7 @@ source ~/.config/init.sh
 export HISTFILE=$XDG_STATE_HOME/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
-setopt appendhistory
+setopt SHARE_HISTORY
 
 fpath+=.zfunc
 
