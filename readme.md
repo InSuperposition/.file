@@ -75,7 +75,7 @@ brew bundle dump --force
 ### Stow
 
 [`.stow-local-ignore`](.stow-local-ignore`)
-[gnu `stow`](<https://www.gnu.org/software/stow/manual/stow.html>) to symlink the contents of the folder in the user's `$HOME` (`~`) folder by default.
+[gnu `stow`](<https://www.gnu.org/software/stow/manual/stow.html>) to symlink the contents of the folder in a user's `$HOME` (`~`) folder by default.
 
 ## Debug / Cleanup
 
