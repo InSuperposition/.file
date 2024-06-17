@@ -69,8 +69,8 @@ Update [.config/homebrew/Brewfile](.config/homebrew/Brewfile) with installed pac
 brew bundle dump --force
 ```
 
-<https://github.com/Homebrew/homebrew-bundle>
-<https://github.com/mas-cli/mas>
+- [Homebrew Bundle](https://github.com/Homebrew/homebrew-bundle)
+- [Mac App Store CLI](https://github.com/mas-cli/mas)
 
 ### Stow - `.stow-local-ignore`
 
