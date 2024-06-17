@@ -7,6 +7,3 @@
 [submodule ".config/clojure"]
 	path = .config/clojure
 	url = https://github.com/InSuperposition/clojure.git
-[submodule ".config/nvim"]
-	path = .config/nvim
-	url = https://github.com/InSuperposition/nvim.git
