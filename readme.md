@@ -72,8 +72,9 @@ brew bundle dump --force
 - [Homebrew Bundle](https://github.com/Homebrew/homebrew-bundle)
 - [Mac App Store CLI](https://github.com/mas-cli/mas)
 
-### Stow - `.stow-local-ignore`
+### Stow
 
+[`.stow-local-ignore`](.stow-local-ignore`)
 [gnu `stow`](<https://www.gnu.org/software/stow/manual/stow.html>) to symlink the contents of the folder in the user's `$HOME` (`~`) folder by default.
 
 ## Debug / Cleanup
