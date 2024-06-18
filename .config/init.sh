@@ -19,6 +19,7 @@ export GRAALVM_HOME="/Library/Java/JavaVirtualMachines/$GRAALVM_VERSION/Contents
 export JAVA_HOME="$GRAALVM_HOME" # "$ANDROID_JVM"
 export JAVA_BIN_PATH="$JAVA_HOME/bin"
 
+. $XDG_CONFIG_HOME/fnm/init.sh
 . $XDG_CONFIG_HOME/pyenv/init.sh
 . $XDG_CONFIG_HOME/starship/init.sh
 . $XDG_CONFIG_HOME/alias.sh
