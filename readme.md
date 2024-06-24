@@ -29,7 +29,7 @@ export ZDOTDIR=$HOME/.config/zsh
 
 ### XDG Base Directory
 
-`.config/init.sh` exports the following environment variables, other `init.sh` files in this repo **depend** on these variables as well.
+`.config/setup/init.sh` exports the following environment variables, other `init.sh` files in this repo **depend** on these variables as well.
 
 ```sh
 export XDG_CONFIG_HOME=$HOME/.config
