@@ -1,5 +1,5 @@
 #!/bin/zsh
-source ~/.config/init.sh
+source ~/.config/setup/init.sh
 export HISTFILE=$XDG_STATE_HOME/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
