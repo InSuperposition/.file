@@ -29,7 +29,7 @@ export ZDOTDIR=$HOME/.config/zsh
 
 ### XDG Base Directory
 
-`.config/setup/init.sh` exports the following environment variables, other `init.sh` files in this repo **depend** on these variables as well.
+[`.config/setup/init.sh`](.config/setup/init.sh) exports the following XDG spec environment variables, other `init.sh` files in this repo **depend** on these variables as well.
 
 ```sh
 export XDG_CONFIG_HOME=$HOME/.config
@@ -57,13 +57,14 @@ Find out more about these variables (and others)
 
 [`.config/homebrew`](.config/homebrew)
 
-Install brew packages and casks and generate/update [.config/homebrew/Brewfile.lock.json](.config/homebrew/Brewfile.lock.json)
+Install brew packages and casks [.config/homebrew/Brewfile.lock.json](.config/homebrew/Brewfile.lock.json)
+If there is a vesion conflict updates lock file with installed version
 
 ```console
 brew bundle
 ```
 
-Update [.config/homebrew/Brewfile](.config/homebrew/Brewfile) with installed packages
+Update [.config/homebrew/Brewfile](.config/homebrew/Brewfile) with currently installed packages
 
 ```console
 brew bundle dump --force
