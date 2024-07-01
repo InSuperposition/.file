@@ -40,5 +40,6 @@ export JAVA_HOME=$GRAALVM_HOME
 export JAVA_BIN_PATH=$JAVA_HOME/bin
 
 . $XDG_CONFIG_HOME/homebrew/init.sh
+. $XDG_CONFIG_HOME/porter/init.sh
 . $XDG_CONFIG_HOME/starship/init.sh
 . $XDG_CONFIG_HOME/setup/alias.sh
