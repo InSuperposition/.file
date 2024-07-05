@@ -7,11 +7,11 @@ export XDG_STATE_HOME=$HOME/.local/state
 
 
 export SOPS_CONFIG=$XDG_CONFIG_HOME/sops/.sops.yaml
-
 export GITLIBS=$XDG_CACHE_HOME/gitlibs
 export GNUPGHOME=$XDG_CONFIG_HOME/gnupg
 export MINIKUBE_HOME=$XDG_CONFIG_HOME/minikube
 
+#pyenv
 export PYENV_ROOT="$XDG_CONFIG_HOME/pyenv"
 
 if [ -d "$PYENV_ROOT/bin" ]; then
@@ -24,6 +24,7 @@ else
   echo "pyenv is not installed."
 fi
 
+#fnm
 eval "$(fnm env --use-on-cd)"
 
 # Android
@@ -40,6 +41,7 @@ export JAVA_HOME=$GRAALVM_HOME
 export JAVA_BIN_PATH=$JAVA_HOME/bin
 
 . $XDG_CONFIG_HOME/homebrew/init.sh
+. $XDG_CONFIG_HOME/pnpm/init.sh
 . $XDG_CONFIG_HOME/porter/init.sh
 . $XDG_CONFIG_HOME/starship/init.sh
 . $XDG_CONFIG_HOME/setup/alias.sh
