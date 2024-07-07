@@ -7,23 +7,50 @@
 #### `zsh` on 󰀵 (OS X)
 
 1. `/etc/zshenv` <- create/edit file
-1. Add the following line for for zsh to use
+1. Add the following line for for zsh to look for config files
 
 ```sh
 export ZDOTDIR=$HOME/.config/zsh
 ```
 
-### Installation
+### `.file` Installation
+
+1. install [`homebrew`](https://brew.sh/#install)
+
+   ```console
+   > /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+1. Install depedencies `git` and `stow`
+
+   ```console
+   > brew install git stow
+   ```
 
 1. Clone this repo to `$HOME/.file` directory
-1. In repo folder, install submodules: `git submodule update --init --recursive`
-1. [install `homebrew`](https://docs.brew.sh/Installation)
-1. `brew install stow`
-1. `stow .`
-1. Change git config [.config/git/config](.config/git/config)
 
-- user name/email
-- merge/diff tools (VS Code is default)
+   ```console
+   # from $HOME directory
+   > git clone --recurse-submodules -j8 https://github.com/InSuperposition/.file.git
+   ```
+
+1. Run `stow` from $HOME/.file, to symlink config files
+
+   ```console
+   > cd $HOME/.file
+   > stow .
+   ```
+
+1. Source `.zshrc` or open new terminal
+
+1. Install `brew` packages
+
+   ```console
+   > brew bundle install --no-upgrade
+   
+   # or to upgrade to latest versions, drop the --no-upgrade
+   > brew bundle install
+   ```
 
 ## How It Works
 
