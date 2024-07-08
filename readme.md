@@ -1,6 +1,8 @@
-# `.file`
->
-> a dotfile (pronounced .file) repository using `git submodule` and [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration
+# `.file`- (pronounced .file)
+
+> a dotfile repository using `git submodule` and [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration.
+
+Clone this repo [using `git clone --recurse-submodules ...`](https://github.com/InSuperposition/.file#file-installation)
 
 ## How It Works
 
