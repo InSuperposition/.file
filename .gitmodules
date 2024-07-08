@@ -1,6 +1,12 @@
+[submodule ".config/android"]
+	path = .config/android
+	url = https://github.com/InSuperposition/android.git
 [submodule ".config/clojure"]
 	path = .config/clojure
 	url = https://github.com/InSuperposition/clojure.git
+[submodule ".config/fnm"]
+	path = .config/fnm
+	url = https://github.com/InSuperposition/fnm.git
 [submodule ".config/git"]
 	path = .config/git
 	url = https://github.com/InSuperposition/git.git
@@ -16,12 +22,19 @@
 [submodule ".config/homebrew"]
 	path = .config/homebrew
 	url = https://github.com/InSuperposition/homebrew.git
+[submodule ".config/java"]
+	path = .config/java
+	url = https://github.com/InSuperposition/java.git
 [submodule ".config/kitty"]
 	path = .config/kitty
 	url = https://github.com/InSuperposition/kitty.git
 [submodule ".config/pnpm"]
 	path = .config/pnpm
 	url = https://github.com/InSuperposition/pnpm.git
+[submodule ".config/pyenv"]
+	path = .config/pyenv
+	url = https://github.com/InSuperposition/pyenv.git
+
 [submodule ".config/starship"]
 	path = .config/starship
 	url = https://github.com/InSuperposition/starship.git
@@ -31,6 +44,3 @@
 [submodule ".config/zsh"]
 	path = .config/zsh
 	url = https://github.com/InSuperposition/zsh.git
-[submodule ".config/pyenv"]
-	path = .config/pyenv
-	url = https://github.com/InSuperposition/pyenv.git
