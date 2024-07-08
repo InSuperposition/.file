@@ -7,6 +7,9 @@
 [submodule ".config/clojure"]
 	path = .config/clojure
 	url = https://github.com/InSuperposition/clojure.git
+[submodule ".config/docker"]
+	path = .config/docker
+	url = https://github.com/InSuperposition/docker.git
 [submodule ".config/fnm"]
 	path = .config/fnm
 	url = https://github.com/InSuperposition/fnm.git
