@@ -44,3 +44,9 @@
 [submodule ".config/zsh"]
 	path = .config/zsh
 	url = https://github.com/InSuperposition/zsh.git
+[submodule ".config/cargo"]
+	path = .config/cargo
+	url = https://github.com/InSuperposition/cargo.git
+[submodule ".config/rustup"]
+	path = .config/rustup
+	url = https://github.com/InSuperposition/rustup.git
