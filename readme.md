@@ -4,7 +4,9 @@
 
 ### XDG Base Directory
 
-[`.config/setup/init.sh`](.config/setup/init.sh) exports the following XDG spec environment variables, other `init.sh` files in this repo **depend** on these variables as well.
+[`.config/.file/init.sh`](.config/.file/init.sh) exports the following XDG spec environment variables, other `init.sh` files in this repo **depend** on these variables as well.
+
+Some submodules require an `init.sh` file to setup aliases, run commands, environment variables, etc.
 
 ```sh
 export XDG_CONFIG_HOME=$HOME/.config
