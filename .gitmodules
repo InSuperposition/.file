@@ -1,21 +1,21 @@
-[submodule ".config/alacritty/theme"]
-	path = .config/alacritty/theme
+[submodule ".config/alacritty/alacritty-theme"]
+	path = .config/alacritty/alacritty-theme
 	url = https://github.com/alacritty/alacritty-theme.git
-[submodule ".config/kitty/themes/kitty-cobalt2"]
-	path = .config/kitty/themes/kitty-cobalt2
-	url = https://github.com/lalitmee/kitty-cobalt2.git
 [submodule ".config/clojure"]
 	path = .config/clojure
 	url = https://github.com/InSuperposition/clojure.git
-[submodule ".config/nvim"]
-	path = .config/nvim
-	url = https://github.com/InSuperposition/nvim.git
 [submodule ".config/git"]
 	path = .config/git
 	url = https://github.com/InSuperposition/git.git
 [submodule ".config/gnugpg"]
 	path = .config/gnugpg
 	url = https://github.com/InSuperposition/gnugpg.git
+[submodule ".config/kitty/themes/kitty-cobalt2"]
+	path = .config/kitty/themes/kitty-cobalt2
+	url = https://github.com/lalitmee/kitty-cobalt2.git
 [submodule ".config/minikube"]
 	path = .config/minikube
 	url = https://github.com/InSuperposition/minikube.git
+[submodule ".config/nvim"]
+	path = .config/nvim
+	url = https://github.com/InSuperposition/nvim.git
