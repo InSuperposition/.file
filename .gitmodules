@@ -1,6 +1,9 @@
 [submodule ".config/android"]
 	path = .config/android
 	url = https://github.com/InSuperposition/android.git
+[submodule ".config/cargo"]
+	path = .config/cargo
+	url = https://github.com/InSuperposition/cargo.git
 [submodule ".config/clojure"]
 	path = .config/clojure
 	url = https://github.com/InSuperposition/clojure.git
@@ -28,13 +31,18 @@
 [submodule ".config/kitty"]
 	path = .config/kitty
 	url = https://github.com/InSuperposition/kitty.git
+[submodule ".config/kube"]
+	path = .config/kube
+	url = https://github.com/InSuperposition/kube.git
 [submodule ".config/pnpm"]
 	path = .config/pnpm
 	url = https://github.com/InSuperposition/pnpm.git
 [submodule ".config/pyenv"]
 	path = .config/pyenv
 	url = https://github.com/InSuperposition/pyenv.git
-
+[submodule ".config/rustup"]
+	path = .config/rustup
+	url = https://github.com/InSuperposition/rustup.git
 [submodule ".config/starship"]
 	path = .config/starship
 	url = https://github.com/InSuperposition/starship.git
@@ -44,9 +52,3 @@
 [submodule ".config/zsh"]
 	path = .config/zsh
 	url = https://github.com/InSuperposition/zsh.git
-[submodule ".config/cargo"]
-	path = .config/cargo
-	url = https://github.com/InSuperposition/cargo.git
-[submodule ".config/rustup"]
-	path = .config/rustup
-	url = https://github.com/InSuperposition/rustup.git
