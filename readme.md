@@ -1,4 +1,4 @@
-# `.file`- (pronounced .file)
+# `.file` - (pronounced dotfile)
 
 > a dotfile repository using `git submodule` and [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration.
 
