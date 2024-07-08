@@ -1,16 +1,16 @@
 #!/bin/sh
 
+# XDG Base Directory Specification - https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
-
-export SOPS_CONFIG=$XDG_CONFIG_HOME/sops/.sops.yaml
-export GITLIBS=$XDG_CACHE_HOME/gitlibs
+# TODO: relocate to new repos
 export GNUPGHOME=$XDG_CONFIG_HOME/gnupg
 export MINIKUBE_HOME=$XDG_CONFIG_HOME/minikube
 
+# TODO: relocate to `pyenv` repo
 #pyenv
 export PYENV_ROOT="$XDG_CONFIG_HOME/pyenv"
 
@@ -42,6 +42,6 @@ export JAVA_BIN_PATH=$JAVA_HOME/bin
 
 . $XDG_CONFIG_HOME/homebrew/init.sh
 . $XDG_CONFIG_HOME/pnpm/init.sh
-. $XDG_CONFIG_HOME/porter/init.sh
 . $XDG_CONFIG_HOME/starship/init.sh
-. $XDG_CONFIG_HOME/setup/alias.sh
+
+. $XDG_CONFIG_HOME/.file/alias.sh
