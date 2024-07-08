@@ -6,20 +6,6 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
-# TODO: relocate to `pyenv` repo
-#pyenv
-export PYENV_ROOT="$XDG_CONFIG_HOME/pyenv"
-
-if [ -d "$PYENV_ROOT/bin" ]; then
-  PATH="$PYENV_ROOT/bin:$PATH"
-fi
-
-if command -v pyenv >/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-else
-  echo "pyenv is not installed."
-fi
-
 #fnm
 eval "$(fnm env --use-on-cd)"
 

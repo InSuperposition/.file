@@ -31,3 +31,6 @@
 [submodule ".config/zsh"]
 	path = .config/zsh
 	url = https://github.com/InSuperposition/zsh.git
+[submodule ".config/pyenv"]
+	path = .config/pyenv
+	url = https://github.com/InSuperposition/pyenv.git
