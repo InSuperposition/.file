@@ -6,10 +6,6 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
-# TODO: relocate to new repos
-export GNUPGHOME=$XDG_CONFIG_HOME/gnupg
-export MINIKUBE_HOME=$XDG_CONFIG_HOME/minikube
-
 # TODO: relocate to `pyenv` repo
 #pyenv
 export PYENV_ROOT="$XDG_CONFIG_HOME/pyenv"
@@ -40,8 +36,6 @@ export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/$GRAALVM_VERSION/Contents/
 export JAVA_HOME=$GRAALVM_HOME
 export JAVA_BIN_PATH=$JAVA_HOME/bin
 
-. $XDG_CONFIG_HOME/homebrew/init.sh
-. $XDG_CONFIG_HOME/pnpm/init.sh
-. $XDG_CONFIG_HOME/starship/init.sh
+. $XDG_CONFIG_HOME/.file/submodule.sh
 
 . $XDG_CONFIG_HOME/.file/alias.sh
