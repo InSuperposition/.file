@@ -63,20 +63,28 @@ brew bundle dump --force
 Recursively cleanup dead symlinks
 
 ```console
-symlinks -dvr ~/.config
+> symlinks -dvr ~/.config
 ```
 
 ## Setup
 
-### Shell Configuration
+### Shell Configuration on 󰀵 (OS X)
 
-#### `zsh` on 󰀵 (OS X)
+#### `zsh`
 
 1. `/etc/zshenv` <- create/edit file
 1. Add the following line for for zsh to look for config files
 
 ```sh
 export ZDOTDIR=$HOME/.config/zsh
+```
+
+#### 󰀵 (OS X) GUI
+
+May need to set XDG Variables here for GUI
+
+```console
+launchctl setenv environmentvariablename environmentvariablevalue
 ```
 
 ### `.file` Installation
