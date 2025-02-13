@@ -29,8 +29,7 @@ see [.gitmodules] - repository's [git submodules](https://git-scm.com/docs/submo
 
 ### Homebrew
 
-Install brew packages and casks [.config/homebrew/Brewfile.lock.json](.config/homebrew/Brewfile.lock.json)
-If there is a vesion conflict updates lock file with installed version
+Install brew packages and casks [.config/homebrew/Brewfile.json](.config/homebrew/Brewfile.json)
 
 ```console
 brew bundle install --no-upgrade
@@ -42,7 +41,7 @@ brew bundle install --no-upgrade
 > brew bundle
 ```
 
-[`.config/homebrew`](https://github.com/InSuperposition/homebrew.git)  - contains a list of applications to be installed and locked versions
+[`.config/homebrew`](https://github.com/InSuperposition/homebrew) - contains a list of applications to be installed and locked versions
 
 Update [.config/homebrew/Brewfile](.config/homebrew/Brewfile) with currently installed packages
 
@@ -56,11 +55,11 @@ brew bundle dump --force
 ### Stow
 
 [`.stow-local-ignore`](.stow-local-ignore`)
-[gnu `stow`](<https://www.gnu.org/software/stow/manual/stow.html>) to symlink the contents of the folder in a user's `$HOME` (`~`) folder by default.
+[gnu `stow`](https://www.gnu.org/software/stow/manual/stow.html) to symlink the contents of the folder in a user's `$HOME` (`~`) folder by default.
 
-## Debug / Cleanup
+## Cleanup
 
-Recursively cleanup dead symlinks
+Recursively delete dangling symlinks
 
 ```console
 > symlinks -dvr ~/.config
@@ -84,7 +83,7 @@ export ZDOTDIR=$HOME/.config/zsh
 May need to set XDG Variables here for GUI
 
 ```console
-launchctl setenv environmentvariablename environmentvariablevalue
+launchctl setenv ENVIRONMENT_VARIABLE_NAME ENVIRONMENT_VARIABLE_VALUE
 ```
 
 ### `.file` Installation
@@ -95,7 +94,7 @@ launchctl setenv environmentvariablename environmentvariablevalue
    > /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
-1. Install depedencies `git` and `stow`
+1. Install dependencies `git` and `stow`
 
    ```console
    > brew install git stow
