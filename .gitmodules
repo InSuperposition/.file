@@ -58,3 +58,6 @@
 [submodule ".config/doomemacs"]
 	path = .config/doomemacs
 	url = https://github.com/doomemacs/doomemacs
+[submodule ".config/helix"]
+	path = .config/helix
+	url = https://github.com/InSuperposition/helix.git
