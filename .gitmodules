@@ -28,9 +28,6 @@
 [submodule ".config/homebrew"]
 	path = .config/homebrew
 	url = https://github.com/InSuperposition/homebrew.git
-[submodule ".config/kitty"]
-	path = .config/kitty
-	url = https://github.com/InSuperposition/kitty.git
 [submodule ".config/kube"]
 	path = .config/kube
 	url = https://github.com/InSuperposition/kube.git
