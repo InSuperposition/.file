@@ -64,3 +64,6 @@
 [submodule ".config/ghostty"]
 	path = .config/ghostty
 	url = https://github.com/InSuperposition/ghostty
+[submodule ".config/sdkman"]
+	path = .config/sdkman
+	url = https://github.com/InSuperposition/sdkman.git

@@ -2,8 +2,6 @@
 
 > a dotfile repository using `git submodule` and [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration.
 
-Clone this repo [using `git clone --recurse-submodules ...`](https://github.com/InSuperposition/.file#file-installation)
-
 ## How It Works
 
 ### XDG Base Directory
@@ -19,13 +17,22 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 ```
 
-> [XDG Base Directory Summary and list of supported applications](https://wiki.archlinux.org/title/XDG_Base_Directory)
+- [XDG Base Directory Summary and list of supported applications](https://wiki.archlinux.org/title/XDG_Base_Directory)
+- [XDG Specification](https://specifications.freedesktop.org/basedir-spec/latest/)
 
 ### Git
 
 [`.config/git`](https://github.com/InSuperposition/git.git) - user's git config submodule
 
 see [.gitmodules] - repository's [git submodules](https://git-scm.com/docs/submodule)
+
+#### Add `git submodule`
+
+```console
+git submodule add <repository-url> <path>
+
+git submodule update --init --recursive
+```
 
 ### Homebrew
 
@@ -106,6 +113,9 @@ launchctl setenv ENVIRONMENT_VARIABLE_NAME ENVIRONMENT_VARIABLE_VALUE
    # from $HOME directory
    > git clone --recurse-submodules -j8 https://github.com/InSuperposition/.file.git
    ```
+
+`--recurse-submodules` - initializes and updates submodules
+`-j8` - runs 8 concurrent jobs to fetch submodules
 
 1. Run `stow` from $HOME/.file, to symlink config files
 
