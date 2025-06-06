@@ -6,6 +6,8 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
+export PATH="$PATH:/Users/fgalloway/.local/bin"
+
 # XDG_RUNTIME_DIR - https://wiki.gentoo.org/wiki/XDG/Base_Directories
 if [ -z "${XDG_RUNTIME_DIR}" ]; then
 	export XDG_RUNTIME_DIR="/tmp/${UID}-runtime-dir/"
