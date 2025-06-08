@@ -37,6 +37,9 @@
 [submodule ".config/nvim"]
 	path = .config/nvim
 	url = https://github.com/InSuperposition/nvim.git
+[submodule ".config/npm"]
+	path = .config/npm
+	url = https://github.com/InSuperposition/npm.git
 [submodule ".config/pnpm"]
 	path = .config/pnpm
 	url = https://github.com/InSuperposition/pnpm.git
