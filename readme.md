@@ -29,7 +29,7 @@ see [.gitmodules] - repository's [git submodules](https://git-scm.com/docs/submo
 #### Add `git submodule`
 
 ```console
-git submodule add <repository-url> <path>
+git submodule add <repository-url.git> <path>
 
 git submodule update --init --recursive
 ```

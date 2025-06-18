@@ -37,6 +37,9 @@
 [submodule ".config/minikube"]
 	path = .config/minikube
 	url = https://github.com/InSuperposition/minikube.git
+[submodule ".config/mise"]
+	path = .config/mise
+	url = https://github.com/InSuperposition/mise.git
 [submodule ".config/nvim"]
 	path = .config/nvim
 	url = https://github.com/InSuperposition/nvim.git
