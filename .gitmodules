@@ -10,9 +10,6 @@
 [submodule ".config/docker"]
 	path = .config/docker
 	url = https://github.com/InSuperposition/docker.git
-[submodule ".config/fnm"]
-	path = .config/fnm
-	url = https://github.com/InSuperposition/fnm.git
 [submodule ".config/ghostty"]
 	path = .config/ghostty
 	url = https://github.com/InSuperposition/ghostty.git
@@ -49,15 +46,9 @@
 [submodule ".config/pnpm"]
 	path = .config/pnpm
 	url = https://github.com/InSuperposition/pnpm.git
-[submodule ".config/pyenv"]
-	path = .config/pyenv
-	url = https://github.com/InSuperposition/pyenv.git
 [submodule ".config/rustup"]
 	path = .config/rustup
 	url = https://github.com/InSuperposition/rustup.git
-[submodule ".config/sdkman"]
-	path = .config/sdkman
-	url = https://github.com/InSuperposition/sdkman.git
 [submodule ".config/starship"]
 	path = .config/starship
 	url = https://github.com/InSuperposition/starship.git
