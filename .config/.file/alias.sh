@@ -11,11 +11,15 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+alias f="find . -name"
+
 # Grep with color output
 alias grep='grep --color=auto'
 
+alias mkcd="mkdir -p && cd"
+
 # Show current IP address
-alias myip="curl ifconfig.me"
+alias myip6="curl ifconfig.me; echo"
 
 # Extract various types of compressed files
 alias untar='tar -xvf'
