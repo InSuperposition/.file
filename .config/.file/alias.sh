@@ -1,5 +1,8 @@
 #!/bin/sh
+
+# ls with color output
 alias ls='ls --color=always'
+
 # List directory contents in long format with human-readable file sizes
 alias ll='ls -lh'
 
@@ -11,15 +14,14 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
-alias f="find . -name"
+# Find folder or file name in current directory
+alias f='find . -name'
 
 # Grep with color output
 alias grep='grep --color=auto'
 
-alias mkcd="mkdir -p && cd"
-
 # Show current IP address
-alias myip6="curl ifconfig.me; echo"
+alias myip6='curl ifconfig.me; echo'
 
 # Extract various types of compressed files
 alias untar='tar -xvf'
