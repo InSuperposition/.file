@@ -1,6 +1,3 @@
-[submodule ".config/android"]
-	path = .config/android
-	url = https://github.com/InSuperposition/android.git
 [submodule ".config/cargo"]
 	path = .config/cargo
 	url = https://github.com/InSuperposition/cargo.git
