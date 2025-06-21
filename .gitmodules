@@ -22,12 +22,6 @@
 [submodule ".config/homebrew"]
 	path = .config/homebrew
 	url = https://github.com/InSuperposition/homebrew.git
-[submodule ".config/kaggle"]
-	path = .config/kaggle
-	url = https://github.com/InSuperposition/kaggle.git
-[submodule ".config/mise"]
-	path = .config/mise
-	url = https://github.com/InSuperposition/mise.git
 [submodule ".config/rustup"]
 	path = .config/rustup
 	url = https://github.com/InSuperposition/rustup.git
