@@ -1,11 +1,9 @@
 #!/bin/sh
 . $XDG_CONFIG_HOME/android/init.sh
 . $XDG_CONFIG_HOME/cargo/init.sh
-. $XDG_CONFIG_HOME/docker/init.sh
 . $XDG_CONFIG_HOME/gnugpg/init.sh
 . $XDG_CONFIG_HOME/homebrew/init.sh
 . $XDG_CONFIG_HOME/kaggle/init.sh
-. $XDG_CONFIG_HOME/kube/init.sh
 . $XDG_CONFIG_HOME/minikube/init.sh
 . $XDG_CONFIG_HOME/mise/init.sh
 . $XDG_CONFIG_HOME/npm/init.sh
