@@ -16,9 +16,6 @@
 [submodule ".config/gnugpg"]
 	path = .config/gnugpg
 	url = https://github.com/InSuperposition/gnugpg.git
-[submodule ".config/helix"]
-	path = .config/helix
-	url = https://github.com/InSuperposition/helix.git
 [submodule ".config/homebrew"]
 	path = .config/homebrew
 	url = https://github.com/InSuperposition/homebrew.git
