@@ -25,9 +25,6 @@
 [submodule ".config/kaggle"]
 	path = .config/kaggle
 	url = https://github.com/InSuperposition/kaggle.git
-[submodule ".config/kube"]
-	path = .config/kube
-	url = https://github.com/InSuperposition/kube.git
 [submodule ".config/minikube"]
 	path = .config/minikube
 	url = https://github.com/InSuperposition/minikube.git
