@@ -1,0 +1,7 @@
+[tools]
+bun = "latest"
+clojure = "latest"
+java = "oracle-graalvm"
+node = "22"
+python = "3.12"
+rust = "stable"
