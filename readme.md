@@ -1,6 +1,6 @@
 # `.file` repository
 
-> a dotfile repository using [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration. Requires GNU `stow`, Homebrew and `git`
+> a dotfile repository using [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration. Requires [GNU `stow`](https://www.gnu.org/software/stow/), [Homebrew](https://brew.sh/) and [`git`](https://git-scm.com/)
 
 ## Setup
 
