@@ -3,3 +3,4 @@
 .gitmodules
 .gitignore
 readme.md
+^/[^/]*\.sh$
