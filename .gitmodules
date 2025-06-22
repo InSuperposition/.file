@@ -1,6 +1,3 @@
-[submodule ".config/clojure"]
-	path = .config/clojure
-	url = https://github.com/InSuperposition/clojure.git
 [submodule ".config/ghostty"]
 	path = .config/ghostty
 	url = https://github.com/InSuperposition/ghostty.git
