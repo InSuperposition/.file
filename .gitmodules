@@ -1,6 +1,3 @@
-[submodule ".config/cargo"]
-	path = .config/cargo
-	url = https://github.com/InSuperposition/cargo.git
 [submodule ".config/clojure"]
 	path = .config/clojure
 	url = https://github.com/InSuperposition/clojure.git
