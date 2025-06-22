@@ -22,6 +22,3 @@
 [submodule ".config/starship"]
 	path = .config/starship
 	url = https://github.com/InSuperposition/starship.git
-[submodule ".config/zsh"]
-	path = .config/zsh
-	url = https://github.com/InSuperposition/zsh.git
