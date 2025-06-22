@@ -1,6 +1,6 @@
 # `.file` repository
 
-> a dotfile repository using [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration.
+> a dotfile repository using [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration. Requires GNU `stow`, Homebrew and `git`
 
 ## Setup
 
@@ -26,7 +26,7 @@ export ZDOTDIR=$HOME/.config/zsh
 1. Install dependencies `git` and `stow`
 
    ```sh
-   > brew install git stow
+   brew install git stow
    ```
 
 1. Clone this repo to `$HOME/.file` directory
@@ -34,20 +34,20 @@ export ZDOTDIR=$HOME/.config/zsh
    from $HOME directory
 
    ```sh
-   > git clone  https://github.com/InSuperposition/.file.git
+   git clone  https://github.com/InSuperposition/.file.git
    ```
 
 1. Run `stow` from $HOME/.file, to symlink config files
 
-   ```console
-   > cd $HOME/.file
-   > stow .
+   ```sh
+   cd $HOME/.file
+   stow .
    ```
 
 1. Source `.zshrc` or open new terminal
 
    ```sh
-   > source $HOME/.file/zsh/.zshrc
+   source $HOME/.file/zsh/.zshrc
    ```
 
    or use this repo's alias to reload zsh's config
@@ -88,21 +88,27 @@ export XDG_STATE_HOME=$HOME/.local/state
 
 Install brew packages and casks [.config/homebrew/Brewfile.json](.config/homebrew/Brewfile.json)
 
-```console
+```sh
 brew bundle install --no-upgrade
+```
 
-# or to upgrade to latest versions, drop the --no-upgrade
-> brew bundle install
+or to upgrade to latest versions, drop the --no-upgrade
 
-# install is also optional
-> brew bundle
+```sh
+brew bundle install
+```
+
+`install` is also optional
+
+```sh
+brew bundle
 ```
 
 [`.config/homebrew`](https://github.com/InSuperposition/homebrew) - contains a list of applications to be installed and locked versions
 
 Update [.config/homebrew/Brewfile](.config/homebrew/Brewfile) with currently installed packages
 
-```console
+```sh
 brew bundle dump --force
 ```
 
@@ -118,6 +124,6 @@ brew bundle dump --force
 
 Recursively delete dangling symlinks
 
-```console
-> symlinks -dvr ~/.config | grep dangling
+```sh
+symlinks -dvr ~/.config | grep dangling
 ```
