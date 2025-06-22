@@ -1,6 +1,6 @@
 # `.file` repository
 
-> a dotfile repository using [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration. Requires [GNU `stow`](https://www.gnu.org/software/stow/), [Homebrew](https://brew.sh/) and [`git`](https://git-scm.com/)
+> a dotfile repository using [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration. Requires [GNU `stow`](https://www.gnu.org/software/stow/), [Homebrew](https://brew.sh/) and [`git`](https://git-scm.com/). Uses the amazing [`mise`](https://mise.jdx.dev/) to create environments for various programming languages.
 
 ## Setup
 
@@ -29,12 +29,12 @@ export ZDOTDIR=$HOME/.config/zsh
    brew install git stow
    ```
 
-1. Clone this repo to `$HOME/.file` directory
-
-   from $HOME directory
+1. On Github click 'Use this template' or fork repo.
+1. In your new repo, **change git user name and email** in [`.config/git/config`](.config/git/config)
+1. Clone your new repo from your $HOME directory
 
    ```sh
-   git clone  https://github.com/InSuperposition/.file.git
+   git clone  https://github.com/<GITHUB_USER_NAME>/.file.git
    ```
 
 1. Run `stow` from $HOME/.file, to symlink config files
@@ -108,7 +108,7 @@ brew bundle install
 brew bundle
 ```
 
-[`.config/homebrew`](https://github.com/InSuperposition/homebrew) - contains a list of applications to be installed and locked versions
+[`.config/homebrew`](.config/homebrew) - contains a list of applications to be installed and locked versions
 
 Update [.config/homebrew/Brewfile](.config/homebrew/Brewfile) with currently installed packages
 
@@ -123,6 +123,12 @@ brew bundle dump --force
 
 [`.stow-local-ignore`](.stow-local-ignore`)
 [gnu `stow`](https://www.gnu.org/software/stow/manual/stow.html) to symlink the contents of the folder in a user's `$HOME` (`~`) folder by default.
+
+### Mise - manage multiple versions of programming languages
+
+[`.config/mise/config.toml`](.config/mise/config.toml)
+
+common commands - <https://mise.jdx.dev/dev-tools/#common-commands>
 
 ## Cleanup
 

@@ -6,10 +6,6 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
-LOCAL_BIN_HOME=$HOME/.local/bin
-
-export PATH="$PATH:$LOCAL_BIN_HOME"
-
 # XDG_RUNTIME_DIR - https://wiki.gentoo.org/wiki/XDG/Base_Directories
 if [ -z "${XDG_RUNTIME_DIR}" ]; then
 	export XDG_RUNTIME_DIR="/tmp/${UID}-runtime-dir/"
@@ -18,6 +14,10 @@ if [ -z "${XDG_RUNTIME_DIR}" ]; then
 		chmod 0700 "${XDG_RUNTIME_DIR}"
 	fi
 fi
+
+LOCAL_BIN_HOME=$HOME/.local/bin
+
+export PATH="$PATH:$LOCAL_BIN_HOME"
 
 # Load user-specific configurations
 . $XDG_CONFIG_HOME/cargo/init.sh

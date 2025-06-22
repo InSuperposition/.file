@@ -16,12 +16,12 @@ alias sz="source $ZSHRC_PATH"
 
 ZSH_HOME_DIR="${XDG_CONFIG_HOME}/zsh"
 
-# Load ZI (Z Shell Interactive Plugin Manager)
-source $ZSH_HOME_DIR/zi_init.zsh
 
 if [[ -r "$ZSH_HOME_DIR/zi_init.zsh" ]]; then
+# Load ZI (Z Shell Interactive Plugin Manager)
   source "$ZSH_HOME_DIR/zi_init.zsh" && zzinit
+  
+# Load ZI plugins
+  source $ZSH_HOME_DIR/zi_plugin.zsh
 fi
 
-# Load ZI plugins
-source $ZSH_HOME_DIR/zi_plugin.zsh
