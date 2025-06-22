@@ -90,7 +90,7 @@ export XDG_RUNTIME_DIR="/tmp/${UID}-runtime-dir/"
 
 ### Homebrew
 
-Install brew packages and casks [.config/homebrew/Brewfile.json](.config/homebrew/Brewfile.json)
+Install brew packages and casks [.config/homebrew/Brewfile](.config/homebrew/Brewfile)
 
 ```sh
 brew bundle install --no-upgrade
