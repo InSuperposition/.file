@@ -1,6 +1,6 @@
 # `.file` repository
 
-> a dotfile repository using `git submodule` and [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration.
+> a dotfile repository using [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to compartmentalize shell configuration.
 
 ## How It Works
 
@@ -8,7 +8,7 @@
 
 [`.config/.file/init.sh`](.config/.file/init.sh) exports the following XDG spec environment variables, other `init.sh` files in this repo **depend** on these variables as well.
 
-Some submodules require an `init.sh` file to setup aliases, run commands, environment variables, etc.
+Some tools an `init.sh` file to setup aliases, run commands, environment variables, etc.
 
 ```sh
 export XDG_CONFIG_HOME=$HOME/.config
@@ -22,17 +22,7 @@ export XDG_STATE_HOME=$HOME/.local/state
 
 ### Git
 
-[`.config/git`](https://github.com/InSuperposition/git.git) - user's git config submodule
-
-see [.gitmodules] - repository's [git submodules](https://git-scm.com/docs/submodule)
-
-#### Add `git submodule`
-
-```console
-git submodule add <repository-url.git> <path>
-
-git submodule update --init --recursive
-```
+[`.config/git`](https://github.com/InSuperposition/git.git) - user's git config
 
 ### Homebrew
 
@@ -111,11 +101,8 @@ launchctl setenv ENVIRONMENT_VARIABLE_NAME ENVIRONMENT_VARIABLE_VALUE
 
    ```console
    # from $HOME directory
-   > git clone --recurse-submodules -j8 https://github.com/InSuperposition/.file.git
+   > git clone  https://github.com/InSuperposition/.file.git
    ```
-
-`--recurse-submodules` - initializes and updates submodules
-`-j8` - runs 8 concurrent jobs to fetch submodules
 
 1. Run `stow` from $HOME/.file, to symlink config files
 
