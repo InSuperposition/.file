@@ -41,6 +41,9 @@ export ZDOTDIR=$HOME/.config/zsh
 
    ```sh
    cd $HOME/.file
+   ```
+
+   ```sh
    stow .
    ```
 
