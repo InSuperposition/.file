@@ -19,20 +19,21 @@ export ZDOTDIR=$HOME/.config/zsh
 
 1. Install [`homebrew`](https://brew.sh/#install)
 
-   ```console
-   > /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```sh
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
 1. Install dependencies `git` and `stow`
 
-   ```console
+   ```sh
    > brew install git stow
    ```
 
 1. Clone this repo to `$HOME/.file` directory
 
-   ```console
-   # from $HOME directory
+   from $HOME directory
+
+   ```sh
    > git clone  https://github.com/InSuperposition/.file.git
    ```
 
@@ -45,18 +46,20 @@ export ZDOTDIR=$HOME/.config/zsh
 
 1. Source `.zshrc` or open new terminal
 
-   ```console
+   ```sh
    > source $HOME/.file/zsh/.zshrc
+   ```
 
    or use this repo's alias to reload zsh's config
 
-   > sz
+   ```sh
+   sz
    ```
 
 1. Install `brew` packages
 
-   ```console
-   > brew bundle install --no-upgrade
+   ```sh
+   brew bundle install --no-upgrade
    ```
 
 ## How It Works
