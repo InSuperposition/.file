@@ -1,6 +1,3 @@
-[submodule ".config/git"]
-	path = .config/git
-	url = https://github.com/InSuperposition/git.git
 [submodule ".config/gnugpg"]
 	path = .config/gnugpg
 	url = https://github.com/InSuperposition/gnugpg.git
