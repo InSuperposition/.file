@@ -1,6 +1,3 @@
 [submodule ".config/homebrew"]
 	path = .config/homebrew
 	url = https://github.com/InSuperposition/homebrew.git
-[submodule ".config/rustup"]
-	path = .config/rustup
-	url = https://github.com/InSuperposition/rustup.git
