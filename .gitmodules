@@ -4,6 +4,3 @@
 [submodule ".config/rustup"]
 	path = .config/rustup
 	url = https://github.com/InSuperposition/rustup.git
-[submodule ".config/starship"]
-	path = .config/starship
-	url = https://github.com/InSuperposition/starship.git
