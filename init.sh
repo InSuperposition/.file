@@ -19,6 +19,14 @@ if [ -z "${XDG_RUNTIME_DIR}" ]; then
 	fi
 fi
 
-. $XDG_CONFIG_HOME/.file/submodule.sh
+# Load user-specific configurations
+. $XDG_CONFIG_HOME/cargo/init.sh
+. $XDG_CONFIG_HOME/gnugpg/init.sh
+. $XDG_CONFIG_HOME/homebrew/init.sh
+. $XDG_CONFIG_HOME/kaggle/init.sh
+. $XDG_CONFIG_HOME/mise/init.sh
+. $XDG_CONFIG_HOME/rustup/init.sh
+. $XDG_CONFIG_HOME/starship/init.sh
 
-. $XDG_CONFIG_HOME/.file/alias.sh
+# Load user-specific aliases
+. $HOME/.file/alias.sh
