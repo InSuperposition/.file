@@ -1,3 +1,0 @@
-[submodule ".config/homebrew"]
-	path = .config/homebrew
-	url = https://github.com/InSuperposition/homebrew.git
