@@ -2,7 +2,7 @@
 
 source $HOME/.file/init.sh
 
-export HISTFILE=$XDG_STATE_HOME/.zsh_history
+export HISTFILE=$XDG_STATE_HOME/zsh/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
 setopt INC_APPEND_HISTORY
@@ -24,4 +24,3 @@ if [[ -r "$ZSH_HOME_DIR/zi_init.zsh" ]]; then
 # Load ZI plugins
   source $ZSH_HOME_DIR/zi_plugin.zsh
 fi
-
