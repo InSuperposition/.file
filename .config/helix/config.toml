@@ -1,4 +1,4 @@
-# theme = "cobalt2"
+theme = "tokyonight_storm"
 
 [editor]
 # line-number = "relative"
@@ -11,10 +11,9 @@ cursorline = true
 # Use relative line numbers
 line-number = "relative"
 # Show a ruler at column 120
-rulers = [120]
+rulers = [80]
 # Force the theme to show colors
 true-color = true
-
 
 # Minimum severity to show a diagnostic after the end of a line
 end-of-line-diagnostics = "hint"
