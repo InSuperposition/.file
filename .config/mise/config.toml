@@ -1,7 +1,10 @@
 [tools]
+age = "latest"
 bun = "latest"
+claude = "latest"
 clojure = "latest"
 java = "oracle-graalvm"
 node = "22"
 python = "3.11"
 rust = "stable"
+sops = "latest"
