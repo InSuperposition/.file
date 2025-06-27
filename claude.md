@@ -58,6 +58,7 @@ symlinks -dr ~/.config
 
 - `init.sh` - Main bootstrap script that sets XDG variables and loads all configurations
 - `alias.sh` - Global shell aliases
+- `.config/claude/claude.md - is claude's global config file
 - `.config/*/init.sh` - Tool-specific initialization scripts
 - `.config/homebrew/Brewfile` - Package management definitions
 - `.config/mise/config.toml` - Programming language versions
