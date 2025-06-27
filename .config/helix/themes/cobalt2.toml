@@ -1,0 +1,320 @@
+# Cobalt2 Theme for Helix
+# Based on Wes Bos's Cobalt2 theme for VS Code, Alacritty, and iTerm2
+
+
+# UI Colors
+"ui.background" = { bg = "cobalt_bg" }
+"ui.background.separator" = { fg = "cobalt_border" }
+"ui.text" = { fg = "white" }
+"ui.text.focus" = { fg = "white", bg = "cobalt_selection" }
+"ui.text.inactive" = { fg = "gray" }
+"ui.text.info" = { fg = "cobalt_cyan" }
+
+# Window and borders
+"ui.window" = { fg = "cobalt_border" }
+"ui.help" = { bg = "cobalt_dark_bg", fg = "white" }
+
+# Cursor and selection
+"ui.cursor" = { bg = "cobalt_yellow", fg = "cobalt_bg" }
+"ui.cursor.primary" = { bg = "cobalt_yellow", fg = "cobalt_bg" }
+"ui.cursor.match" = { bg = "cobalt_selection", modifiers = ["bold"] }
+"ui.selection" = { bg = "cobalt_selection" }
+"ui.selection.primary" = { bg = "cobalt_selection" }
+"ui.highlight" = { bg = "cobalt_selection" }
+
+# Gutter
+"ui.gutter" = { bg = "cobalt_bg" }
+"ui.gutter.selected" = { bg = "cobalt_selection" }
+"ui.linenr" = { fg = "gray" }
+"ui.linenr.selected" = { fg = "white" }
+
+# Statusline
+"ui.statusline" = { bg = "cobalt_dark_bg", fg = "white" }
+"ui.statusline.inactive" = { bg = "cobalt_dark_bg", fg = "gray" }
+"ui.statusline.normal" = { bg = "cobalt_blue", fg = "white" }
+"ui.statusline.insert" = { bg = "cobalt_green", fg = "cobalt_bg" }
+"ui.statusline.select" = { bg = "cobalt_orange", fg = "cobalt_bg" }
+"ui.statusline.separator" = { fg = "cobalt_border" }
+
+# Menu and popup
+"ui.menu" = { bg = "cobalt_dark_bg", fg = "white" }
+"ui.menu.selected" = { bg = "cobalt_selection", fg = "cobalt_yellow" }
+"ui.menu.scroll" = { bg = "cobalt_selection", fg = "white" }
+"ui.popup" = { bg = "cobalt_dark_bg", fg = "white" }
+"ui.popup.info" = { bg = "cobalt_dark_bg", fg = "white" }
+
+# Editor widgets
+"ui.virtual" = { fg = "cobalt_dark_gray" }
+"ui.virtual.ruler" = { bg = "cobalt_ruler" }
+"ui.virtual.whitespace" = { fg = "cobalt_dark_gray" }
+"ui.virtual.indent-guide" = { fg = "cobalt_indent" }
+"ui.virtual.inlay-hint" = { fg = "cobalt_pink", bg = "#0000001a" }
+
+# Diagnostics
+"diagnostic" = { modifiers = ["underlined"] }
+"diagnostic.hint" = { fg = "cobalt_cyan", modifiers = ["underlined"] }
+"diagnostic.info" = { fg = "cobalt_blue", modifiers = ["underlined"] }
+"diagnostic.warning" = { fg = "cobalt_yellow", modifiers = ["underlined"] }
+"diagnostic.error" = { fg = "cobalt_red", modifiers = ["underlined"] }
+
+# Git signs
+"diff.plus" = { fg = "cobalt_green" }
+"diff.minus" = { fg = "cobalt_red" }
+"diff.delta" = { fg = "cobalt_yellow" }
+
+# Syntax highlighting
+"attribute" = { fg = "cobalt_orange" }
+"comment" = { fg = "cobalt_blue_gray", modifiers = ["italic"] }
+"constant" = { fg = "cobalt_pink" }
+"constant.builtin" = { fg = "cobalt_pink" }
+"constant.builtin.boolean" = { fg = "cobalt_pink" }
+"constant.character" = { fg = "cobalt_mint" }
+"constant.character.escape" = { fg = "cobalt_pink" }
+"constant.numeric" = { fg = "cobalt_pink" }
+"constructor" = { fg = "cobalt_yellow" }
+"function" = { fg = "cobalt_yellow" }
+"function.builtin" = { fg = "cobalt_yellow" }
+"function.macro" = { fg = "cobalt_mint" }
+"function.method" = { fg = "cobalt_yellow" }
+"keyword" = { fg = "cobalt_orange" }
+"keyword.control" = { fg = "cobalt_orange" }
+"keyword.control.conditional" = { fg = "cobalt_orange" }
+"keyword.control.import" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"keyword.control.return" = { fg = "cobalt_pink" }
+"keyword.control.exception" = { fg = "cobalt_orange" }
+"keyword.operator" = { fg = "cobalt_orange" }
+"keyword.directive" = { fg = "cobalt_orange" }
+"keyword.function" = { fg = "cobalt_orange" }
+"keyword.storage" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"keyword.storage.type" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"keyword.storage.modifier" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"label" = { fg = "cobalt_yellow" }
+"namespace" = { fg = "cobalt_light_blue" }
+"operator" = { fg = "cobalt_orange" }
+"punctuation" = { fg = "white" }
+"punctuation.bracket" = { fg = "white" }
+"punctuation.delimiter" = { fg = "white" }
+"punctuation.special" = { fg = "cobalt_orange" }
+"special" = { fg = "cobalt_orange" }
+"string" = { fg = "cobalt_light_green" }
+"string.regexp" = { fg = "cobalt_mint" }
+"string.special" = { fg = "cobalt_mint" }
+"string.special.symbol" = { fg = "cobalt_light_green" }
+"tag" = { fg = "cobalt_light_blue" }
+"type" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"type.builtin" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"type.enum" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"type.enum.variant" = { fg = "cobalt_light_blue" }
+"type.interface" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"variable" = { fg = "white" }
+"variable.builtin" = { fg = "cobalt_pink" }
+"variable.parameter" = { fg = "cobalt_light_blue" }
+"variable.other" = { fg = "white" }
+"variable.other.member" = { fg = "cobalt_light_blue" }
+
+# Markup (Markdown, etc.)
+"markup.heading" = { fg = "cobalt_yellow", modifiers = ["bold"] }
+"markup.heading.1" = { fg = "cobalt_yellow", modifiers = ["bold"] }
+"markup.heading.2" = { fg = "cobalt_orange", modifiers = ["bold"] }
+"markup.heading.3" = { fg = "cobalt_light_blue", modifiers = ["bold"] }
+"markup.heading.4" = { fg = "cobalt_mint", modifiers = ["bold"] }
+"markup.heading.5" = { fg = "cobalt_pink", modifiers = ["bold"] }
+"markup.heading.6" = { fg = "cobalt_green", modifiers = ["bold"] }
+"markup.heading.marker" = { fg = "cobalt_yellow" }
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+"markup.link" = { fg = "cobalt_light_blue", modifiers = ["underlined"] }
+"markup.link.url" = { fg = "cobalt_light_blue", modifiers = ["underlined"] }
+"markup.link.text" = { fg = "cobalt_light_green" }
+"markup.quote" = { fg = "cobalt_blue_gray", modifiers = ["italic"] }
+"markup.raw" = { fg = "cobalt_mint" }
+"markup.raw.inline" = { fg = "cobalt_mint" }
+"markup.raw.block" = { bg = "cobalt_selection" }
+"markup.list" = { fg = "cobalt_yellow" }
+
+# Language-specific (TypeScript/JavaScript/React priority)
+"keyword.control.flow.js" = { fg = "cobalt_orange" }
+"keyword.control.flow.ts" = { fg = "cobalt_orange" }
+"storage.type.js" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"storage.type.ts" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"storage.type.interface.ts" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"storage.type.type.ts" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"entity.name.type.ts" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"entity.name.type.interface.ts" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"entity.name.type.alias.ts" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"support.type.primitive.ts" = { fg = "cobalt_pink" }
+"entity.name.function.ts" = { fg = "cobalt_yellow" }
+"entity.name.function.js" = { fg = "cobalt_yellow" }
+"variable.language.this.js" = { fg = "cobalt_pink" }
+"variable.language.this.ts" = { fg = "cobalt_pink" }
+"variable.language.super.js" = { fg = "cobalt_pink" }
+"variable.language.super.ts" = { fg = "cobalt_pink" }
+"meta.jsx" = { fg = "white" }
+"meta.tag.jsx" = { fg = "white" }
+"entity.name.tag.jsx" = { fg = "cobalt_light_blue" }
+"support.class.component.jsx" = { fg = "cobalt_light_blue" }
+"meta.tag.attributes.jsx" = { fg = "cobalt_light_blue" }
+"entity.other.attribute-name.jsx" = { fg = "cobalt_light_blue" }
+
+# CSS/SCSS/LESS
+"entity.name.tag.css" = { fg = "cobalt_light_blue" }
+"entity.other.attribute-name.class.css" = { fg = "cobalt_yellow" }
+"entity.other.attribute-name.id.css" = { fg = "cobalt_yellow" }
+"support.type.property-name.css" = { fg = "cobalt_light_blue" }
+"support.constant.property-value.css" = { fg = "cobalt_mint" }
+"constant.numeric.css" = { fg = "cobalt_pink" }
+"keyword.other.unit.css" = { fg = "cobalt_pink" }
+"punctuation.definition.entity.css" = { fg = "cobalt_yellow" }
+"variable.scss" = { fg = "cobalt_light_blue" }
+"variable.sass" = { fg = "cobalt_light_blue" }
+"variable.less" = { fg = "cobalt_light_blue" }
+
+# HTML/XML
+"text.html" = { fg = "white" }
+"entity.name.tag.html" = { fg = "cobalt_light_blue" }
+"entity.other.attribute-name.html" = { fg = "cobalt_light_blue" }
+"punctuation.definition.tag.html" = { fg = "white" }
+"string.quoted.double.html" = { fg = "cobalt_light_green" }
+"string.quoted.single.html" = { fg = "cobalt_light_green" }
+
+# JSON
+"source.json" = { fg = "white" }
+"support.type.property-name.json" = { fg = "cobalt_light_blue" }
+"punctuation.support.type.property-name.begin.json" = { fg = "white" }
+"punctuation.support.type.property-name.end.json" = { fg = "white" }
+
+# YAML
+"entity.name.tag.yaml" = { fg = "cobalt_light_blue" }
+"constant.language.boolean.yaml" = { fg = "cobalt_pink" }
+"constant.numeric.yaml" = { fg = "cobalt_pink" }
+"string.unquoted.yaml" = { fg = "cobalt_light_green" }
+
+# TOML
+"keyword.key.toml" = { fg = "cobalt_light_blue" }
+"constant.language.boolean.toml" = { fg = "cobalt_pink" }
+"constant.numeric.toml" = { fg = "cobalt_pink" }
+
+# Rust
+"entity.name.type.rust" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"entity.name.lifetime.rust" = { fg = "cobalt_orange" }
+"keyword.unsafe.rust" = { fg = "cobalt_red" }
+"attribute.rust" = { fg = "cobalt_orange" }
+
+# Python
+"keyword.control.import.python" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"storage.type.function.python" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"storage.type.class.python" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"variable.language.special.self.python" = { fg = "cobalt_pink" }
+"meta.function-call.generic.python" = { fg = "cobalt_yellow" }
+
+# Go
+"entity.name.package.go" = { fg = "cobalt_light_blue" }
+"entity.name.type.go" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"entity.name.function.go" = { fg = "cobalt_yellow" }
+"keyword.package.go" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"keyword.import.go" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"keyword.function.go" = { fg = "cobalt_orange", modifiers = ["italic"] }
+
+# Clojure/ClojureScript
+"keyword.clojure" = { fg = "cobalt_orange" }
+"keyword.control.clojure" = { fg = "cobalt_orange" }
+"keyword.function.clojure" = { fg = "cobalt_orange" }
+"keyword.macro.clojure" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"entity.name.function.clojure" = { fg = "cobalt_yellow" }
+"entity.name.function.macro.clojure" = { fg = "cobalt_mint" }
+"entity.global.clojure" = { fg = "cobalt_yellow" }
+"entity.name.namespace.clojure" = { fg = "cobalt_light_blue" }
+"meta.symbol.clojure" = { fg = "cobalt_light_blue" }
+"meta.symbol.namespace.clojure" = { fg = "cobalt_light_blue" }
+"constant.keyword.clojure" = { fg = "cobalt_light_blue" }
+"constant.numeric.clojure" = { fg = "cobalt_pink" }
+"string.quoted.clojure" = { fg = "cobalt_light_green" }
+"string.regexp.clojure" = { fg = "cobalt_mint" }
+"comment.clojure" = { fg = "cobalt_blue_gray", modifiers = ["italic"] }
+"punctuation.bracket.clojure" = { fg = "white" }
+"punctuation.delimiter.clojure" = { fg = "white" }
+"meta.expression.clojure" = { fg = "white" }
+"meta.definition.global.clojure" = { fg = "cobalt_yellow" }
+"support.function.clojure" = { fg = "cobalt_yellow" }
+"meta.definition.variable.clojure" = { fg = "white" }
+"keyword.operator.macro.clojure" = { fg = "cobalt_orange" }
+"entity.name.variable.clojure" = { fg = "white" }
+"source.symbol.unqualified.clojure" = { fg = "cobalt_light_blue" }
+
+# ClojureScript specific
+"keyword.clojurescript" = { fg = "cobalt_orange" }
+"entity.name.type.clojurescript" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"support.class.clojurescript" = { fg = "cobalt_pink", modifiers = ["italic"] }
+"support.type.object.console.clojurescript" = { fg = "cobalt_light_blue" }
+"meta.property-name.clojurescript" = { fg = "cobalt_light_blue" }
+
+# Clojure/ClojureScript with React (Reagent/Rum/etc.)
+"meta.reagent.component.clojure" = { fg = "cobalt_light_blue" }
+"entity.reagent.component.clojure" = { fg = "cobalt_light_blue" }
+"keyword.reagent.clojure" = { fg = "cobalt_orange" }
+"support.reagent.ratio.clojure" = { fg = "cobalt_pink" }
+"entity.other.attribute-name.reagent.clojure" = { fg = "cobalt_light_blue" }
+"punctuation.section.reagent.clojure" = { fg = "white" }
+"meta.rum.component.clojure" = { fg = "cobalt_light_blue" }
+"support.class.react.clojure" = { fg = "cobalt_light_blue" }
+
+# Special forms and core functions
+"support.function.core.clojure" = { fg = "cobalt_yellow" }
+"keyword.special.clojure" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"storage.control.clojure" = { fg = "cobalt_orange", modifiers = ["italic"] }
+"variable.language.clojure" = { fg = "cobalt_pink" }
+
+# Reader conditionals
+"punctuation.definition.reader-conditional.clojure" = { fg = "cobalt_orange" }
+"keyword.operator.reader-conditional.clojure" = { fg = "cobalt_orange" }
+
+# Metadata
+"punctuation.definition.metadata.clojure" = { fg = "cobalt_mint" }
+"meta.metadata.simple.clojure" = { fg = "cobalt_mint" }
+"meta.metadata.map.clojure" = { fg = "cobalt_mint" }
+
+[palette]
+# Main background colors
+cobalt_bg = "#193549"
+cobalt_dark_bg = "#122738"
+cobalt_selection = "#0d3a58"
+cobalt_border = "#15232d"
+cobalt_ruler = "#1F4662"
+cobalt_indent = "#3B5364"
+
+# Main syntax colors
+white = "#ffffff"
+cobalt_yellow = "#ffc600"
+cobalt_orange = "#ff9d00"
+cobalt_pink = "#fb94ff"
+cobalt_light_blue = "#9effff"
+cobalt_mint = "#2affdf"
+cobalt_light_green = "#a5ff90"
+cobalt_green = "#3ad900"
+cobalt_blue = "#0088ff"
+cobalt_cyan = "#80fcff"
+cobalt_red = "#ff628c"
+
+# UI colors
+gray = "#aaaaaa"
+cobalt_dark_gray = "#35434d"
+cobalt_blue_gray = "#0088ff"
+cobalt_error = "#ff5630"
+
+# Terminal colors (ANSI)
+black = "#000000"
+red = "#ff628c"
+green = "#3ad900"
+yellow = "#ffc600"
+blue = "#0088ff"
+magenta = "#fb94ff"
+cyan = "#80fcff"
+bright_black = "#0050A4"
+bright_red = "#ff628c"
+bright_green = "#3ad900"
+bright_yellow = "#ffc600"
+bright_blue = "#0088ff"
+bright_magenta = "#fb94ff"
+bright_cyan = "#80fcff"
+bright_white = "#ffffff"

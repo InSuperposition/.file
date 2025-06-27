@@ -1,8 +1,11 @@
 [tools]
 age = "latest"
+bat = "latest"
 bun = "latest"
 claude = "latest"
 clojure = "latest"
+deno = "2.3.7"
+helix = "25.01.1"
 java = "oracle-graalvm"
 node = "22"
 python = "3.11"
