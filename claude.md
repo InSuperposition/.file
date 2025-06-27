@@ -59,9 +59,10 @@ symlinks -dr ~/.config
 - `init.sh` - Main bootstrap script that sets XDG variables and loads all configurations
 - `alias.sh` - Global shell aliases
 - `.claude/claude.md - is claude's global config file
+- `.config/git/config` - is git config and aliases for git and git-lfs
 - `.config/*/init.sh` - Tool-specific initialization scripts
 - `.config/homebrew/Brewfile` - Package management definitions
-- `.config/mise/config.toml` - Programming language versions
+- `.config/mise/config.toml` - Programming language versions and packages
 - `.stow-local-ignore` - Files/patterns to exclude from stowing
 
 ## Development Tools Included
