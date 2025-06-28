@@ -52,6 +52,7 @@ testssl <domain>
 - **Use ES6 modules**: Proper import/export statements
 - **Group related styles**: Logical CSS sections and comments
 - **Consistent naming**: Implement consistent naming conventions across all file types
+- **CSS attributes should come after browser prefixes**
 
 ## Development Workflow Standards
 
@@ -71,6 +72,8 @@ testssl <domain>
 
 ### Environment Management
 
+- make sure versions exists before adding to dependencies
+- do not guess or hallucinate when adding versions or addons, prompt for choices.
 - Use `mise` for language version consistency
 - Document required tool versions
 - Provide setup instructions in project `readme.md`
@@ -101,6 +104,7 @@ testssl <domain>
 - **Easy**: Familiar, near at hand, but potentially complex underneath
 - Choose simple solutions even if they require more initial learning
 - Avoid complecting (intertwining) unrelated concepts
+- **Less is More**: minimize a11y on semantic elements, keep CSS, markup and CODE concise, focus on composability and reusable code
 
 ### Functional Approaches Over Object-Oriented
 
@@ -229,6 +233,8 @@ Testing should not focus on the implementation within the function, as that can 
 #### Frontend Testing
 
 - use `testing-library` and the variation for the framework used
+- **follow testing-library [priorities](https://testing-library.com/docs/queries/about#priority)** for function from its API
+- **DO NOT use a `data-testid` attribute EVER**
 - Test user interactions in browsers using playwright
 - Test accessibility
 - Test internationalization left-to-right and right-to-left layout
@@ -353,11 +359,17 @@ function sortByProperty<T, K extends keyof T>(
 }
 ```
 
+### React 19+ Standards
+
+- **use latest approached allowed by React 19**
+- **When a file uses JSX, provide correct extension** (*.jsx,*.tsx)
+
 ### CSS Standards (Modern Browser Compatible)
 
 - **Use CSS Grid and Flexbox** for layouts (avoid floats and tables)
 - **Implement CSS Custom Properties** for consistent theming and design tokens
-- **Write semantic class names** using BEM methodology when appropriate
+- **Write semantic class names** using class names with a single underscore id needed, DO NOT use BEM
+- **For states use a separate class if an CSS attribute or psuedo selector is not available** [disabled], :focus, .active
 - **Use nested selectors and CSS Layers** for organization and cascade control
 - **Use logical properties**: `margin-inline-start` instead of `margin-left`
 - **Utilize modern CSS functions**: `clamp()`, `min()`, `max()` for responsive design
@@ -402,7 +414,7 @@ function sortByProperty<T, K extends keyof T>(
     padding-inline: var(--space-sm);
     background: var(--color-surface);
     
-    &__item {
+    &_item {
       text-decoration: none;
       padding: var(--space-xs) var(--space-sm);
       border-radius: 0.25rem;

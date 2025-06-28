@@ -3,5 +3,5 @@
 .gitmodules
 .gitignore
 readme.md
-/claude.md
+/CLAUDE.md
 ^/[^/]*\.sh$
