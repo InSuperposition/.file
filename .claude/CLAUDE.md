@@ -76,6 +76,23 @@ testssl <domain>
 - Provide setup instructions in project `readme.md`
 - Use `.env` files for local configuration (never commit them)
 
+## Collaboration and Code Review
+
+### Code Review Checklist
+
+- Security implications reviewed
+- Tests added/updated
+- Documentation updated
+- Performance impact considered
+- Error handling adequate
+
+### Communication
+
+- Write clear messages
+- Document breaking changes
+- Provide context in pull requests
+- Be constructive in code reviews
+
 ## Functional Programming Principles (Simple Made Easy)
 
 ### Simplicity Over Ease
@@ -605,20 +622,98 @@ fn calculate_total(items: &[Item]) -> Result<f64, CalculationError> {
        [user-item user])]))
 ```
 
+## AI Development Best Practices
 
-## Collaboration and Code Review
+### Working with AI Assistants
 
-### Code Review Checklist
+- **Be specific and clear**: Provide precise requirements and context
+- **Break down complex tasks**: Split large features into smaller, manageable pieces
+- **Provide examples**: Show desired input/output patterns when possible
+- **Request explanations**: Ask AI to explain reasoning behind code decisions
+- **Validate outputs**: Always review and test AI-generated code
+- **Iterate incrementally**: Build and test in small steps rather than large changes
 
-- Security implications reviewed
-- Tests added/updated
-- Documentation updated
-- Performance impact considered
-- Error handling adequate
+### Code Generation Guidelines
 
-### Communication
+- **Specify constraints**: Define performance, security, and compatibility requirements
+- **Request multiple approaches**: Ask for different implementation strategies
+- **Include error handling**: Explicitly request robust error management
+- **Ask for tests**: Request unit tests alongside implementation code
+- **Demand documentation**: Ensure complex logic is well-documented
+- **Consider edge cases**: Explicitly discuss boundary conditions and failure modes
 
-- Write clear commit messages
-- Document breaking changes
-- Provide context in pull requests
-- Be constructive in code reviews
+### Prompt Engineering for Development
+
+```markdown
+# Effective prompt structure
+
+## Context
+"I'm working on a React application that manages user authentication..."
+
+## Requirements
+- Must support OAuth 2.0
+- TypeScript with strict mode
+- Follow our existing error handling patterns
+- Include comprehensive tests
+
+## Constraints
+- No external dependencies beyond what's already installed
+- Must be compatible with React 18+
+- Performance: response time under 100ms
+
+## Example
+"Here's how our current auth flow works: [code example]"
+```
+
+### AI Code Review Process
+
+- **Security review**: Always check AI code for security vulnerabilities
+- **Performance analysis**: Evaluate algorithmic complexity and resource usage
+- **Code style consistency**: Ensure AI output matches project conventions
+- **Test coverage**: Verify tests cover all code paths and edge cases
+- **Documentation quality**: Check that explanations are accurate and helpful
+- **Integration testing**: Test AI-generated code with existing systems
+
+### AI Pair Programming Best Practices
+
+- **Define roles clearly**: Human handles architecture, AI implements details
+- **Maintain context**: Keep AI informed about project structure and goals
+- **Validate assumptions**: Double-check AI understanding of requirements
+- **Use AI for exploration**: Leverage AI to explore alternative approaches
+- **Human final review**: Always have human oversight for critical decisions
+- **Document AI contributions**: Note when code was AI-generated for future reference
+
+### Common AI Development Pitfalls
+
+- **Over-reliance**: Don't let AI make architectural decisions without human review
+- **Context loss**: AI may forget earlier conversation context in long sessions
+- **Pattern repetition**: AI might repeat patterns even when inappropriate
+- **Hallucinated APIs**: AI may suggest non-existent functions or libraries
+- **Security blindness**: AI might miss security implications of generated code
+- **Performance assumptions**: AI may not consider real-world performance constraints
+
+### Example AI Development Workflow
+
+```markdown
+1. **Planning Phase**
+   - Human: Define requirements and architecture
+   - AI: Suggest implementation approaches
+   - Human: Choose approach and define interfaces
+
+2. **Implementation Phase**
+   - AI: Generate initial implementation
+   - Human: Review for security and performance
+   - AI: Refine based on feedback
+   - Human: Integration testing
+
+3. **Testing Phase**
+   - AI: Generate comprehensive test cases
+   - Human: Review test coverage and edge cases
+   - AI: Add missing tests
+   - Human: Run full test suite
+
+4. **Documentation Phase**
+   - AI: Generate initial documentation
+   - Human: Review for accuracy and completeness
+   - AI: Update based on feedback
+```
