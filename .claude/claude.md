@@ -29,9 +29,9 @@ testssl <domain>
 
 ### Naming Conventions
 
-- Use lowercase with underscores: `my_config_file.js`, unless it is against convention of language
-- Prefer singular forms: `user.model.js` not `users.model.js`
-- Be descriptive but concise: `auth_service.py` not `a.py`
+- Use lowercase with underscores: `my_config_file.js`, unless it is against convention of language. This helps when selecting text and readability
+- Prefer singular forms: `user.model.js` or `model/user/` not `users.model.js`
+- Be descriptive but concise: `service/authentication.py` and `service/authorization.py` not `service/auth.py` or `auth_service.py`
 
 ### Directory Structure
 
@@ -60,91 +60,8 @@ testssl <domain>
 
 - Use `mise` for language version consistency
 - Document required tool versions
-- Provide setup instructions in project README
+- Provide setup instructions in project `readme.md``
 - Use `.env` files for local configuration (never commit them)
-
-## Common Commands and Shortcuts
-
-### Quick Development Setup
-
-```sh
-# Install all language tools
-mise install
-
-# Install project dependencies (if applicable)
-npm install  # or pip install -r requirements.txt, etc.
-
-# Run security checks
-gitleaks detect --source . --verbose
-```
-
-### Maintenance Tasks
-
-```sh
-# Update all tools
-mise outdated && mise upgrade
-
-# Clean up unused dependencies
-npm prune  # or pip-autoremove, etc.
-
-# Check for security vulnerabilities
-npm audit  # or safety check, etc.
-```
-
-## Error Handling and Debugging
-
-### Defensive Programming
-
-- Always validate inputs
-- Handle edge cases gracefully
-- Provide meaningful error messages
-- Log important events and errors
-- Use appropriate error types and status codes
-
-### Testing Strategy
-
-- Write unit tests for critical functions
-- Include integration tests for complex workflows
-- Test error conditions and edge cases
-- Maintain good test coverage
-
-## Web Development Standards
-
-### JavaScript Standards (ES2022+)
-
-- Use modern syntax: `const`/`let`, arrow functions, destructuring, template literals
-- Implement async/await over Promise chains for better readability
-- Use optional chaining (`?.`) and nullish coalescing (`??`) operators
-- Utilize Array methods: `map()`, `filter()`, `reduce()`, `find()`
-- Write semantic function names: `calculateTotalPrice()`, `validateUserInput()`
-- Avoid `var` declarations and use proper scoping
-- Handle errors with try/catch blocks and meaningful error messages
-
-### CSS Standards (Modern Browser Compatible)
-
-- Use CSS Grid and Flexbox for layouts (avoid floats and tables)
-- Implement CSS Custom Properties for consistent theming
-- Write semantic class names, uses selectors in CSS files for styling `.navigation_item.active:focus`, dynamically update classList
-- write using nested selector and CSS Layers
-- Use logical properties: `margin-inline-start` instead of `margin-left`
-- Utilize modern CSS functions: `clamp()`, `min()`, `max()` for responsive design
-- Implement CSS container queries for component-based responsiveness
-- **Avoid CSS frameworks like Tailwind** - write custom, maintainable CSS
-
-### Code Organization Principles
-
-- **Compartmentalization**: Each component/module has single responsibility
-- **Extensibility**: Use composition patterns, implement plugin architecture
-- **Semantic Naming**: Classes and functions clearly describe their purpose
-- **Browser Compatibility**: Target features with 95%+ browser support
-- **No External Dependencies**: Prefer vanilla implementations over libraries
-
-### File Structure Guidelines
-
-- Separate concerns: HTML structure, CSS styling, JavaScript behavior
-- Use ES6 modules and proper import/export statements
-- Group related styles with logical CSS sections and comments
-- Implement consistent naming conventions across all file types
 
 ## Functional Programming Principles (Simple Made Easy)
 
@@ -195,12 +112,112 @@ class Order {
 - **Data is code**: Treat configuration and state as first-class values
 - **Avoid temporal coupling**: Don't require specific ordering of operations
 
+## Common Commands and Shortcuts
+
+### Quick Development Setup
+
+```sh
+# Install all language tools
+mise install
+
+# Install project dependencies (if applicable)
+npm install  # or pip install -r requirements.txt, etc.
+
+# Run security checks
+gitleaks detect --source . --verbose
+```
+
+### Maintenance Tasks
+
+```sh
+# Update all tools
+mise outdated && mise upgrade
+
+# Clean up unused dependencies
+npm prune  # or pip-autoremove, etc.
+
+# Check for security vulnerabilities
+npm audit  # or safety check, etc.
+```
+
+## Error Handling and Debugging
+
+### Defensive Programming
+
+- Always validate inputs
+- Handle edge cases gracefully
+- Provide meaningful error messages
+- add layers of error messages, focusing on end users 1st and api users 2nd and then developers
+- Log all events and errors
+- Use appropriate error types and status codes
+
+### Testing Strategy
+
+Testing should test the outputs of various inputs defined or undefined values.
+Testing should not focus on the implementation within the function, as that can change over time
+
+- Create an informative description of each test
+- Include integration tests for complex workflows
+- Test all error conditions
+- Test all edge cases, including failing tests, prompt to fix code or rewrite test
+- Maintain 100% test coverage
+- Write unit tests for all functions
+
+#### Frontend Testing
+
+- use `testing-library` and the variation for the framework used
+- Test user interactions in browsers using playwright
+- Test accessibility
+- Test internationalization left-to-right and right-to-left layout
+- Take snapshot of before after and check pixel diff
+
+## Web Development Standards
+
+### JavaScript Standards (ES2022+)
+
+- Prefer named functions over anonymous or arrow functions, improves the stack trace readability
+- Use modern syntax: `const`/`let`, arrow functions, destructuring, template literals
+- Implement async/await over Promise chains for better readability
+- Use optional chaining (`?.`) and nullish coalescing (`??`) operators
+- Utilize Array methods: `map()`, `filter()`, `reduce()`, `find()`
+- Write semantic function names: `calculateTotalPrice()`, `validateUserInput()`
+- Avoid `var` declarations and use proper scoping
+- Handle errors with try/catch blocks and meaningful error messages
+
+### CSS Standards (Modern Browser Compatible)
+
+- Use CSS Grid and Flexbox for layouts (avoid floats and tables)
+- Implement CSS Custom Properties for consistent theming
+- Write semantic class names, uses selectors in CSS files for styling `.navigation_item.active:focus`, dynamically update classList
+- write using nested selector and CSS Layers
+- Use logical properties: `margin-inline-start` instead of `margin-left`
+- Utilize modern CSS functions: `clamp()`, `min()`, `max()` for responsive design
+- Implement CSS container queries for component-based responsiveness,
+- **Avoid CSS frameworks like Tailwind with anti-semantic classes** - write custom, maintainable CSS
+
+### Code Organization Principles
+
+- **Compartmentalization**: Each component/module has single responsibility
+- **Extensibility**: Use composition patterns, implement plugin architecture
+- **Semantic Naming**: Classes and functions clearly describe their purpose
+- **Browser Compatibility**: Target features with 95%+ browser support
+- **No External Dependencies**: Prefer vanilla implementations over libraries
+
+### File Structure Guidelines
+
+- CSS files and Unit tests should be co-located in same folder with JS/TS component, sharing the same name but different extensions ( *.css, &.test.ts)
+- Separate concerns: HTML structure, CSS styling, JavaScript behavior into separate files.
+- Use ES6 modules and proper import/export statements
+- Group related styles with logical CSS sections and comments
+- Implement consistent naming conventions across all file types
+
 ## Documentation Standards
 
 ### Code Documentation
 
 - Document why, not just what
-- Keep documentation close to code
+- Keep documentation in unit test files, and unit test files close to code in same folder
+- Document integration testing, as well
 - Update docs when changing functionality
 - Use clear, concise language
 
