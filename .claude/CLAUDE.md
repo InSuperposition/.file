@@ -717,3 +717,265 @@ fn calculate_total(items: &[Item]) -> Result<f64, CalculationError> {
    - Human: Review for accuracy and completeness
    - AI: Update based on feedback
 ```
+
+## Database Management and Data Architecture
+
+### Schema Design Principles
+
+- **Normalize data appropriately**: Use 3NF for transactional systems, denormalize for analytics
+- **Design for queries**: Structure tables based on primary access patterns
+- **Use consistent naming**: Follow clear conventions for tables, columns, and constraints
+- **Plan for growth**: Consider indexing strategy and partitioning from the start
+- **Document relationships**: Clearly define foreign keys and referential integrity
+- **Version your schema**: Track all schema changes with migration scripts
+
+### Database Migration Best Practices
+
+- **Incremental changes**: Each migration should be small and focused
+- **Backward compatibility**: Ensure migrations don't break existing code
+- **Rollback strategy**: Always include down migrations for reverting changes
+- **Test thoroughly**: Test migrations on copy of production data
+- **Zero-downtime deployments**: Use techniques like blue-green or rolling deployments
+- **Backup before migration**: Always have a recovery plan
+
+### SQL Schema Design Examples
+
+```sql
+-- User management schema with proper normalization
+CREATE TABLE users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email VARCHAR(255) UNIQUE NOT NULL,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT valid_email CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+);
+
+CREATE TABLE user_profiles (
+  user_id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  bio TEXT,
+  avatar_url TEXT,
+  timezone VARCHAR(50) DEFAULT 'UTC',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE user_roles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  role_name VARCHAR(50) NOT NULL,
+  granted_at TIMESTAMPTZ DEFAULT NOW(),
+  granted_by UUID REFERENCES users(id),
+  UNIQUE(user_id, role_name)
+);
+
+-- Indexes for performance
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_username ON users(username);
+CREATE INDEX idx_user_roles_user_id ON user_roles(user_id);
+CREATE INDEX idx_user_roles_role_name ON user_roles(role_name);
+
+-- Audit table for tracking changes
+CREATE TABLE user_audit (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL,
+  action VARCHAR(20) NOT NULL, -- 'INSERT', 'UPDATE', 'DELETE'
+  old_values JSONB,
+  new_values JSONB,
+  changed_at TIMESTAMPTZ DEFAULT NOW(),
+  changed_by UUID REFERENCES users(id)
+);
+```
+
+### SQL Query Best Practices
+
+```sql
+-- Efficient user lookup with profile data
+SELECT 
+  u.id,
+  u.email,
+  u.username,
+  p.first_name,
+  p.last_name,
+  p.bio,
+  array_agg(r.role_name) as roles
+FROM users u
+LEFT JOIN user_profiles p ON u.id = p.user_id
+LEFT JOIN user_roles r ON u.id = r.user_id
+WHERE u.email = $1
+GROUP BY u.id, u.email, u.username, p.first_name, p.last_name, p.bio;
+
+-- Pagination with window functions
+SELECT 
+  id,
+  username,
+  email,
+  created_at,
+  COUNT(*) OVER() as total_count
+FROM users
+WHERE created_at >= $1
+ORDER BY created_at DESC
+LIMIT $2 OFFSET $3;
+
+-- Complex aggregation query with CTEs
+WITH user_activity AS (
+  SELECT 
+    user_id,
+    COUNT(*) as total_actions,
+    COUNT(*) FILTER (WHERE action = 'INSERT') as creates,
+    COUNT(*) FILTER (WHERE action = 'UPDATE') as updates,
+    COUNT(*) FILTER (WHERE action = 'DELETE') as deletes,
+    MAX(changed_at) as last_activity
+  FROM user_audit
+  WHERE changed_at >= NOW() - INTERVAL '30 days'
+  GROUP BY user_id
+),
+active_users AS (
+  SELECT 
+    u.id,
+    u.username,
+    ua.total_actions,
+    ua.creates,
+    ua.updates,
+    ua.deletes,
+    ua.last_activity
+  FROM users u
+  INNER JOIN user_activity ua ON u.id = ua.user_id
+  WHERE ua.total_actions > 10
+)
+SELECT * FROM active_users
+ORDER BY total_actions DESC;
+```
+
+### Datalog Query Examples
+
+```clojure
+;; Datomic/DataScript query examples for the same user system
+
+;; Find user by email with profile information
+[:find ?user-id ?email ?username ?first-name ?last-name
+ :in $ ?email-lookup
+ :where
+ [?user-id :user/email ?email-lookup]
+ [?user-id :user/username ?username]
+ [?user-id :user/email ?email]
+ [?user-id :user/first-name ?first-name]
+ [?user-id :user/last-name ?last-name]]
+
+;; Find all users with their roles
+[:find ?username (pull ?role [:role/name])
+ :where
+ [?user :user/username ?username]
+ [?user :user/roles ?role]]
+
+;; Complex query: Find users who have been active in the last 30 days
+[:find ?username ?action-count
+ :in $ ?since
+ :where
+ [?user :user/username ?username]
+ [?audit :audit/user ?user]
+ [?audit :audit/timestamp ?timestamp]
+ [(> ?timestamp ?since)]
+ (aggregate ?action-count (count ?audit) :by ?user)]
+
+;; Recursive query: Find all permissions for a user (including role inheritance)
+[:find ?permission
+ :in $ ?user
+ :where
+ (or [?user :user/permissions ?permission]
+     (and [?user :user/roles ?role]
+          [?role :role/permissions ?permission])
+     (and [?user :user/roles ?role]
+          [?role :role/parent-roles ?parent-role]
+          [?parent-role :role/permissions ?permission]))]
+
+;; Rules-based query for complex business logic
+[:find ?user
+ :in $ %
+ :where
+ (active-user-with-admin-privileges ?user)]
+
+;; Rule definitions (would be passed in % parameter)
+[[(active-user-with-admin-privileges ?user)
+  [?user :user/active? true]
+  [?user :user/roles ?role]
+  [?role :role/name "admin"]]
+ 
+ [(active-user-with-admin-privileges ?user)
+  [?user :user/active? true]
+  [?user :user/roles ?role]
+  [?role :role/permissions :permission/admin-access]]]
+```
+
+### Migration Script Templates
+
+```sql
+-- Migration: 001_create_users_table.up.sql
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Add migration record
+INSERT INTO schema_migrations (version, applied_at) 
+VALUES ('001', NOW());
+
+COMMIT;
+
+-- Migration: 001_create_users_table.down.sql
+BEGIN;
+
+DROP TABLE IF EXISTS users;
+
+-- Remove migration record
+DELETE FROM schema_migrations WHERE version = '001';
+
+COMMIT;
+```
+
+### Database Testing Strategies
+
+- **Unit tests**: Test individual queries and stored procedures
+- **Integration tests**: Test database interactions with application code
+- **Performance tests**: Benchmark query performance with realistic data volumes
+- **Migration tests**: Verify migrations work on production-like data
+- **Constraint tests**: Ensure data integrity rules are enforced
+- **Backup/restore tests**: Verify disaster recovery procedures
+
+### Schema Evolution Patterns
+
+```sql
+-- Adding a new column (backward compatible)
+ALTER TABLE users ADD COLUMN phone VARCHAR(20);
+
+-- Renaming a column (requires application coordination)
+-- Step 1: Add new column
+ALTER TABLE users ADD COLUMN full_name VARCHAR(200);
+
+-- Step 2: Update application to write to both columns
+-- Step 3: Migrate existing data
+UPDATE users SET full_name = first_name || ' ' || last_name 
+WHERE full_name IS NULL;
+
+-- Step 4: Update application to read from new column
+-- Step 5: Drop old columns
+ALTER TABLE users DROP COLUMN first_name, DROP COLUMN last_name;
+
+-- Creating indexes concurrently (PostgreSQL)
+CREATE INDEX CONCURRENTLY idx_users_phone ON users(phone);
+```
+
+### Data Architecture Patterns
+
+- **Event Sourcing**: Store all changes as immutable events
+- **CQRS**: Separate read and write models for complex domains
+- **Data Lake**: Store raw data for analytics and machine learning
+- **Data Warehouse**: Structured, aggregated data for reporting
+- **Microservices Data**: Each service owns its data, communicate via APIs
+- **Polyglot Persistence**: Use different databases for different use cases
