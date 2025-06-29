@@ -1,4 +1,4 @@
-# Global CLAUDE.md Workflow Guidelines
+# Global Workflow Guidelines
 
 This file provides global guidance for Claude Code across all projects and repositories.
 
@@ -63,6 +63,7 @@ testssl <domain>
 - Write tests for new functionality
 - Document complex logic with clear comments
 - Use Type hints where available
+- check project's workspace config files for how to write code for types, linter and formatter
 - Always run linters and formatters before committing, including markdown files
 - Lint code, fix lint errors. Linting should never conflict with formatter
 - use formatter config files as guide for code, run format on files after linting.
