@@ -1,4 +1,4 @@
-# Global claude.md Workflow Guidelines
+# Global CLAUDE.md Workflow Guidelines
 
 This file provides global guidance for Claude Code across all projects and repositories.
 
@@ -25,13 +25,13 @@ ssh-audit <host>
 testssl <domain>
 ```
 
-## File Naming and Organization
+## File Naming and Organization (language agnostic)
 
 ### Naming Conventions
 
-- Use lowercase with underscores: `my_config_file.js`, unless it is against convention of language. This helps when selecting text and readability
+- Use lowercase with underscores: `my_config_file.js`, UNLESS it is against convention of language. This helps when selecting text and readability
 - Prefer singular forms: `user.model.js` or `model/user/` not `users.model.js`
-- Be descriptive but concise: `service/authentication.py` and `service/authorization.py` not `service/auth.py` or `auth_service.py`
+- Be descriptive but concise: `service/authentication.py` and `service/authorization.py` NOT `service/auth.py` or `auth_service.py`
 
 ### Directory Structure
 
@@ -54,14 +54,19 @@ testssl <domain>
 - **Consistent naming**: Implement consistent naming conventions across all file types
 - **CSS attributes should come after browser prefixes**
 
-## Development Workflow Standards
+## Development Workflow Standards (language agnostic)
 
 ### Code Quality
 
-- Always run linters and formatters before committing, including markdown files
+- Typecheck 1st, Lint 2nd, Format 3rd, Test last
+- a11y and ARIA standards are important but do not add roles needlessly
 - Write tests for new functionality
 - Document complex logic with clear comments
-- Use TypeScript/type hints where available
+- Use Type hints where available
+- Always run linters and formatters before committing, including markdown files
+- Lint code, fix lint errors. Linting should never conflict with formatter
+- use formatter config files as guide for code, run format on files after linting.
+- check for conflicts between linting behavior and formatting behavior
 
 ### Git Practices
 
@@ -96,7 +101,16 @@ testssl <domain>
 - Provide context in pull requests
 - Be constructive in code reviews
 
-## Functional Programming Principles (Simple Made Easy)
+## Semantics in software development
+
+- Understand the the importance of semantics
+- memorize <https://developer.mozilla.org/>
+- Semantics in HTML, CSS, URLS and Javascript are extremely important
+- tests should test based on semantics, roles of markup are a must
+- getting an element by text or label text creates major problems when i18 is implemented
+- use HTML built-in semantics , then ARIA attributes where appropriate if semantics are needed
+
+## Functional Programming Principles - Simple Made Easy (language agnostic)
 
 ### Simplicity Over Ease
 

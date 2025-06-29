@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 # XDG Base Directory Specification - https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
@@ -18,6 +19,9 @@ fi
 LOCAL_BIN_HOME=$HOME/.local/bin
 
 export PATH="$PATH:$LOCAL_BIN_HOME"
+
+export EDITOR=hx
+export VISUAL=code
 
 # Load user-specific configurations
 . $XDG_CONFIG_HOME/cargo/init.sh
