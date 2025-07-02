@@ -1,6 +1,6 @@
 # Global Workflow Guidelines
 
-This file provides global guidance for Claude Code across all projects and repositories.
+This file provides global guidance for AL agents across all projects and repositories.
 
 ## Security-First Development Principles
 
@@ -53,6 +53,34 @@ testssl <domain>
 - **Group related styles**: Logical CSS sections and comments
 - **Consistent naming**: Implement consistent naming conventions across all file types
 - **CSS attributes should come after browser prefixes**
+
+### Technical Identifier Naming Standards
+
+#### **HTML/React Attributes and Technical Identifiers**
+
+- Never use `id="contact_form"` or `data-testid="submit_button"`, for code, stories or tests
+- Use `snake_case` for all technical identifiers:  names, CSS custom properties, test attributes
+- Examples: `name="user_profile"`, `--color_primary`,
+- Apply to: `name`, `htmlFor`, `aria-describedby`, `aria-labelledby`, CSS custom properties, test identifiers
+
+#### **User-Facing Content**
+
+- Keep user-visible text in natural language: labels, placeholders, error messages, aria-label
+- Examples: `aria-label="Close dialog"`, `placeholder="Enter your email address"`
+- These represent actual content users see, not technical identifiers
+
+#### **CSS Class Names**
+
+- Use semantic base classes with composable modifiers: `.button.lg.primary`, `.input.xs.error`
+- For compound classes use single underscore: `.layout_stack`, `.form_message`
+- Avoid BEM notation in favor of semantic composable classes
+
+#### **Rationale**
+
+- Improves text selection (double-click selects entire identifier)
+- Better readability and consistency across codebase
+- Aligns with backend naming conventions
+- Prevents confusion between technical IDs and user content
 
 ## Development Workflow Standards (language agnostic)
 
@@ -205,6 +233,36 @@ npm audit  # or safety check, etc.
 - Document dependencies and requirements
 - Include usage examples
 - Maintain a changelog for significant changes
+
+### Markdown Standards and Linting
+
+#### **Markdown Formatting Standards**
+
+- Use `markdownlint-cli2` for consistent markdown formatting
+- Configure with `.markdownlint-cli2.jsonc` for project-specific rules
+- Run `npm run lint:md` to check markdown files before commits
+- Follow CommonMark specification for compatibility
+
+#### **Required Markdown Rules**
+
+- Use consistent heading hierarchy (no skipped levels)
+- Proper list formatting with consistent indentation
+- No trailing whitespace at line endings
+- Consistent emphasis markers (`*` for emphasis, `**` for strong)
+- Proper code block formatting with language specification
+- Line length limits for readability (typically 80-120 characters)
+
+#### **Markdown Linting Integration**
+
+```shell
+> markdownlint-cli2
+```
+
+#### **Documentation File Naming**
+
+- Use lowercase with hyphens for markdown files: `user-guide.md`, `api-reference.md`
+- Exception: `README.md` and `CHANGELOG.md` (conventional uppercase)
+- Organize documentation in `/docs` directory when extensive
 
 ## Performance and Efficiency
 
@@ -383,7 +441,8 @@ function sortByProperty<T, K extends keyof T>(
 
 - **Use CSS Grid and Flexbox** for layouts (avoid floats and tables)
 - **Implement CSS Custom Properties** for consistent theming and design tokens
-- **Write semantic class names** using class names with a single underscore id needed, DO NOT use BEM
+- **Use snake_case for ALL CSS identifiers** for improved readability: classes (`.form_message`) and variables (`--color_primary`)
+- **Write semantic class names** using underscores instead of hyphens, DO NOT use BEM
 - **For states use a separate class if an CSS attribute or psuedo selector is not available** [disabled], :focus, .active
 - **Use nested selectors and CSS Layers** for organization and cascade control
 - **Use logical properties**: `margin-inline-start` instead of `margin-left`
@@ -393,6 +452,7 @@ function sortByProperty<T, K extends keyof T>(
 - **Dynamically update classList** in JavaScript, avoid inline styles
 - **Group related styles** with logical CSS sections and comments
 - **Use `@layer`** to control cascade and specificity
+- **Colocate story styles**: Use `.story.css` files for Storybook-specific styling instead of inline styles
 - **Avoid CSS frameworks like Tailwind** - write custom, maintainable CSS
 
 ```css
@@ -401,13 +461,13 @@ function sortByProperty<T, K extends keyof T>(
 
 @layer base {
   :root {
-    --color-primary: hsl(220 90% 50%);
-    --color-surface: hsl(0 0% 98%);
-    --space-xs: clamp(0.25rem, 1vw, 0.5rem);
-    --space-sm: clamp(0.5rem, 2vw, 1rem);
-    --space-md: clamp(1rem, 3vw, 2rem);
-    --size-content: min(65ch, 90vw);
-    --font-base: system-ui, sans-serif;
+    --color_primary: hsl(220 90% 50%);
+    --color_surface: hsl(0 0% 98%);
+    --space_xs: clamp(0.25rem, 1vw, 0.5rem);
+    --space_sm: clamp(0.5rem, 2vw, 1rem);
+    --space_md: clamp(1rem, 3vw, 2rem);
+    --size_content: min(65ch, 90vw);
+    --font_base: system-ui, sans-serif;
   }
   
   html {
@@ -415,7 +475,7 @@ function sortByProperty<T, K extends keyof T>(
   }
   
   body {
-    font-family: var(--font-base);
+    font-family: var(--font_base);
     line-height: 1.5;
     margin: 0;
   }
@@ -425,23 +485,23 @@ function sortByProperty<T, K extends keyof T>(
   .navigation {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    gap: var(--space-sm);
-    padding-inline: var(--space-sm);
-    background: var(--color-surface);
+    gap: var(--space_sm);
+    padding-inline: var(--space_sm);
+    background: var(--color_surface);
     
     &_item {
       text-decoration: none;
-      padding: var(--space-xs) var(--space-sm);
+      padding: var(--space_xs) var(--space_sm);
       border-radius: 0.25rem;
       
       &:is(:hover, :focus-visible) {
-        color: var(--color-primary);
-        background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+        color: var(--color_primary);
+        background: color-mix(in srgb, var(--color_primary) 10%, transparent);
       }
       
       &[aria-current="page"] {
         font-weight: 600;
-        background: var(--color-primary);
+        background: var(--color_primary);
         color: white;
       }
     }
@@ -449,7 +509,7 @@ function sortByProperty<T, K extends keyof T>(
 }
 
 @layer utilities {
-  .sr-only {
+  .visually_hidden {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -496,8 +556,8 @@ function sortByProperty<T, K extends keyof T>(
   <main>
     <h1>User Dashboard</h1>
     
-    <section aria-labelledby="recent-users">
-      <h2 id="recent-users">Recent Users</h2>
+    <section aria-labelledby="recent_users">
+      <h2 class="recent-users">Recent Users</h2>
       <ul>
         <li>
           <article>

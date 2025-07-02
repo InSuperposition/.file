@@ -7,3 +7,5 @@
 **/.lsp/.cache/
 **/.portal/vs-code.edn
 **/.cpcache
+
+**/.claude/settings.local.json
