@@ -2,8 +2,8 @@
 .git
 .gitmodules
 .gitignore
+.stowrc
 
-root/
 
 readme.md
 /CLAUDE.md

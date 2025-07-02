@@ -8,8 +8,7 @@
 
 #### `zsh`
 
-1. `/etc/zshenv` <- create/edit file
-1. Add the following line for for zsh to look for config files
+This repo's .zshenv changes zsh's config to the following
 
 ```sh
 export ZDOTDIR=$HOME/.config/zsh
