@@ -8,8 +8,8 @@ if [ -z "$ZELLIJ" ]; then
     fi
 fi
 
-if [ ! -f "$XDG_DATA_HOME/zsh/completions/_zellij" ]; then
-    touch "$XDG_DATA_HOME/zsh/completions/_zellij"
+# Generate completions only if they don't exist or zellij is newer
+if [[ ! -f "$XDG_DATA_HOME/zsh/completions/_zellij" ]] || [[ "$(command -v zellij)" -nt "$XDG_DATA_HOME/zsh/completions/_zellij" ]]; then
     zellij setup --generate-completion zsh > "$XDG_DATA_HOME/zsh/completions/_zellij"
 fi
 
