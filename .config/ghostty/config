@@ -7,7 +7,6 @@ theme = Cobalt2
 font-variation = "wght=400"
 font-variation-bold = "wght=700"
 font-variation-italic = "ital=1"
-# font-variation-bold-italic = "wght=700,ital=1"
 
 
 # Modern rendering options
@@ -76,3 +75,5 @@ mouse-shift-capture = true
 # Shell integration
 shell-integration = detect
 shell-integration-features = cursor,sudo,title
+
+# custom-shader = ~/.local/share/ghostty/shader/crt/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix.glsl
