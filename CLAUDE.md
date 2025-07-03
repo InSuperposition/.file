@@ -10,7 +10,7 @@ This is a **dotfiles repository** that manages shell and application configurati
 
 - **XDG Base Directory Specification** for organized file structure
 - **GNU Stow** for symlink management
-- **Homebrew** for package management  
+- **Homebrew** for package management
 - **Mise** for programming language version management
 - **Zellij** as the primary terminal multiplexer
 
@@ -32,9 +32,10 @@ This is a **dotfiles repository** that manages shell and application configurati
 
 ### Configuration Structure
 
-```
+```shell
 .config/
 ├── [tool]/
+│   ├── alias.sh          # Tool-specific aliases
 │   ├── init.sh          # Tool-specific initialization
 │   ├── config files     # Tool configurations
 │   └── ...
@@ -77,7 +78,7 @@ This is a **dotfiles repository** that manages shell and application configurati
 # Deploy configurations
 stow .
 
-# Reload shell configuration  
+# Reload shell configuration
 sz
 
 # Install packages
@@ -98,11 +99,13 @@ mise install
 ## Special Considerations
 
 ### Security
+
 - SSH certificates for authentication
 - SOPS for encrypted configuration storage
 - Comprehensive security hardening in remote access setup
 
 ### Maintenance
+
 - Regular symlink cleanup with `symlinks -dvr ~/.config`
 - Package updates via `brew bundle install`
 - Language version management through `mise outdated`
