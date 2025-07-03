@@ -1,0 +1,27 @@
+#!/bin/bash
+# Zellij session resurrection script
+
+RESURRECT_DIR="$HOME/.config/zellij/resurrect"
+mkdir -p "$RESURRECT_DIR"
+
+case "$1" in
+    save)
+        SESSION="${2:-$(zellij list-sessions | head -1 | cut -d' ' -f1)}"
+        zellij action dump-layout > "$RESURRECT_DIR/${SESSION}.kdl"
+        echo "Session $SESSION saved to $RESURRECT_DIR/${SESSION}.kdl"
+        ;;
+    restore)
+        SESSION="${2:-main}"
+        if [ -f "$RESURRECT_DIR/${SESSION}.kdl" ]; then
+            zellij --session "$SESSION" --layout "$RESURRECT_DIR/${SESSION}.kdl"
+        else
+            echo "No saved session found for $SESSION"
+        fi
+        ;;
+    list)
+        ls -la "$RESURRECT_DIR"/*.kdl 2>/dev/null || echo "No saved sessions"
+        ;;
+    *)
+        echo "Usage: $0 {save|restore|list} [session-name]"
+        ;;
+esac

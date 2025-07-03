@@ -1,0 +1,32 @@
+#!/bin/bash
+# Test remote access setup with Zellij
+
+echo "Testing SSH connection..."
+ssh -p 2222 localhost echo "SSH OK" || echo "SSH FAILED"
+
+echo -e "\nTesting mosh..."
+mosh --server="mosh-server --port=60001" localhost echo "Mosh OK" || echo "Mosh FAILED"
+
+echo -e "\nTesting Zellij..."
+ssh -p 2222 localhost -t zellij --session test action new-tab
+ssh -p 2222 localhost -t zellij list-sessions | grep test && echo "Zellij OK" || echo "Zellij FAILED"
+ssh -p 2222 localhost -t zellij kill-session test 2>/dev/null
+
+echo -e "\nTesting terminal colors..."
+echo "TERM=$TERM"
+tput colors
+
+echo -e "\nTesting certificate..."
+ssh-keygen -L -f ~/.ssh/id_ed25519-cert.pub
+
+echo -e "\nActive SSH connections:"
+sudo lsof -i :2222
+
+echo -e "\nSSH logs (last 10 lines):"
+sudo tail -10 /var/log/system.log | grep sshd
+
+echo -e "\nRate limit status:"
+sudo pfctl -t ssh_bruteforce -T show 2>/dev/null || echo "No blocked IPs"
+
+echo -e "\nZellij sessions:"
+zellij list-sessions

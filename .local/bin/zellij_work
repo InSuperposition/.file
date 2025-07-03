@@ -1,0 +1,23 @@
+#!/bin/bash
+# Smart Zellij session manager
+
+SESSION_NAME="${1:-main}"
+LAYOUT="${2:-development}"
+
+# Function to check if session exists
+session_exists() {
+    zellij list-sessions 2>/dev/null | grep -q "^${SESSION_NAME}"
+}
+
+# Create or attach to session
+if session_exists; then
+    echo "Attaching to existing session: $SESSION_NAME"
+    zellij attach "$SESSION_NAME"
+else
+    echo "Creating new session: $SESSION_NAME with layout: $LAYOUT"
+    if [ -f "$HOME/.config/zellij/layouts/${LAYOUT}.kdl" ]; then
+        zellij --session "$SESSION_NAME" --layout "$HOME/.config/zellij/layouts/${LAYOUT}.kdl"
+    else
+        zellij --session "$SESSION_NAME"
+    fi
+fi

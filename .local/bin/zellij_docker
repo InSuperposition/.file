@@ -1,0 +1,110 @@
+#!/bin/bash
+# Docker container Zellij integration
+
+set -euo pipefail
+
+CONTAINER="${1:-}"
+SESSION_PREFIX="docker"
+
+usage() {
+    echo "Usage: $0 <container_name|container_id>"
+    echo "       $0 -l|--list    List all running containers"
+    exit 1
+}
+
+list_containers() {
+    docker ps --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Status}}"
+}
+
+get_shell() {
+    local container=$1
+    for shell in bash zsh fish sh; do
+        if docker exec "$container" which "$shell" >/dev/null 2>&1; then
+            echo "$shell"
+            return
+        fi
+    done
+    echo "sh"
+}
+
+create_docker_layout() {
+    local container=$1
+    local shell=$2
+    local layout_file="/tmp/docker-${container}.kdl"
+
+    cat > "$layout_file" << EOF
+layout {
+    tab name="shell" focus=true {
+        pane {
+            command "docker"
+            args "exec" "-it" "${container}" "${shell}"
+        }
+    }
+
+    tab name="logs" {
+        pane {
+            command "docker"
+            args "logs" "-f" "--tail" "100" "${container}"
+        }
+    }
+
+    tab name="stats" {
+        pane split_direction="horizontal" {
+            pane {
+                command "docker"
+                args "stats" "${container}"
+            }
+            pane {
+                command "docker"
+                args "exec" "-it" "${container}" "${shell}"
+            }
+        }
+    }
+}
+EOF
+    echo "$layout_file"
+}
+
+main() {
+    case "${1:-}" in
+        -l|--list)
+            list_containers
+            exit 0
+            ;;
+        -h|--help|"")
+            usage
+            ;;
+    esac
+
+    local container=$1
+    local session_name="${SESSION_PREFIX}-${container}"
+
+    # Verify container exists and is running
+    if ! docker inspect "$container" >/dev/null 2>&1; then
+        echo "Error: Container '$container' not found"
+        exit 1
+    fi
+
+    if [ "$(docker inspect -f '{{.State.Running}}' "$container")" != "true" ]; then
+        echo "Error: Container '$container' is not running"
+        exit 1
+    fi
+
+    # Get the best available shell
+    local shell=$(get_shell "$container")
+
+    # Create layout and start session
+    local layout_file=$(create_docker_layout "$container" "$shell")
+
+    # Start or attach to Zellij session
+    if zellij list-sessions 2>/dev/null | grep -q "^${session_name}"; then
+        zellij attach "$session_name"
+    else
+        zellij --session "$session_name" --layout "$layout_file"
+    fi
+
+    # Clean up
+    rm -f "$layout_file"
+}
+
+main "$@"

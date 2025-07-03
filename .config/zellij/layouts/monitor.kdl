@@ -1,0 +1,39 @@
+layout {
+    tab name="overview" focus=true {
+        pane split_direction="vertical" {
+            pane size="50%" {
+                command "sh"
+                args "-c" "while true; do clear; echo '=== Zellij Sessions ==='; zellij list-sessions 2>/dev/null || echo 'No sessions'; echo; echo '=== Active SSH ==='; sudo lsof -i :2222 2>/dev/null | grep -v COMMAND | wc -l | xargs echo 'Connections:'; sleep 5; done"
+            }
+            pane split_direction="horizontal" size="50%" {
+                pane {
+                    command "btop"
+                }
+                pane {
+                    command "sh"
+                    args "-c" "while true; do clear; echo '=== Docker ==='; docker ps --format 'table {{.Names}}\t{{.Status}}' 2>/dev/null | head -10; sleep 5; done"
+                }
+            }
+        }
+    }
+
+    tab name="logs" {
+        pane split_direction="horizontal" {
+            pane {
+                command "tail"
+                args "-f" "/var/log/system.log"
+            }
+            pane {
+                command "journalctl"
+                args "-f" "-u" "sshd"
+            }
+        }
+    }
+
+    tab name="network" {
+        pane {
+            command "sudo"
+            args "netstat" "-an" "-p" "tcp"
+        }
+    }
+}

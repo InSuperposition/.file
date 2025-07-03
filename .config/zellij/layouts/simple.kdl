@@ -1,0 +1,12 @@
+layout {
+    tab name="main" focus=true {
+        pane
+    }
+
+    tab name="servers" {
+        pane split_direction="vertical" {
+            pane
+            pane
+        }
+    }
+}

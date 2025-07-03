@@ -2,6 +2,19 @@ keybinds clear-defaults=true {
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
     }
+    normal {
+        bind "Ctrl s" {
+            LaunchOrFocusPlugin "file:~/.local/share/zellij/plugin/room.wasm" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
+        bind "Ctrl h" {
+            LaunchOrFocusPlugin "file:~/.local/share/zellij/plugin/harpoon.wasm" {
+                floating true
+            }
+        }
+    }
     pane {
         bind "left" { MoveFocus "left"; }
         bind "down" { MoveFocus "down"; }

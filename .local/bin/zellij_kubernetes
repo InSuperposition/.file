@@ -1,0 +1,126 @@
+#!/bin/bash
+# Kubernetes pod Zellij integration
+
+set -euo pipefail
+
+POD="${1:-}"
+NAMESPACE="${2:-default}"
+SESSION_PREFIX="k8s"
+
+usage() {
+    echo "Usage: $0 <pod_name> [namespace]"
+    echo "       $0 -l|--list [namespace]    List pods"
+    echo "       $0 -A|--all-namespaces      List all pods"
+    exit 1
+}
+
+list_pods() {
+    local ns_flag=""
+    [ "$1" = "-A" ] && ns_flag="--all-namespaces" || ns_flag="-n ${1:-default}"
+    kubectl get pods $ns_flag -o wide
+}
+
+get_containers() {
+    local pod=$1
+    local namespace=$2
+    kubectl get pod "$pod" -n "$namespace" -o jsonpath='{.spec.containers[*].name}'
+}
+
+create_k8s_layout() {
+    local pod=$1
+    local namespace=$2
+    local containers=($3)
+    local layout_file="/tmp/k8s-${namespace}-${pod}.kdl"
+
+    cat > "$layout_file" << EOF
+layout {
+    tab_template name="container_template" {
+        pane {
+            command "kubectl"
+            args "exec" "-it" "${pod}" "-n" "${namespace}" "-c" "\${container}" "--" "/bin/sh" "-c" "command -v bash >/dev/null 2>&1 && exec bash || exec sh"
+        }
+    }
+
+EOF
+
+    # Add container tabs
+    local first=true
+    for container in "${containers[@]}"; do
+        if [ "$first" = true ]; then
+            echo "    container_template name=\"${container}\" container=\"${container}\" focus=true" >> "$layout_file"
+            first=false
+        else
+            echo "    container_template name=\"${container}\" container=\"${container}\"" >> "$layout_file"
+        fi
+    done
+
+    cat >> "$layout_file" << EOF
+
+    tab name="logs" {
+        pane {
+            command "kubectl"
+            args "logs" "-f" "${pod}" "-n" "${namespace}" "--all-containers=true" "--tail=100"
+        }
+    }
+
+    tab name="describe" {
+        pane {
+            command "sh"
+            args "-c" "kubectl describe pod ${pod} -n ${namespace} | less"
+        }
+    }
+
+    tab name="events" {
+        pane {
+            command "watch"
+            args "-n" "2" "kubectl" "get" "events" "-n" "${namespace}" "--field-selector" "involvedObject.name=${pod}"
+        }
+    }
+}
+EOF
+    echo "$layout_file"
+}
+
+main() {
+    case "${1:-}" in
+        -l|--list)
+            list_pods "${2:-}"
+            exit 0
+            ;;
+        -A|--all-namespaces)
+            list_pods "-A"
+            exit 0
+            ;;
+        -h|--help|"")
+            usage
+            ;;
+    esac
+
+    local pod=$1
+    local namespace=$2
+    local session_name="${SESSION_PREFIX}-${namespace}-${pod}"
+
+    # Verify pod exists
+    if ! kubectl get pod "$pod" -n "$namespace" >/dev/null 2>&1; then
+        echo "Error: Pod '$pod' not found in namespace '$namespace'"
+        exit 1
+    fi
+
+    # Get containers in pod
+    local containers=($(get_containers "$pod" "$namespace"))
+
+    # Create layout and start session
+    local layout_file=$(create_k8s_layout "$pod" "$namespace" "${containers[*]}")
+
+    # Start or attach to Zellij session
+    if zellij list-sessions 2>/dev/null | grep -q "^${session_name}"; then
+        zellij attach "$session_name"
+    else
+        zellij --session "$session_name" --layout "$layout_file"
+    fi
+
+    # Clean up
+    rm -f "$layout_file"
+}
+
+main "$@"
