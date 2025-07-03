@@ -20,24 +20,14 @@ fpath=("$XDG_DATA_HOME/zsh/completions" $fpath)  # Add personal completions firs
 
 # Lazy load completions - only initialize when first tab completion is used
 autoload -Uz compinit
-if [[ -n "$XDG_DATA_HOME/zsh/completions/zcompdump" ]]; then
-    compinit
+export ZSH_COMPDUMP="$XDG_DATA_HOME/zsh/completions/zcompdump"
+if [[ -f "$ZSH_COMPDUMP" ]]; then
+    compinit -d "$ZSH_COMPDUMP"
 else
-    compinit -C
+    compinit -d "$ZSH_COMPDUMP" -C
 fi
 
 ZSHRC_PATH="$XDG_CONFIG_HOME/zsh/.zshrc"
 
 alias ez="code $ZSHRC_PATH"
 alias sz="source $ZSHRC_PATH"
-
-# ZSH_HOME_DIR="${XDG_CONFIG_HOME}/zsh"
-
-
-# if [[ -r "$ZSH_HOME_DIR/zi_init.zsh" ]]; then
-# # Load ZI (Z Shell Interactive Plugin Manager)
-#   source "$ZSH_HOME_DIR/zi_init.zsh" && zzinit
-  
-# # Load ZI plugins
-#   source $ZSH_HOME_DIR/zi_plugin.zsh
-# fi
