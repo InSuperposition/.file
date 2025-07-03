@@ -1,3 +1,78 @@
 font-family = Hasklug Nerd Font
 font-size = 16
 theme = Cobalt2
+
+
+# Use font variations for better rendering
+font-variation = "wght=400"
+font-variation-bold = "wght=700"
+font-variation-italic = "ital=1"
+# font-variation-bold-italic = "wght=700,ital=1"
+
+
+# Modern rendering options
+unfocused-split-opacity = 0.9
+
+# Window configuration
+window-padding-x = 10
+window-padding-y = 10
+window-save-state = "always"
+window-inherit-working-directory = true
+window-inherit-font-size = true
+
+# Shell and environment
+copy-on-select = true
+mouse-hide-while-typing = true
+link-url = true
+
+# Scrollback and history
+scrollback-limit = 50000
+
+# Cursor customization
+cursor-style = "block"
+cursor-style-blink = false
+cursor-color = "#7aa2f7"
+
+
+# Advanced features
+gtk-titlebar = false
+# Experimental features
+gtk-tabs-location = "top"
+macos-titlebar-style = "transparent"
+confirm-close-surface = false
+
+# Quick terminal feature
+quick-terminal-position = "top"
+quick-terminal-screen = "main"
+quick-terminal-animation-duration = 200
+
+
+# Clipboard
+clipboard-read = "allow"
+clipboard-write = "allow"
+clipboard-trim-trailing-spaces = true
+clipboard-paste-protection = true
+clipboard-paste-bracketed-safe = true
+
+# Background blur (macOS)
+background-opacity = 0.95
+background-blur-radius = 20
+
+# Auto-update check
+auto-update = "check"
+
+# macOS-specific performance options
+macos-option-as-alt = true
+mouse-scroll-multiplier = 3
+
+# Terminal behavior
+term = xterm-256color
+scrollback-limit = 100000
+
+# Mouse
+mouse-hide-while-typing = true
+mouse-shift-capture = true
+
+# Shell integration
+shell-integration = detect
+shell-integration-features = cursor,sudo,title

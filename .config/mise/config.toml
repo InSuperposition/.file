@@ -1,6 +1,5 @@
 [tools]
 age = "latest"
-bat = "latest"
 bun = "latest"
 claude = "latest"
 clojure = "latest"
@@ -13,3 +12,4 @@ python = "3.11"
 ripgrep = "latest"
 rust = "stable"
 sops = "latest"
+zellij = "latest"
