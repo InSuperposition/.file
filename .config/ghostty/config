@@ -1,9 +1,10 @@
 font-family = Hasklug Nerd Font
-font-size = 16
+font-size = 14
 theme = Cobalt2
 
 
 # Use font variations for better rendering
+font-thicken = true
 font-variation = "wght=400"
 font-variation-bold = "wght=700"
 font-variation-italic = "ital=1"
@@ -23,6 +24,7 @@ window-inherit-font-size = true
 copy-on-select = true
 mouse-hide-while-typing = true
 link-url = true
+shell-integration-features = cursor, sudo, title
 
 # Scrollback and history
 scrollback-limit = 50000
@@ -37,7 +39,7 @@ cursor-color = "#7aa2f7"
 gtk-titlebar = false
 # Experimental features
 gtk-tabs-location = "top"
-macos-titlebar-style = "transparent"
+macos-titlebar-style = transparent
 confirm-close-surface = false
 
 # Quick terminal feature
