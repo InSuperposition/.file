@@ -31,3 +31,6 @@ ZSHRC_PATH="$XDG_CONFIG_HOME/zsh/.zshrc"
 
 alias ez="code $ZSHRC_PATH"
 alias sz="source $ZSHRC_PATH"
+
+eval "$(atuin init zsh)"
+source /usr/local/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
