@@ -123,10 +123,10 @@ brew install fzf ripgrep bat eza starship atuin
 
 #### Binaries
 
-- [`zellij_docker`](../.local/bin/zellij_docker) => Docker integration
-- [`zellij_kubernetes`](../.local/bin/zellij_kubernetes) => Kubernetes integration
-- [`zellij_resurrect`](../.local/bin/zellij_resurrect) => Session resurrection script
-- [`zellij_work`](../.local/bin/zellij_work) => Smart Zellij session manager
+- [`session_docker`](../.local/bin/session_docker) => Docker integration
+- [`session_kubernetes`](../.local/bin/session_kubernetes) => Kubernetes integration
+- [`session_resurrect`](../.local/bin/session_resurrect) => Session resurrection script
+- [`session_work`](../.local/bin/session_work) => Smart Zellij session manager
 
 #### Commands
 
@@ -143,10 +143,10 @@ zellij attach dev || zellij --session dev --layout ~/.config/zellij/layouts/deve
 zellij --session monitor --layout ~/.config/zellij/layouts/monitor.kdl
 
 # Docker containers
-~/.local/bin/zellij_docker -l
+~/.local/bin/session_docker -l
 
 # Kubernetes pods
-~/.local/bin/zellij_kubernetes -A
+~/.local/bin/session_kubernetes -A
 
 # List all Zellij sessions
 zellij list-sessions
@@ -227,17 +227,17 @@ defaults write com.apple.Terminal ShowLineMarks -bool false
 
 The repository includes Docker integration scripts for Zellij:
 
-- [`.local/bin/zellij_docker`](.local/bin/zellij_docker) - Docker container management
-- [`.local/bin/zellij_kubernetes`](.local/bin/zellij_kubernetes) - Kubernetes pod management
+- [`.local/bin/session_docker`](.local/bin/session_docker) - Docker container management
+- [`.local/bin/session_kubernetes`](.local/bin/session_kubernetes) - Kubernetes pod management
 
 ### 4.2 Container Commands
 
 ```bash
 # List and attach to Docker containers
-~/.local/bin/zellij_docker -l
+~/.local/bin/session_docker -l
 
 # Kubernetes pod management
-~/.local/bin/zellij_kubernetes -A
+~/.local/bin/session_kubernetes -A
 
 # Create container-specific Zellij sessions
 zellij --session "docker-$(docker ps --format '{{.Names}}' | head -1)"

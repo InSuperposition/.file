@@ -17,9 +17,9 @@ ZI[BIN_DIR]="${XDG_DATA_HOME}/zi/repository"
 # Zsh modules directory
 ZI[ZMODULES_DIR]="$ZI[HOME_DIR]/zmodules"
 # Where ZI cache is, e.g.: "~/.cache/zi"
-ZI[CACHE_DIR]="${XDG_DATA_HOME}/zi"
+ZI[CACHE_DIR]="${XDG_CACHE_HOME}/zi"
 # Path to .zcompdump file, with the file included (i.e. its name can be different)
-ZI[ZCOMPDUMP_PATH]="$ZI[CACHE_DIR]/.zcompdump"
+ZI[ZCOMPDUMP_PATH]="${XDG_CACHE_HOME}/zsh/zcompdump"
 # If set to 1, then mutes some of the ZI warnings, specifically the plugin already registered warning
 ZI[MUTE_WARNINGS]="${ZI[MUTE_WARNINGS]:-0}"
 # polaris = https://wiki.zshell.dev/community/zsh_plugin_standard#global-parameter-with-prefix

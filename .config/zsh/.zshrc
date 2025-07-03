@@ -7,7 +7,12 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 setopt INC_APPEND_HISTORY
 
-fpath+=.zfunc
+
+[[ ! -d "$XDG_DATA_HOME/zsh/completions" ]] && mkdir -p "$XDG_DATA_HOME/zsh/completions"
+[[ ! -d "$XDG_CACHE_HOME/zsh" ]] && mkdir -p "$XDG_CACHE_HOME/zsh"
+
+# Add global completions directory to fpath
+fpath+=("$XDG_DATA_HOME/zsh/completions" $fpath)
 
 ZSHRC_PATH="$XDG_CONFIG_HOME/zsh/.zshrc"
 
