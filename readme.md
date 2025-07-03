@@ -129,6 +129,16 @@ brew bundle dump --force
 
 common commands - <https://mise.jdx.dev/dev-tools/#common-commands>
 
+## Linting
+
+### XDG Compliance
+
+[`xdg-ninja`](https://github.com/b3nj5m1n/xdg-ninja) is a script that checks for any files or directories in the home directory that do not follow the XDG Base Directory Specification.
+
+```sh
+xdg-ninja
+```
+
 ## Stow Configuration Management
 
 ### .stow-local-ignore

@@ -5,8 +5,3 @@ if [[ ! -f "$XDG_CACHE_HOME/mise_env" || "$XDG_CONFIG_HOME/mise/init.sh" -nt "$X
     mise activate zsh > "$XDG_CACHE_HOME/mise_env"
 fi
 [[ -f "$XDG_CACHE_HOME/mise_env" ]] && source "$XDG_CACHE_HOME/mise_env"
-
-# Generate mise completions if they don't exist or mise is newer
-if [[ ! -f "$XDG_DATA_HOME/zsh/completions/_mise" ]] || [[ "$(command -v mise)" -nt "$XDG_DATA_HOME/zsh/completions/_mise" ]]; then
-    mise completion zsh > "$XDG_DATA_HOME/zsh/completions/_mise"
-fi
