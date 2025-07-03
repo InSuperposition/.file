@@ -6,6 +6,10 @@ export HISTFILE=$XDG_STATE_HOME/zsh/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
 setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
 
 
 [[ ! -d "$XDG_DATA_HOME/zsh/completions" ]] && mkdir -p "$XDG_DATA_HOME/zsh/completions"
@@ -13,6 +17,14 @@ setopt INC_APPEND_HISTORY
 
 # Add global completions directory to fpath
 fpath+=("$XDG_DATA_HOME/zsh/completions" $fpath)
+
+# Lazy load completions - only initialize when first tab completion is used
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
 ZSHRC_PATH="$XDG_CONFIG_HOME/zsh/.zshrc"
 
