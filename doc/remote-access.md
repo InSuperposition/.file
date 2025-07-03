@@ -223,6 +223,26 @@ defaults write com.apple.Terminal ShowLineMarks -bool false
 
 ## Phase 4: Container & Kubernetes Integration with Zellij
 
+### 4.1 Docker Integration
+
+The repository includes Docker integration scripts for Zellij:
+
+- [`.local/bin/zellij_docker`](.local/bin/zellij_docker) - Docker container management
+- [`.local/bin/zellij_kubernetes`](.local/bin/zellij_kubernetes) - Kubernetes pod management
+
+### 4.2 Container Commands
+
+```bash
+# List and attach to Docker containers
+~/.local/bin/zellij_docker -l
+
+# Kubernetes pod management
+~/.local/bin/zellij_kubernetes -A
+
+# Create container-specific Zellij sessions
+zellij --session "docker-$(docker ps --format '{{.Names}}' | head -1)"
+```
+
 ## Phase 5: Security Enhancements
 
 ### 5.1 Install Security Tools
@@ -507,6 +527,21 @@ sudo systemctl enable --now zellij-main@$USER.service
    - Post-Login Command: `zellij attach main || zellij --session main`
 4. Create Termius Snippets for Zellij - see section 2.2 Zellij File Commands
 
+### 6.2 SSH Client Configuration
+
+```bash
+# Add to ~/.ssh/config on client devices
+Host macbook
+    HostName 192.168.1.X
+    Port 2222
+    User yourusername
+    IdentityFile ~/.ssh/id_ed25519
+    CertificateFile ~/.ssh/id_ed25519-cert.pub
+    PreferredAuthentications publickey
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+```
+
 ### 6.3 Blink Shell Configuration with Mosh
 
 ```javascript
@@ -616,7 +651,7 @@ sudo wg-quick up wg0
 sudo brew services start wireguard-tools
 ```
 
-### 4. Backup Strategy with SOPS
+### 8.5 Backup Strategy with SOPS
 
 ```bash
 # Backup Zellij configs
@@ -683,6 +718,196 @@ chmod +x ~/bin/backup-zellij-config
 9. **Plugin Ecosystem**: Growing collection of useful plugins
 10. **Performance**: Generally faster and more responsive
 
+## Phase 9: Automation & Convenience Scripts
+
+### 9.1 Quick Setup Script
+
+```bash
+# Create setup script
+cat > ~/.local/bin/setup-remote-access << 'EOF'
+#!/bin/bash
+set -euo pipefail
+
+PHASE=${1:-"all"}
+
+setup_ssh() {
+    echo "Setting up SSH with certificate authentication..."
+    sudo systemsetup -setremotelogin on
+    sudo mkdir -p /etc/ssh/sshd_config.d/
+    # Add SSH config setup here
+}
+
+setup_zellij() {
+    echo "Setting up Zellij..."
+    brew install zellij fzf ripgrep bat eza
+    # Create default session
+    zellij --session main --layout ~/.config/zellij/layouts/simple.kdl --detached
+}
+
+setup_security() {
+    echo "Setting up security enhancements..."
+    brew install sshguard
+    # Add security setup here
+}
+
+case "$PHASE" in
+    "ssh"|"1") setup_ssh ;;
+    "zellij"|"2") setup_zellij ;;
+    "security"|"5") setup_security ;;
+    "all") setup_ssh && setup_zellij && setup_security ;;
+    *) echo "Usage: $0 [ssh|zellij|security|all]" ;;
+esac
+EOF
+chmod +x ~/.local/bin/setup-remote-access
+```
+
+### 9.2 Health Check Script
+
+```bash
+# Create health check script
+cat > ~/.local/bin/remote-access-health << 'EOF'
+#!/bin/bash
+
+echo "=== Remote Access Health Check ==="
+
+# Check SSH service
+if sudo launchctl list | grep -q ssh; then
+    echo "✓ SSH service is running"
+else
+    echo "✗ SSH service is not running"
+fi
+
+# Check Zellij sessions
+if zellij list-sessions &>/dev/null; then
+    echo "✓ Zellij is available"
+    echo "  Active sessions: $(zellij list-sessions 2>/dev/null | wc -l)"
+else
+    echo "✗ Zellij is not available"
+fi
+
+# Check certificates
+if [[ -f ~/.ssh/id_ed25519-cert.pub ]]; then
+    CERT_VALID=$(ssh-keygen -L -f ~/.ssh/id_ed25519-cert.pub | grep "Valid:" | cut -d' ' -f2-)
+    echo "✓ SSH certificate present"
+    echo "  Validity: $CERT_VALID"
+else
+    echo "✗ SSH certificate not found"
+fi
+
+# Check network connectivity
+if ping -c 1 8.8.8.8 &>/dev/null; then
+    echo "✓ Network connectivity OK"
+else
+    echo "✗ Network connectivity issues"
+fi
+
+# Check security tools
+if brew list sshguard &>/dev/null; then
+    echo "✓ SSHGuard installed"
+else
+    echo "- SSHGuard not installed"
+fi
+EOF
+chmod +x ~/.local/bin/remote-access-health
+```
+
+### 9.3 Zellij Session Management
+
+```bash
+# Create session manager
+cat > ~/.local/bin/zs << 'EOF'
+#!/bin/bash
+# Quick Zellij session manager
+
+case "$1" in
+    "ls"|"list") zellij list-sessions ;;
+    "kill") zellij kill-session "${2:-main}" ;;
+    "killall") zellij kill-all-sessions ;;
+    "dev") zellij attach dev || zellij --session dev --layout ~/.config/zellij/layouts/development.kdl ;;
+    "monitor") zellij attach monitor || zellij --session monitor --layout ~/.config/zellij/layouts/monitor.kdl ;;
+    "main"|"") zellij attach main || zellij --session main --layout ~/.config/zellij/layouts/simple.kdl ;;
+    *) zellij attach "$1" || zellij --session "$1" ;;
+esac
+EOF
+chmod +x ~/.local/bin/zs
+```
+
+## Phase 10: Troubleshooting & Performance
+
+### 10.1 Common Issues
+
+**SSH Connection Refused:**
+
+```bash
+# Check if SSH is running
+sudo launchctl list | grep ssh
+
+# Check SSH configuration
+sudo sshd -t -f /etc/ssh/sshd_config
+
+# Check firewall
+sudo pfctl -s rules | grep 2222
+```
+
+**Zellij Session Issues:**
+
+```bash
+# Check for zombie processes
+ps aux | grep zellij
+
+# Clean up dead sessions
+zellij kill-all-sessions
+
+# Check permissions
+ls -la ~/.local/share/zellij/
+```
+
+**Certificate Problems:**
+
+```bash
+# Verify certificate
+ssh-keygen -L -f ~/.ssh/id_ed25519-cert.pub
+
+# Test certificate authentication
+ssh -vvv -p 2222 user@localhost
+```
+
+### 10.2 Performance Tuning
+
+```bash
+# Optimize SSH configuration
+echo 'ClientAliveInterval 30' | sudo tee -a /etc/ssh/sshd_config.d/99-custom.conf
+echo 'ClientAliveCountMax 3' | sudo tee -a /etc/ssh/sshd_config.d/99-custom.conf
+
+# Optimize Zellij memory usage
+export ZELLIJ_CONFIG_DIR="${HOME}/.config/zellij"
+export ZELLIJ_CACHE_DIR="${HOME}/.cache/zellij"
+```
+
+### 10.3 Security Best Practices
+
+1. **Regular Certificate Rotation:**
+
+   ```bash
+   # Add to crontab for monthly renewal
+   0 0 1 * * ~/.local/bin/renew-ssh-cert
+   ```
+
+2. **Log Monitoring:**
+
+   ```bash
+   # Monitor SSH attempts
+   tail -f /var/log/system.log | grep sshd
+   
+   # Monitor Zellij sessions
+   zellij action query-tab-names
+   ```
+
+3. **Network Segmentation:**
+   - Use separate VLANs for management traffic
+   - Implement network access control lists
+   - Regular security audits
+
 ## Final Notes
 
 - Zellij's configuration is more straightforward than tmux
@@ -691,3 +916,6 @@ chmod +x ~/bin/backup-zellij-config
 - Session persistence works better out of the box
 - The keybindings are more intuitive (though we've added tmux compatibility)
 - Ghostty + Zellij is a modern, performant combination
+- Use the automation scripts to simplify setup and maintenance
+- Regular health checks prevent connectivity issues
+- Security should be reviewed and updated regularly
