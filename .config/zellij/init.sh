@@ -1,18 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 
-# Zellij integration
+# Check if not already in a Zellij session
 if [[ -z "$ZELLIJ" ]]; then
     # Auto-attach to main session when SSHing in
     if [[ -n "$SSH_CONNECTION" ]]; then
         zellij attach main || zellij --session main
     fi
-fi
-
-# Zellij aliases
-
-# Zellij completion
-if command -v zellij &> /dev/null; then
-    eval "$(zellij setup --generate-completion zsh)"
 fi
 
 # Custom prompt for Zellij
