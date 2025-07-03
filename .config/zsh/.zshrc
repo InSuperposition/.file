@@ -15,7 +15,7 @@ setopt HIST_SAVE_NO_DUPS
 [[ ! -d "$XDG_DATA_HOME/zsh/completions" ]] && mkdir -p "$XDG_DATA_HOME/zsh/completions"
 [[ ! -d "$XDG_CACHE_HOME/zsh" ]] && mkdir -p "$XDG_CACHE_HOME/zsh"
 
-typeset -U fpath  # Remove duplicates
+typeset -U fpath  # Remove duplicates paths for loading completions
 fpath=("$XDG_DATA_HOME/zsh/completions" $fpath)  # Add personal completions first
 
 # Lazy load completions - only initialize when first tab completion is used
