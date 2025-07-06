@@ -103,3 +103,4 @@ shell-integration = detect
 shell-integration-features = cursor,sudo,title
 
 # custom-shader = ~/.local/share/ghostty/shader/crt/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix.glsl
+keybind = shift+enter=text:\n
