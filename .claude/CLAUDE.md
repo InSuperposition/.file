@@ -54,6 +54,7 @@ Claude should read documentation files in the following order for optimal unders
 - Apply security and performance practices from code_design.md
 - Leverage existing patterns identified in feature.md
 - Use appropriate tools and technologies from implementation.md
+- **Use markdownlint-cli2** to format `*.md` documents the have bee edited by AI agent, see config file at ~/.config/markdownlint/markdownlint.jsonc
 
 ## Important Reminders
 
