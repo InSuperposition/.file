@@ -1,7 +1,6 @@
 [tools]
 age = "latest"
 bun = "latest"
-claude = "latest"
 clojure = "latest"
 deno = "latest"
 fzf = "latest"
