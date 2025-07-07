@@ -1,0 +1,451 @@
+#!/bin/bash
+# Comprehensive Connection Test Script
+# Tests all aspects of remote access functionality
+
+set -euo pipefail
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+log_info() {
+    echo -e "${GREEN}[INFO]${NC} $1"
+}
+
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+log_section() {
+    echo -e "\n${BLUE}=== $1 ===${NC}"
+}
+
+# Test configuration
+TEST_SESSION="connection-test"
+TIMEOUT=10
+
+test_ssh_basic() {
+    log_section "Basic SSH Connection Test"
+    
+    local success=0
+    
+    log_info "Testing SSH connection to localhost:2222..."
+    if timeout $TIMEOUT ssh -o ConnectTimeout=5 -p 2222 localhost echo "SSH connection successful" 2>/dev/null; then
+        echo "  ✓ Basic SSH connection: PASS"
+        success=1
+    else
+        echo "  ✗ Basic SSH connection: FAIL"
+        log_error "Cannot establish SSH connection"
+    fi
+    
+    return $((1 - success))
+}
+
+test_ssh_certificate() {
+    log_section "SSH Certificate Authentication Test"
+    
+    local success=0
+    
+    log_info "Testing certificate authentication..."
+    if timeout $TIMEOUT ssh -o ConnectTimeout=5 -o PreferredAuthentications=publickey \
+        -p 2222 localhost "echo 'Certificate auth successful'" 2>/dev/null; then
+        echo "  ✓ Certificate authentication: PASS"
+        success=1
+    else
+        echo "  ✗ Certificate authentication: FAIL"
+        log_error "Certificate authentication failed"
+    fi
+    
+    # Test certificate validity
+    if [[ -f "$HOME/.ssh/id_ed25519-cert.pub" ]]; then
+        local cert_info=$(ssh-keygen -L -f "$HOME/.ssh/id_ed25519-cert.pub" 2>/dev/null || echo "")
+        if [[ -n "$cert_info" ]]; then
+            echo "  ✓ Certificate file is readable"
+            local principals=$(echo "$cert_info" | grep "Valid for" || echo "")
+            if [[ -n "$principals" ]]; then
+                echo "    $principals"
+            fi
+        else
+            echo "  ✗ Certificate file is unreadable"
+        fi
+    else
+        echo "  ✗ Certificate file missing"
+    fi
+    
+    return $((1 - success))
+}
+
+test_zellij_basic() {
+    log_section "Zellij Basic Functionality Test"
+    
+    local success=0
+    
+    log_info "Testing Zellij session creation..."
+    if zellij --session "$TEST_SESSION" --detached echo "Zellij test" 2>/dev/null; then
+        echo "  ✓ Zellij session creation: PASS"
+        
+        # Test session listing
+        if zellij list-sessions 2>/dev/null | grep -q "$TEST_SESSION"; then
+            echo "  ✓ Zellij session listing: PASS"
+            
+            # Clean up test session
+            zellij kill-session "$TEST_SESSION" 2>/dev/null || true
+            echo "  ✓ Zellij session cleanup: PASS"
+            success=1
+        else
+            echo "  ✗ Zellij session listing: FAIL"
+        fi
+    else
+        echo "  ✗ Zellij session creation: FAIL"
+        log_error "Cannot create Zellij session"
+    fi
+    
+    return $((1 - success))
+}
+
+test_ssh_zellij_integration() {
+    log_section "SSH + Zellij Integration Test"
+    
+    local success=0
+    
+    log_info "Testing SSH with Zellij auto-attach..."
+    
+    # Create a test session first
+    zellij --session "$TEST_SESSION" --detached "echo 'Test session ready'" 2>/dev/null || true
+    
+    # Test SSH with Zellij attach
+    local ssh_result=$(timeout $TIMEOUT ssh -o ConnectTimeout=5 -p 2222 localhost \
+        "zellij attach $TEST_SESSION --exit-code-from-session" 2>&1 || echo "failed")
+    
+    if [[ "$ssh_result" != "failed" ]]; then
+        echo "  ✓ SSH + Zellij integration: PASS"
+        success=1
+    else
+        echo "  ✗ SSH + Zellij integration: FAIL"
+        log_error "SSH + Zellij integration failed"
+    fi
+    
+    # Test main session auto-attach
+    local main_result=$(timeout $TIMEOUT ssh -o ConnectTimeout=5 -p 2222 localhost \
+        "zellij attach main || zellij --session main --detached" 2>/dev/null && echo "success" || echo "failed")
+    
+    if [[ "$main_result" == "success" ]]; then
+        echo "  ✓ Main session auto-attach: PASS"
+    else
+        echo "  ✗ Main session auto-attach: FAIL"
+    fi
+    
+    # Clean up
+    zellij kill-session "$TEST_SESSION" 2>/dev/null || true
+    
+    return $((1 - success))
+}
+
+test_mosh_connection() {
+    log_section "Mosh Connection Test"
+    
+    local success=0
+    
+    if ! command -v mosh &> /dev/null; then
+        echo "  ⚠ Mosh not installed - skipping test"
+        return 0
+    fi
+    
+    log_info "Testing Mosh connection..."
+    
+    # Test basic mosh connection
+    local mosh_result=$(timeout $TIMEOUT mosh --server="mosh-server --port=60001" \
+        localhost -- echo "Mosh connection successful" 2>/dev/null || echo "failed")
+    
+    if [[ "$mosh_result" == "Mosh connection successful" ]]; then
+        echo "  ✓ Mosh basic connection: PASS"
+        success=1
+    else
+        echo "  ✗ Mosh basic connection: FAIL"
+        log_warn "Check Mosh installation and UDP ports 60000-61000"
+    fi
+    
+    # Test Mosh with Zellij
+    if [[ $success -eq 1 ]]; then
+        local mosh_zellij_result=$(timeout $TIMEOUT mosh --server="mosh-server --port=60002" \
+            localhost -- zellij --session mosh-test --detached 2>/dev/null && echo "success" || echo "failed")
+        
+        if [[ "$mosh_zellij_result" == "success" ]]; then
+            echo "  ✓ Mosh + Zellij integration: PASS"
+            zellij kill-session mosh-test 2>/dev/null || true
+        else
+            echo "  ✗ Mosh + Zellij integration: FAIL"
+        fi
+    fi
+    
+    return $((1 - success))
+}
+
+test_terminal_features() {
+    log_section "Terminal Features Test"
+    
+    local success=0
+    
+    log_info "Testing terminal capabilities..."
+    
+    # Test color support
+    local color_test=$(timeout $TIMEOUT ssh -o ConnectTimeout=5 -p 2222 localhost \
+        "tput colors" 2>/dev/null || echo "0")
+    
+    if [[ "$color_test" -ge 256 ]]; then
+        echo "  ✓ 256-color support: PASS ($color_test colors)"
+        success=1
+    else
+        echo "  ✗ 256-color support: FAIL ($color_test colors)"
+    fi
+    
+    # Test environment variables
+    local term_var=$(timeout $TIMEOUT ssh -o ConnectTimeout=5 -p 2222 localhost \
+        "echo \$TERM" 2>/dev/null || echo "")
+    
+    if [[ "$term_var" == "xterm-256color" ]]; then
+        echo "  ✓ TERM environment: PASS ($term_var)"
+    else
+        echo "  ⚠ TERM environment: WARN ($term_var)"
+    fi
+    
+    # Test UTF-8 support
+    local utf8_test=$(timeout $TIMEOUT ssh -o ConnectTimeout=5 -p 2222 localhost \
+        "echo '🚀 UTF-8 test ✅'" 2>/dev/null || echo "failed")
+    
+    if [[ "$utf8_test" == "🚀 UTF-8 test ✅" ]]; then
+        echo "  ✓ UTF-8 support: PASS"
+    else
+        echo "  ✗ UTF-8 support: FAIL"
+    fi
+    
+    return $((1 - success))
+}
+
+test_security_features() {
+    log_section "Security Features Test"
+    
+    local success=0
+    
+    log_info "Testing security configurations..."
+    
+    # Test password authentication is disabled
+    local password_test=$(timeout $TIMEOUT ssh -o ConnectTimeout=5 -o PreferredAuthentications=password \
+        -o PasswordAuthentication=yes -p 2222 test@localhost echo "Password auth enabled" 2>&1 || echo "disabled")
+    
+    if [[ "$password_test" == *"Permission denied"* ]] || [[ "$password_test" == "disabled" ]]; then
+        echo "  ✓ Password authentication: DISABLED (secure)"
+        success=1
+    else
+        echo "  ⚠ Password authentication: ENABLED (insecure)"
+    fi
+    
+    # Test non-standard port
+    if lsof -i :2222 >/dev/null 2>&1; then
+        echo "  ✓ Non-standard SSH port: CONFIGURED (2222)"
+    else
+        echo "  ✗ Non-standard SSH port: NOT CONFIGURED"
+    fi
+    
+    # Test rate limiting
+    if sudo pfctl -s rules 2>/dev/null | grep -q "2222"; then
+        echo "  ✓ SSH rate limiting: ENABLED"
+    else
+        echo "  ✗ SSH rate limiting: DISABLED"
+    fi
+    
+    return $((1 - success))
+}
+
+test_network_connectivity() {
+    log_section "Network Connectivity Test"
+    
+    local success=0
+    
+    log_info "Testing network configuration..."
+    
+    # Get local IP addresses
+    local ips=$(ifconfig | grep "inet " | grep -v "127.0.0.1" | awk '{print $2}')
+    
+    if [[ -n "$ips" ]]; then
+        echo "  ✓ Network interfaces detected:"
+        echo "$ips" | sed 's/^/    /'
+        
+        # Test connectivity to each IP
+        local working_ips=0
+        while read -r ip; do
+            if [[ -n "$ip" ]]; then
+                if timeout 5 ssh -o ConnectTimeout=3 -p 2222 "$ip" echo "IP test" 2>/dev/null; then
+                    echo "    ✓ $ip: ACCESSIBLE"
+                    working_ips=$((working_ips + 1))
+                else
+                    echo "    ✗ $ip: NOT ACCESSIBLE"
+                fi
+            fi
+        done <<< "$ips"
+        
+        if [[ $working_ips -gt 0 ]]; then
+            echo "  ✓ Network connectivity: PASS ($working_ips/$(echo "$ips" | wc -l | tr -d ' ') IPs working)"
+            success=1
+        else
+            echo "  ✗ Network connectivity: FAIL (no IPs accessible)"
+        fi
+    else
+        echo "  ✗ No network interfaces found"
+    fi
+    
+    return $((1 - success))
+}
+
+test_performance() {
+    log_section "Performance Test"
+    
+    log_info "Testing connection performance..."
+    
+    # Test connection time
+    local start_time=$(date +%s%N)
+    if timeout $TIMEOUT ssh -o ConnectTimeout=5 -p 2222 localhost "echo 'Performance test'" 2>/dev/null; then
+        local end_time=$(date +%s%N)
+        local duration=$(( (end_time - start_time) / 1000000 )) # Convert to milliseconds
+        
+        if [[ $duration -lt 1000 ]]; then
+            echo "  ✓ Connection speed: EXCELLENT (${duration}ms)"
+        elif [[ $duration -lt 3000 ]]; then
+            echo "  ✓ Connection speed: GOOD (${duration}ms)"
+        else
+            echo "  ⚠ Connection speed: SLOW (${duration}ms)"
+        fi
+    else
+        echo "  ✗ Connection speed: FAILED"
+    fi
+    
+    # Test session creation performance
+    local zellij_start=$(date +%s%N)
+    if zellij --session perf-test --detached "echo 'Performance test session'" 2>/dev/null; then
+        local zellij_end=$(date +%s%N)
+        local zellij_duration=$(( (zellij_end - zellij_start) / 1000000 ))
+        
+        echo "  ✓ Zellij session creation: ${zellij_duration}ms"
+        zellij kill-session perf-test 2>/dev/null || true
+    else
+        echo "  ✗ Zellij session creation: FAILED"
+    fi
+}
+
+run_all_tests() {
+    log_info "Running comprehensive connection tests..."
+    log_info "Date: $(date)"
+    echo ""
+    
+    local total_tests=8
+    local passed_tests=0
+    
+    # Run all tests
+    test_ssh_basic && passed_tests=$((passed_tests + 1))
+    test_ssh_certificate && passed_tests=$((passed_tests + 1))
+    test_zellij_basic && passed_tests=$((passed_tests + 1))
+    test_ssh_zellij_integration && passed_tests=$((passed_tests + 1))
+    test_mosh_connection && passed_tests=$((passed_tests + 1))
+    test_terminal_features && passed_tests=$((passed_tests + 1))
+    test_security_features && passed_tests=$((passed_tests + 1))
+    test_network_connectivity && passed_tests=$((passed_tests + 1))
+    
+    # Performance test (informational only)
+    test_performance
+    
+    # Show summary
+    log_section "Test Summary"
+    
+    local success_rate=$(( passed_tests * 100 / total_tests ))
+    echo "  Tests passed: $passed_tests/$total_tests ($success_rate%)"
+    
+    if [[ $passed_tests -eq $total_tests ]]; then
+        echo "  🎉 All tests passed! System is ready for iPhone access."
+        return 0
+    elif [[ $success_rate -ge 80 ]]; then
+        echo "  ✅ Most tests passed. Minor issues may need attention."
+        return 0
+    elif [[ $success_rate -ge 60 ]]; then
+        echo "  ⚠️  Some tests failed. System needs attention."
+        return 1
+    else
+        echo "  ❌ Many tests failed. Significant issues need resolution."
+        return 1
+    fi
+}
+
+show_help() {
+    echo "Connection Test Script"
+    echo ""
+    echo "Usage: $0 [test_name]"
+    echo ""
+    echo "Available tests:"
+    echo "  ssh         - Basic SSH connection test"
+    echo "  cert        - SSH certificate authentication test"
+    echo "  zellij      - Zellij functionality test"
+    echo "  integration - SSH + Zellij integration test"
+    echo "  mosh        - Mosh connection test"
+    echo "  terminal    - Terminal features test"
+    echo "  security    - Security configuration test"
+    echo "  network     - Network connectivity test"
+    echo "  performance - Performance test"
+    echo "  all         - Run all tests (default)"
+    echo "  help        - Show this help"
+    echo ""
+    echo "Examples:"
+    echo "  $0              # Run all tests"
+    echo "  $0 ssh          # Test SSH only"
+    echo "  $0 integration  # Test SSH + Zellij integration"
+}
+
+main() {
+    case "${1:-all}" in
+        "ssh")
+            test_ssh_basic
+            ;;
+        "cert")
+            test_ssh_certificate
+            ;;
+        "zellij")
+            test_zellij_basic
+            ;;
+        "integration")
+            test_ssh_zellij_integration
+            ;;
+        "mosh")
+            test_mosh_connection
+            ;;
+        "terminal")
+            test_terminal_features
+            ;;
+        "security")
+            test_security_features
+            ;;
+        "network")
+            test_network_connectivity
+            ;;
+        "performance")
+            test_performance
+            ;;
+        "all")
+            run_all_tests
+            ;;
+        "help"|"-h"|"--help")
+            show_help
+            ;;
+        *)
+            log_error "Unknown test: $1"
+            show_help
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"

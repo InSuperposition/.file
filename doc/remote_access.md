@@ -1,921 +1,503 @@
-# Enhanced MacBook Pro Remote Terminal Access Setup with Zellij
+# MacBook Remote Terminal Access with Automated Setup
 
 ## Overview
 
-This setup uses Zellij, which offers modern features like WebAssembly plugins, mouse support, floating panes, and a more intuitive interface. The setup prioritizes local network access first, with WireGuard added last, focusing on simplicity and security with SSH certificates.
+This documentation describes a modern, script-based approach to setting up secure remote terminal access from iPhone/iPad to your MacBook using SSH certificates, Zellij terminal multiplexer, and enterprise-grade security.
 
-## Phase 1: SSH Server Setup with Certificate Authentication
+**Key improvements over the original manual setup:**
 
-### 1.1 Enable SSH and Basic Hardening
+- 🤖 **Automated scripts** for all configuration steps
+- 📱 **Mobile-first design** with QR codes and setup wizards
+- 🛡️ **Enhanced security** with certificate authentication and rate limiting
+- 🔧 **Comprehensive tooling** for monitoring, troubleshooting, and maintenance
+- 📊 **Health checks** and diagnostics for system reliability
+
+## What's New: Script-Based Architecture
+
+The setup has been completely modularized into purpose-built scripts that handle all the manual configuration steps from the original guide:
+
+### Setup Scripts
+
+- `setup_ssh` - Complete SSH certificate authority and server configuration
+- `setup_security` - SSHGuard, SOPS encryption, and firewall rules
+- `setup_service` - macOS LaunchAgent services for persistence
+
+### Mobile Configuration
+
+- `generate_qr_config` - QR codes for easy iPhone/iPad setup
+- `setup_iphone_guide` - Interactive mobile setup wizard
+
+### Monitoring & Maintenance
+
+- `remote_health_check` - Comprehensive system health monitoring
+- `connection_test` - Connection testing suite
+- `cert_status` - Certificate management and renewal
+- `troubleshoot_remote` - Advanced diagnostic and repair tools
+
+## Quick Start Guide
+
+### 1. Deploy Configuration Files
 
 ```bash
-# Enable SSH
-sudo systemsetup -setremotelogin on
-
-# Create custom SSH config directory
-sudo mkdir -p /etc/ssh/sshd_config.d/
-
-# Install mosh for better mobile connections
-brew install mosh
-# For Linux: sudo apt install mosh || sudo yum install mosh
+# From the ~/.file directory
+cd ~/.file
+stow .
 ```
 
-### 1.2 SSH Certificate Authority Setup
+This symlinks all configuration files to their proper system locations.
+
+### 2. Run Setup Scripts (in order)
 
 ```bash
-# Create CA directory
-mkdir -p ~/.ssh/ca
-cd ~/.ssh/ca
+# 1. Set up SSH certificates and server configuration
+~/.local/bin/setup_ssh
 
-# Generate CA key pair
-ssh-keygen -t ed25519 -f ssh_ca -C "SSH CA for MacBook Pro"
+# 2. Configure security services (SSHGuard, firewall, SOPS)
+~/.local/bin/setup_security
 
-# Generate host certificate
-sudo ssh-keygen -s ssh_ca -I "macbook-host" -h -n macbook.local,localhost,$(hostname) /etc/ssh/ssh_host_ed25519_key.pub
-
-# Move host certificate
-sudo mv /etc/ssh/ssh_host_ed25519_key-cert.pub /etc/ssh/
-
-# Generate user certificate (valid for 1 year)
-ssh-keygen -s ssh_ca -I "$(whoami)-macbook" -n $(whoami) -V +52w ~/.ssh/id_ed25519.pub
+# 3. Install and start system services
+~/.local/bin/setup_service install
 ```
 
-### 1.3 Enhanced SSH Configuration
-
-Create `/etc/ssh/sshd_config.d/99-custom.conf`:
+### 3. Generate Mobile Configuration
 
 ```bash
-# Security hardening
-Port 2222
-Protocol 2
-HostKey /etc/ssh/ssh_host_ed25519_key
-HostCertificate /etc/ssh/ssh_host_ed25519_key-cert.pub
+# Generate certificates and QR codes for iPhone setup
+~/.local/bin/generate_qr_config all
 
-# Certificate authentication
-TrustedUserCAKeys /etc/ssh/trusted_user_ca_keys
-PubkeyAuthentication yes
-PasswordAuthentication no
-ChallengeResponseAuthentication no
-
-# User restrictions
-PermitRootLogin no
-AllowUsers $(whoami)
-MaxAuthTries 3
-MaxSessions 10
-
-# Keep connections alive
-ClientAliveInterval 300
-ClientAliveCountMax 2
-TCPKeepAlive yes
-
-# Performance tuning
-UseDNS no
-Compression yes
-
-# Disable unnecessary features
-X11Forwarding no
-AllowAgentForwarding yes
-AllowTcpForwarding yes
-PermitTunnel no
-GatewayPorts no
-
-# Logging
-LogLevel VERBOSE
-
-# Rate limiting
-MaxStartups 3:30:10
-PerSourceMaxStartups 2
-PerSourceNetBlockSize 32
+# Run interactive mobile setup guide
+~/.local/bin/setup_iphone_guide
 ```
 
-### 1.4 Install the CA public key
+### 4. Verify Setup
 
 ```bash
-# Copy CA public key to trusted keys
-sudo cp ~/.ssh/ca/ssh_ca.pub /etc/ssh/trusted_user_ca_keys
-sudo chmod 644 /etc/ssh/trusted_user_ca_keys
+# Run comprehensive health check
+~/.local/bin/remote_health_check
 
-# Restart SSH
-sudo launchctl unload /System/Library/LaunchDaemons/ssh.plist
-sudo launchctl load /System/Library/LaunchDaemons/ssh.plist
+# Test all connections
+~/.local/bin/connection_test
 ```
 
-## Phase 2: Zellij Setup with Advanced Features => tmux replacement
+## Detailed Setup Process
 
-### 2.1 Install Zellij and Dependencies
+### Phase 1: SSH Certificate Infrastructure
+
+The `setup_ssh` script automates the complete SSH certificate setup:
+
+**What it does:**
+
+- Enables SSH service on port 2222
+- Creates Certificate Authority (CA) with ed25519 keys
+- Generates host and user certificates (1-year validity)
+- Installs SSH hardening configuration
+- Sets up certificate-based authentication
+
+**Manual steps required:**
+
+- Run with sudo privileges when prompted
+- Confirm SSH service restart
+
+**Generated files:**
+
+- `~/.ssh/ca/ssh_ca` - CA private key (secure)
+- `~/.ssh/ca/ssh_ca.pub` - CA public key
+- `~/.ssh/id_ed25519-cert.pub` - User certificate
+- `/etc/ssh/trusted_user_ca_keys` - System CA trust
+- `/etc/ssh/sshd_config.d/99_custom.conf` - SSH hardening
+
+### Phase 2: Security Hardening
+
+The `setup_security` script implements enterprise-grade security:
+
+**What it does:**
+
+- Configures SSHGuard for brute-force protection
+- Sets up SOPS for encrypted configuration storage
+- Installs pf firewall rules with rate limiting
+- Creates secure configuration management tools
+
+**Manual steps required:**
+
+- Firewall rules activation (script will prompt)
+- Review generated age encryption key
+
+**Generated services:**
+
+- SSHGuard with automatic IP blocking
+- pf firewall with SSH rate limiting (5 conn/30sec)
+- SOPS encrypted config management
+- Mosh UDP port allowances (60000-61000)
+
+### Phase 3: System Services
+
+The `setup_service` script manages persistent services:
+
+**What it does:**
+
+- Creates LaunchAgent plists for SSH keepalive
+- Sets up Zellij session restoration service
+- Manages service loading/unloading
+- Provides service status monitoring
+
+**Manual steps required:**
+
+- None - fully automated
+
+**Services created:**
+
+- `com.user.ssh_keepalive` - Maintains SSH connectivity
+- `com.user.zellij_restore` - Auto-restores Zellij sessions
+
+### Phase 4: Mobile Client Setup
+
+The mobile setup tools provide multiple configuration methods:
+
+**QR Code Generation (`generate_qr_config`):**
+
+- SSH client configuration QR codes
+- Termius app-specific configuration
+- Blink Shell configuration
+- Connection information summary
+- Certificate package for secure transfer
+
+**Interactive Setup (`setup_iphone_guide`):**
+
+- Step-by-step mobile configuration
+- App-specific instructions (Termius, Blink Shell)
+- Security best practices
+- Troubleshooting guidance
+
+## Configuration Details
+
+### SSH Configuration
+
+**Port:** 2222 (non-standard for security)  
+**Authentication:** Certificate-based only (no passwords)  
+**Encryption:** ed25519 keys with 1-year certificate validity  
+**Hardening:** Rate limiting, connection limits, verbose logging
+
+### Zellij Integration
+
+**Auto-attach:** SSH sessions automatically launch Zellij  
+**Sessions available:**
+
+- `main` - Primary work session
+- `dev` - Development environment with container integration
+- `monitor` - System monitoring layout
+
+**Layouts:** Pre-configured for different workflows  
+**Plugins:** Room and Harpoon for enhanced session management
+
+### Security Features
+
+**Certificate Management:**
+
+- Automatic renewal with `renew_ssh_cert`
+- Backup and restoration capabilities
+- Expiry monitoring and alerts
+
+**Network Security:**
+
+- SSH rate limiting (5 connections per 30 seconds)
+- Automatic IP blocking for failed attempts
+- Mosh for resilient mobile connections
+
+**Encrypted Storage:**
+
+- SOPS integration for sensitive configurations
+- Age encryption for certificate backups
+- Secure configuration management tools
+
+## Monitoring & Maintenance
+
+### Health Monitoring
 
 ```bash
-# Install Zellij
-brew install zellij
+# Comprehensive system health check
+~/.local/bin/remote_health_check
 
-# Install useful tools
-brew install fzf ripgrep bat eza starship atuin
-# TODO: setup atuin
+# Specific component tests
+~/.local/bin/connection_test ssh
+~/.local/bin/cert_status renewal
+~/.local/bin/setup_firewall status
 ```
 
-### 2.2 Zellij Files
-
-#### Config files
-
-- [`zellij` config](../.config/zellij/config.kdl)
-- [`zellij` layouts](../.config/zellij/layouts)
-- [`zellij` plugins](../.local/share/zellij/plugins) # TODO: where to place plugins
-
-#### Binaries
-
-- [`session_docker`](../.local/bin/session_docker) => Docker integration
-- [`session_kubernetes`](../.local/bin/session_kubernetes) => Kubernetes integration
-- [`session_resurrect`](../.local/bin/session_resurrect) => Session resurrection script
-- [`session_work`](../.local/bin/session_work) => Smart Zellij session manager
-
-#### Commands
-
-TODO: create alias
+### Certificate Management
 
 ```bash
-# Main session
-zellij attach main || zellij --session main
+# Check certificate expiry
+~/.local/bin/cert_status
 
-# Development layout
-zellij attach dev || zellij --session dev --layout ~/.config/zellij/layouts/development.kdl
+# Renew certificates (automatic check)
+~/.local/bin/renew_ssh_cert check
 
-# Monitor Zellij sessions and system resources
-zellij --session monitor --layout ~/.config/zellij/layouts/monitor.kdl
-
-# Docker containers
-~/.local/bin/session_docker -l
-
-# Kubernetes pods
-~/.local/bin/session_kubernetes -A
-
-# List all Zellij sessions
-zellij list-sessions
-
-# Kill zombie sessions
-zellij kill-all-sessions
-
-# Create floating pane
-zellij action new-pane --floating
-
-# Toggle fullscreen
-zellij action toggle-fullscreen
+# Force certificate renewal
+~/.local/bin/renew_ssh_cert force
 ```
 
-### 2.3 Install Zellij Plugins
+### Service Management
 
-````bash
-# Download room plugin for better session management
-wget -O ~/.local/share/zellij/plugins/room.wasm \
-  https://github.com/rvcas/room/releases/latest/download/room.wasm
+```bash
+# Check service status
+~/.local/bin/setup_service status
 
-# Download harpoon plugin for quick navigation
-wget -O ~/.local/share/zellij/plugins/harpoon.wasm \
-  https://github.com/Nacho114/harpoon/releases/latest/download/harpoon.wasm
+# View service logs
+~/.local/bin/setup_service logs
 
-### 2.4 VSCode Terminal Integration for Zellij
-
-Add to VSCode `settings.json`:
-
-```json
-{
-  "terminal.integrated.profiles.osx": {
-    "zellij": {
-      "path": "zellij",
-      "args": ["--session", "vscode"]
-    },
-    "zellij-dev": {
-      "path": "zellij",
-      "args": [
-        "--session",
-        "vscode",
-        "--layout",
-        "~/.config/zellij/layouts/development.kdl"
-      ]
-    }
-  },
-  "terminal.integrated.env.osx": {
-    "TERM": "xterm-256color",
-    "COLORTERM": "truecolor"
-  }
-}
+# Restart services
+~/.local/bin/setup_service restart
 ```
 
-
-
-## Phase 3: Terminal Applications Setup
-
-### 3.1 Ghostty Configuration
-
-- [`ghostty` config](../.config/ghostty/config)
-
-### 3.2 Terminal.app Profile (if Ghostty unavailable)
+### Security Monitoring
 
 ```bash
-# Export Terminal.app profile after configuration
-defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
-defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
+# View blocked IPs
+~/.local/bin/setup_firewall blocked
 
-# Configure Terminal for Zellij
-defaults write com.apple.Terminal ShellExitAction -int 0
-defaults write com.apple.Terminal FontAntialias -bool true
-defaults write com.apple.Terminal ShowLineMarks -bool false
-````
+# Check failed login attempts
+sudo tail -f /var/log/system.log | grep sshd
 
-## Phase 4: Container & Kubernetes Integration with Zellij
+# Unblock specific IP if needed
+~/.local/bin/setup_firewall unblock [IP]
+```
 
-### 4.1 Docker Integration
+## Troubleshooting
 
-The repository includes Docker integration scripts for Zellij:
-
-- [`.local/bin/session_docker`](.local/bin/session_docker) - Docker container management
-- [`.local/bin/session_kubernetes`](.local/bin/session_kubernetes) - Kubernetes pod management
-
-### 4.2 Container Commands
+### Automated Diagnostics
 
 ```bash
-# List and attach to Docker containers
+# Interactive troubleshooting assistant
+~/.local/bin/troubleshoot_remote
+
+# Generate diagnostic report
+~/.local/bin/troubleshoot_remote report
+
+# Attempt automatic fixes
+~/.local/bin/troubleshoot_remote autofix
+```
+
+### Common Issues
+
+**Connection Refused:**
+
+- Check SSH service: `sudo launchctl list | grep ssh`
+- Verify port 2222: `lsof -i :2222`
+- Test firewall: `~/.local/bin/setup_firewall test`
+
+**Authentication Failed:**
+
+- Check certificates: `~/.local/bin/cert_status`
+- Test local connection: `ssh -p 2222 localhost`
+- Renew if expired: `~/.local/bin/renew_ssh_cert force`
+
+**Mobile App Issues:**
+
+- Regenerate QR codes: `~/.local/bin/generate_qr_config all`
+- Check certificate transfer: `~/.local/bin/generate_qr_config certs`
+- Review setup guide: `~/.local/bin/setup_iphone_guide`
+
+## Manual Configuration Required
+
+While most setup is automated, some steps require manual intervention:
+
+### Initial Dependencies
+
+```bash
+# Install required packages (if not already installed)
+brew install mosh sshguard sops age qrencode
+```
+
+### Network Configuration
+
+- **Router settings:** Ensure MacBook has static/reserved IP
+- **Firewall exceptions:** Allow SSH (port 2222) and Mosh (UDP 60000-61000) through any router firewall
+
+### Mobile App Installation
+
+- Install SSH client app (Termius, Blink Shell, etc.) from App Store
+- Import generated certificates manually via secure transfer method
+- For iPhone-specific setup instructions, see [`iphone_setup.md`](iphone_setup.md).
+
+### Certificate Transfer
+
+- Use AirDrop, secure email, or USB for certificate files
+- Delete temporary files after successful import
+- Verify certificate import in mobile app
+
+## Advanced Features
+
+### Container Integration
+
+The setup includes existing Docker and Kubernetes integration:
+
+```bash
+# Docker container sessions
 ~/.local/bin/session_docker -l
 
 # Kubernetes pod management
 ~/.local/bin/session_kubernetes -A
 
-# Create container-specific Zellij sessions
-zellij --session "docker-$(docker ps --format '{{.Names}}' | head -1)"
+# Session resurrection
+~/.local/bin/session_resurrect save/restore
 ```
 
-## Phase 5: Security Enhancements
-
-### 5.1 Install Security Tools
+### Encrypted Configuration
 
 ```bash
-# Install sshguard for brute-force protection
-brew install sshguard
+# Encrypt sensitive files
+~/.local/bin/secure_config encrypt myfile.yaml
 
-# Configure sshguard
-sudo tee /usr/local/etc/sshguard.conf << 'EOF'
-BACKEND="/usr/local/libexec/sshguard/sshg-fw-pf"
-LOGREADER="STDIN < /var/log/system.log"
-THRESHOLD=30
-BLOCK_TIME=600
-DETECTION_TIME=1800
-WHITELIST_FILE=/usr/local/etc/sshguard.whitelist
-EOF
+# Edit encrypted files
+~/.local/bin/secure_config edit myfile.enc.yaml
 
-# Create whitelist
-echo "127.0.0.0/8" | sudo tee /usr/local/etc/sshguard.whitelist
-echo "10.0.0.0/8" | sudo tee -a /usr/local/etc/sshguard.whitelist
-echo "192.168.0.0/16" | sudo tee -a /usr/local/etc/sshguard.whitelist
-
-# Start sshguard
-sudo brew services start sshguard
+# View encrypted content
+~/.local/bin/secure_config view myfile.enc.yaml
 ```
 
-### 5.2 SOPS (Secrets OPerationS) for Encrypted Configuration
-
-```bash
-# Install SOPS and age
-brew install sops age
-
-# Generate age key for SOPS
-mkdir -p ~/.config/sops/age
-age-keygen -o ~/.config/sops/age/keys.txt
-
-# Export age key for SOPS
-export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
-echo 'export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"' >> ~/.zshrc
-
-# Create SOPS config file
-cat > ~/.sops.yaml << 'EOF'
-creation_rules:
-  - path_regex: \.enc\.yaml$
-    age: >-
-      AGE_PUBLIC_KEY_HERE
-  - path_regex: \.enc\.json$
-    age: >-
-      AGE_PUBLIC_KEY_HERE
-  - path_regex: \.enc\.env$
-    age: >-
-      AGE_PUBLIC_KEY_HERE
-  - path_regex: \.enc\.kdl$
-    age: >-
-      AGE_PUBLIC_KEY_HERE
-EOF
-
-# Get your age public key and update .sops.yaml
-AGE_PUBLIC_KEY=$(grep -oP 'public key: \K.*' ~/.config/sops/age/keys.txt)
-sed -i.bak "s/AGE_PUBLIC_KEY_HERE/$AGE_PUBLIC_KEY/g" ~/.sops.yaml
-
-# Create helper script for secure configs with SOPS
-cat > ~/bin/secure-config << 'EOF'
-#!/bin/bash
-# Manage encrypted configuration files with SOPS
-
-SOPS_AGE_KEY_FILE="${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}"
-CONFIG_DIR="${HOME}/.config/secure"
-mkdir -p "$CONFIG_DIR"
-
-case "$1" in
-    encrypt)
-        if [[ "$2" == *.yaml ]] || [[ "$2" == *.yml ]]; then
-            sops -e "$2" > "$CONFIG_DIR/$(basename "$2" .yaml).enc.yaml"
-        elif [[ "$2" == *.json ]]; then
-            sops -e "$2" > "$CONFIG_DIR/$(basename "$2" .json).enc.json"
-        elif [[ "$2" == *.kdl ]]; then
-            sops -e "$2" > "$CONFIG_DIR/$(basename "$2" .kdl).enc.kdl"
-        else
-            sops -e "$2" > "$CONFIG_DIR/$(basename "$2").enc"
-        fi
-        echo "Encrypted to $CONFIG_DIR/"
-        ;;
-    decrypt)
-        sops -d "$CONFIG_DIR/$2"
-        ;;
-    edit)
-        sops "$CONFIG_DIR/$2"
-        ;;
-    view)
-        sops -d "$CONFIG_DIR/$2" | less
-        ;;
-    list)
-        ls -la "$CONFIG_DIR"/*.enc* 2>/dev/null || echo "No encrypted files found"
-        ;;
-    *)
-        echo "Usage: $0 {encrypt|decrypt|edit|view|list} <file>"
-        echo "Examples:"
-        echo "  $0 encrypt config.yaml    # Creates config.enc.yaml"
-        echo "  $0 edit config.enc.yaml   # Edit encrypted file"
-        echo "  $0 decrypt config.enc.yaml # Decrypt to stdout"
-        ;;
-esac
-EOF
-chmod +x ~/bin/secure-config
-
-# Encrypt Zellij layouts with sensitive information
-~/bin/secure-config encrypt ~/.config/zellij/layouts/development.kdl
-
-# Create SOPS-encrypted SSH certificate storage
-cat > ~/ssh-certs.yaml << EOF
-certificates:
-  ca_private_key: |
-    $(cat ~/.ssh/ca/ssh_ca | sed 's/^/    /')
-  user_cert: |
-    $(cat ~/.ssh/id_ed25519-cert.pub | sed 's/^/    /')
-EOF
-
-~/bin/secure-config encrypt ~/ssh-certs.yaml
-rm ~/ssh-certs.yaml
-```
-
-### 5.3 Advanced Rate Limiting with pf (macOS)
-
-```bash
-# Create pf rules for SSH rate limiting
-sudo tee /etc/pf.anchors/ssh-rate-limit << 'EOF'
-# SSH rate limiting rules
-# Block hosts that make more than 5 connections in 30 seconds
-table <ssh_bruteforce> persist
-block in quick from <ssh_bruteforce>
-pass in on en0 proto tcp to any port 2222 flags S/SA keep state \
-  (max-src-conn 5, max-src-conn-rate 5/30, \
-   overload <ssh_bruteforce> flush global)
-EOF
-
-# Add to main pf.conf
-sudo bash -c 'echo "anchor \"ssh-rate-limit\"" >> /etc/pf.conf'
-sudo bash -c 'echo "load anchor \"ssh-rate-limit\" from \"/etc/pf.anchors/ssh-rate-limit\"" >> /etc/pf.conf'
-
-# Enable pf
-sudo pfctl -e -f /etc/pf.conf
-```
-
-### 5.4 Mosh Firewall Configuration
-
-```bash
-# Allow mosh UDP ports (60000-61000)
-sudo tee -a /etc/pf.anchors/ssh-rate-limit << 'EOF'
-# Mosh UDP ports
-pass in on en0 proto udp to any port 60000:61000 keep state
-EOF
-
-# Reload pf
-sudo pfctl -f /etc/pf.conf
-```
-
-### 5.5 Persistent Services Setup
-
-#### macOS (launchd)
-
-Create SSH keepalive service:
-
-```bash
-sudo tee /Library/LaunchDaemons/com.local.ssh-keepalive.plist << 'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.local.ssh-keepalive</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/usr/sbin/sshd</string>
-        <string>-D</string>
-        <string>-f</string>
-        <string>/etc/ssh/sshd_config</string>
-    </array>
-    <key>RunAtLoad</key>
-    <true/>
-    <key>KeepAlive</key>
-    <true/>
-    <key>StandardErrorPath</key>
-    <string>/var/log/sshd.err</string>
-    <key>StandardOutPath</key>
-    <string>/var/log/sshd.out</string>
-</dict>
-</plist>
-EOF
-
-# Create Zellij session restore service
-tee ~/Library/LaunchAgents/com.user.zellij-restore.plist << 'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.user.zellij-restore</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/opt/homebrew/bin/zellij</string>
-        <string>--session</string>
-        <string>main</string>
-        <string>--layout</string>
-        <string>/Users/$(whoami)/.config/zellij/layouts/simple.kdl</string>
-    </array>
-    <key>RunAtLoad</key>
-    <true/>
-    <key>KeepAlive</key>
-    <dict>
-        <key>SuccessfulExit</key>
-        <false/>
-    </dict>
-    <key>EnvironmentVariables</key>
-    <dict>
-        <key>PATH</key>
-        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
-    </dict>
-</dict>
-</plist>
-EOF
-
-# Load services
-sudo launchctl load /Library/LaunchDaemons/com.local.ssh-keepalive.plist
-launchctl load ~/Library/LaunchAgents/com.user.zellij-restore.plist
-```
-
-#### Linux (systemd)
-
-Create systemd services:
-
-```bash
-# SSH service override (for custom port)
-sudo mkdir -p /etc/systemd/system/sshd.service.d/
-sudo tee /etc/systemd/system/sshd.service.d/override.conf << 'EOF'
-[Service]
-ExecStart=
-ExecStart=/usr/sbin/sshd -D -f /etc/ssh/sshd_config
-Restart=always
-RestartSec=5s
-EOF
-
-# Zellij session service
-sudo tee /etc/systemd/system/zellij-main.service << 'EOF'
-[Unit]
-Description=Zellij main session
-After=network.target
-
-[Service]
-Type=forking
-User=%i
-ExecStart=/usr/bin/zellij --session main --layout /home/%i/.config/zellij/layouts/simple.kdl
-ExecStop=/usr/bin/zellij kill-session main
-RemainAfterExit=yes
-Restart=on-failure
-RestartSec=5s
-Environment="PATH=/usr/local/bin:/usr/bin:/bin"
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# Enable services
-sudo systemctl daemon-reload
-sudo systemctl enable --now sshd
-sudo systemctl enable --now zellij-main@$USER.service
-```
-
-## Phase 6: iPhone Client Configuration
-
-### 6.1 Termius Setup with Certificate Auth & Mosh
-
-1. Install Termius from App Store
-2. Import your SSH certificate and CA certificate
-3. Create host entry:
-   - Host: MacBook's IP
-   - Port: 2222
-   - Username: Your username
-   - Authentication: Certificate
-   - Enable Mosh: Toggle ON
-   - Post-Login Command: `zellij attach main || zellij --session main`
-4. Create Termius Snippets for Zellij - see section 2.2 Zellij File Commands
-
-### 6.2 SSH Client Configuration
-
-```bash
-# Add to ~/.ssh/config on client devices
-Host macbook
-    HostName 192.168.1.X
-    Port 2222
-    User yourusername
-    IdentityFile ~/.ssh/id_ed25519
-    CertificateFile ~/.ssh/id_ed25519-cert.pub
-    PreferredAuthentications publickey
-    ServerAliveInterval 60
-    ServerAliveCountMax 3
-```
-
-### 6.3 Blink Shell Configuration with Mosh
-
-```javascript
-// Blink config for certificate auth with mosh and Zellij
-host "macbook" {
-  hostname = "192.168.1.X"
-  port = 2222
-  user = "yourusername"
-  identityFile = "~/.ssh/id_ed25519-cert.pub"
-  moshServer = "/usr/local/bin/mosh-server"
-  moshPort = "60000:61000"
-  proxyCommand = "none"
-  strictHostKeyChecking = "no"
-  // Auto-attach to Zellij
-  remoteCommand = "zellij attach main || zellij --session main"
-}
-
-// Quick access to different sessions
-host "macbook-dev" {
-  hostname = "192.168.1.X"
-  port = 2222
-  user = "yourusername"
-  identityFile = "~/.ssh/id_ed25519-cert.pub"
-  moshServer = "/usr/local/bin/mosh-server"
-  remoteCommand = "zellij attach dev || zellij --session dev --layout ~/.config/zellij/layouts/development.kdl"
-}
-```
-
-## Phase 7: Testing & Monitoring
-
-### 7.1 Connection Test Script
-
-- [`.local/bin/remote_access_test`](../.local/bin/remote_access_test)
-
-## Phase 8: WireGuard Setup (Final Phase)
-
-### 8.1 WireGuard Installation and Configuration
-
-```bash
-# Install WireGuard
-brew install wireguard-tools
-
-# Create config directory
-sudo mkdir -p /usr/local/etc/wireguard
-cd /usr/local/etc/wireguard
-
-# Generate keys
-sudo bash -c 'umask 077; wg genkey | tee server_private.key | wg pubkey > server_public.key'
-sudo bash -c 'umask 077; wg genkey | tee iphone_private.key | wg pubkey > iphone_public.key'
-```
-
-### 8.2 WireGuard Server Config
-
-```bash
-sudo tee /usr/local/etc/wireguard/wg0.conf << EOF
-[Interface]
-PrivateKey = $(sudo cat server_private.key)
-Address = 10.10.10.1/24
-ListenPort = 51820
-PostUp = sysctl -w net.inet.ip.forwarding=1
-PostUp = echo 'nat on en0 from 10.10.10.0/24 to any -> (en0)' | sudo pfctl -f -
-PostDown = sudo pfctl -F all
-
-[Peer]
-# iPhone
-PublicKey = $(sudo cat iphone_public.key)
-AllowedIPs = 10.10.10.2/32
-PersistentKeepalive = 25
-EOF
-```
-
-### 8.3 iPhone WireGuard Config
-
-Generate QR code for easy import:
-
-```bash
-# Create iPhone config
-cat << EOF > iphone.conf
-[Interface]
-PrivateKey = $(sudo cat iphone_private.key)
-Address = 10.10.10.2/24
-DNS = 1.1.1.1, 8.8.8.8
-
-[Peer]
-PublicKey = $(sudo cat server_public.key)
-Endpoint = YOUR_PUBLIC_IP:51820
-AllowedIPs = 10.10.10.1/32, 192.168.1.0/24
-PersistentKeepalive = 25
-EOF
-
-# Generate QR code
-brew install qrencode
-qrencode -t ansiutf8 < iphone.conf
-
-# Encrypt the config
-~/bin/secure-config encrypt iphone.conf
-rm iphone.conf
-```
-
-### 8.4 Start WireGuard
-
-```bash
-# Load WireGuard
-sudo wg-quick up wg0
-
-# Enable on boot
-sudo brew services start wireguard-tools
-```
-
-### 8.5 Backup Strategy with SOPS
-
-```bash
-# Backup Zellij configs
-cat > ~/bin/backup-zellij-config << 'EOF'
-#!/bin/bash
-BACKUP_DIR="$HOME/.config/backups"
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-BACKUP_NAME="zellij-config-$TIMESTAMP"
-
-mkdir -p "$BACKUP_DIR"
-
-# Create backup structure
-TEMP_DIR=$(mktemp -d)
-mkdir -p "$TEMP_DIR/$BACKUP_NAME"
-
-# Copy configs
-cp -r ~/.config/zellij "$TEMP_DIR/$BACKUP_NAME/"
-cp -r ~/.ssh/ca "$TEMP_DIR/$BACKUP_NAME/"
-cp ~/.sops.yaml "$TEMP_DIR/$BACKUP_NAME/"
-cp -r ~/.config/ghostty "$TEMP_DIR/$BACKUP_NAME/"
-
-# Get list of active sessions
-zellij list-sessions > "$TEMP_DIR/$BACKUP_NAME/active-sessions.txt" 2>/dev/null
-
-# Create manifest
-cat > "$TEMP_DIR/$BACKUP_NAME/manifest.yaml" << MANIFEST
-backup:
-  timestamp: "$TIMESTAMP"
-  hostname: "$(hostname)"
-  user: "$(whoami)"
-  zellij_version: "$(zellij --version)"
-  files:
-    - zellij_config
-    - ssh_ca
-    - sops.yaml
-    - ghostty_config
-    - active_sessions
-MANIFEST
-
-# Tar and encrypt
-cd "$TEMP_DIR"
-tar czf "$BACKUP_NAME.tar.gz" "$BACKUP_NAME"
-sops -e --input-type binary --output-type binary \
-    "$BACKUP_NAME.tar.gz" > "$BACKUP_DIR/$BACKUP_NAME.tar.gz.enc"
-
-# Clean up
-rm -rf "$TEMP_DIR"
-
-echo "Backup saved to $BACKUP_DIR/$BACKUP_NAME.tar.gz.enc"
-EOF
-chmod +x ~/bin/backup-zellij-config
-```
-
-## Key Advantages of Zellij over Tmux
-
-1. **Better Defaults**: No need for extensive configuration to get started
-2. **Floating Panes**: Native support for floating windows
-3. **WebAssembly Plugins**: Extensible with WASM plugins
-4. **Better Mouse Support**: Works out of the box
-5. **Session Serialization**: Built-in session saving/restoration
-6. **Modern UI**: Cleaner, more intuitive interface
-7. **Built-in Layouts**: Powerful layout system with KDL
-8. **Better Copy Mode**: More intuitive selection and copying
-9. **Plugin Ecosystem**: Growing collection of useful plugins
-10. **Performance**: Generally faster and more responsive
-
-## Phase 9: Automation & Convenience Scripts
-
-### 9.1 Quick Setup Script
-
-```bash
-# Create setup script
-cat > ~/.local/bin/setup-remote-access << 'EOF'
-#!/bin/bash
-set -euo pipefail
-
-PHASE=${1:-"all"}
-
-setup_ssh() {
-    echo "Setting up SSH with certificate authentication..."
-    sudo systemsetup -setremotelogin on
-    sudo mkdir -p /etc/ssh/sshd_config.d/
-    # Add SSH config setup here
-}
-
-setup_zellij() {
-    echo "Setting up Zellij..."
-    brew install zellij fzf ripgrep bat eza
-    # Create default session
-    zellij --session main --layout ~/.config/zellij/layouts/simple.kdl --detached
-}
-
-setup_security() {
-    echo "Setting up security enhancements..."
-    brew install sshguard
-    # Add security setup here
-}
-
-case "$PHASE" in
-    "ssh"|"1") setup_ssh ;;
-    "zellij"|"2") setup_zellij ;;
-    "security"|"5") setup_security ;;
-    "all") setup_ssh && setup_zellij && setup_security ;;
-    *) echo "Usage: $0 [ssh|zellij|security|all]" ;;
-esac
-EOF
-chmod +x ~/.local/bin/setup-remote-access
-```
-
-### 9.2 Health Check Script
-
-```bash
-# Create health check script
-cat > ~/.local/bin/remote-access-health << 'EOF'
-#!/bin/bash
-
-echo "=== Remote Access Health Check ==="
-
-# Check SSH service
-if sudo launchctl list | grep -q ssh; then
-    echo "✓ SSH service is running"
-else
-    echo "✗ SSH service is not running"
-fi
-
-# Check Zellij sessions
-if zellij list-sessions &>/dev/null; then
-    echo "✓ Zellij is available"
-    echo "  Active sessions: $(zellij list-sessions 2>/dev/null | wc -l)"
-else
-    echo "✗ Zellij is not available"
-fi
-
-# Check certificates
-if [[ -f ~/.ssh/id_ed25519-cert.pub ]]; then
-    CERT_VALID=$(ssh-keygen -L -f ~/.ssh/id_ed25519-cert.pub | grep "Valid:" | cut -d' ' -f2-)
-    echo "✓ SSH certificate present"
-    echo "  Validity: $CERT_VALID"
-else
-    echo "✗ SSH certificate not found"
-fi
-
-# Check network connectivity
-if ping -c 1 8.8.8.8 &>/dev/null; then
-    echo "✓ Network connectivity OK"
-else
-    echo "✗ Network connectivity issues"
-fi
-
-# Check security tools
-if brew list sshguard &>/dev/null; then
-    echo "✓ SSHGuard installed"
-else
-    echo "- SSHGuard not installed"
-fi
-EOF
-chmod +x ~/.local/bin/remote-access-health
-```
-
-### 9.3 Zellij Session Management
-
-```bash
-# Create session manager
-cat > ~/.local/bin/zs << 'EOF'
-#!/bin/bash
-# Quick Zellij session manager
-
-case "$1" in
-    "ls"|"list") zellij list-sessions ;;
-    "kill") zellij kill-session "${2:-main}" ;;
-    "killall") zellij kill-all-sessions ;;
-    "dev") zellij attach dev || zellij --session dev --layout ~/.config/zellij/layouts/development.kdl ;;
-    "monitor") zellij attach monitor || zellij --session monitor --layout ~/.config/zellij/layouts/monitor.kdl ;;
-    "main"|"") zellij attach main || zellij --session main --layout ~/.config/zellij/layouts/simple.kdl ;;
-    *) zellij attach "$1" || zellij --session "$1" ;;
-esac
-EOF
-chmod +x ~/.local/bin/zs
-```
-
-## Phase 10: Troubleshooting & Performance
-
-### 10.1 Common Issues
-
-**SSH Connection Refused:**
-
-```bash
-# Check if SSH is running
-sudo launchctl list | grep ssh
-
-# Check SSH configuration
-sudo sshd -t -f /etc/ssh/sshd_config
-
-# Check firewall
-sudo pfctl -s rules | grep 2222
-```
-
-**Zellij Session Issues:**
-
-```bash
-# Check for zombie processes
-ps aux | grep zellij
-
-# Clean up dead sessions
-zellij kill-all-sessions
-
-# Check permissions
-ls -la ~/.local/share/zellij/
-```
-
-**Certificate Problems:**
-
-```bash
-# Verify certificate
-ssh-keygen -L -f ~/.ssh/id_ed25519-cert.pub
-
-# Test certificate authentication
-ssh -vvv -p 2222 user@localhost
-```
-
-### 10.2 Performance Tuning
-
-```bash
-# Optimize SSH configuration
-echo 'ClientAliveInterval 30' | sudo tee -a /etc/ssh/sshd_config.d/99-custom.conf
-echo 'ClientAliveCountMax 3' | sudo tee -a /etc/ssh/sshd_config.d/99-custom.conf
-
-# Optimize Zellij memory usage
-export ZELLIJ_CONFIG_DIR="${HOME}/.config/zellij"
-export ZELLIJ_CACHE_DIR="${HOME}/.cache/zellij"
-```
-
-### 10.3 Security Best Practices
-
-1. **Regular Certificate Rotation:**
-
-   ```bash
-   # Add to crontab for monthly renewal
-   0 0 1 * * ~/.local/bin/renew-ssh-cert
-   ```
-
-2. **Log Monitoring:**
-
-   ```bash
-   # Monitor SSH attempts
-   tail -f /var/log/system.log | grep sshd
-
-   # Monitor Zellij sessions
-   zellij action query-tab-names
-   ```
-
-3. **Network Segmentation:**
-   - Use separate VLANs for management traffic
-   - Implement network access control lists
-   - Regular security audits
-
-## Final Notes
-
-- Zellij's configuration is more straightforward than tmux
-- The layout system is more powerful and easier to understand
-- Plugin support adds significant extensibility
-- Session persistence works better out of the box
-- The keybindings are more intuitive (though we've added tmux compatibility)
-- Ghostty + Zellij is a modern, performant combination
-- Use the automation scripts to simplify setup and maintenance
-- Regular health checks prevent connectivity issues
-- Security should be reviewed and updated regularly
+## Future Enhancements Roadmap
+
+### Phase 8: WireGuard VPN Integration
+
+**Status:** Ready for implementation  
+**Purpose:** External network access beyond local WiFi
+
+**Setup tasks:**
+
+- [ ] Install WireGuard: `brew install wireguard-tools`
+- [ ] Generate WireGuard keys for server and iPhone
+- [ ] Configure WireGuard server on MacBook
+- [ ] Create iPhone WireGuard profile with QR code
+- [ ] Set up automatic startup and NAT rules
+- [ ] Integrate with existing firewall configuration
+
+**Script needed:** `wireguard_setup` (not yet implemented)
+
+### Phase 9: Dynamic DNS Integration
+
+**Status:** Planning phase  
+**Purpose:** Access MacBook from anywhere with stable hostname
+
+**Implementation options:**
+
+- **Cloudflare DDNS:** Free tier with API automation
+- **DuckDNS:** Simple dynamic DNS service
+- **No-IP:** Traditional DDNS provider
+- **Custom solution:** Router-based or cron job
+
+**Tasks:**
+
+- [ ] Choose DDNS provider
+- [ ] Create automated update script
+- [ ] Integrate with network change detection
+- [ ] Update mobile app configurations
+- [ ] Set up SSL/TLS certificates for custom domain
+
+**Script needed:** `ddns_setup`
+
+### Phase 10: Core DNS Server
+
+**Status:** Advanced planning  
+**Purpose:** Local DNS resolution and ad-blocking
+
+**Features:**
+
+- **Local DNS resolution** for .local domains
+- **Ad-blocking** with configurable blocklists
+- **DNS-over-HTTPS** for enhanced privacy
+- **Custom DNS records** for local services
+- **Integration** with existing network setup
+
+**Tasks:**
+
+- [ ] Install and configure CoreDNS
+- [ ] Set up ad-blocking lists (Pi-hole compatibility)
+- [ ] Configure DHCP integration
+- [ ] Create management interface
+- [ ] Integrate with monitoring tools
+
+**Script needed:** `coredns_setup`
+
+### Phase 11: Advanced Monitoring
+
+**Status:** Enhancement planning  
+**Purpose:** Comprehensive system and security monitoring
+
+**Features:**
+
+- **Grafana dashboards** for system metrics
+- **Prometheus monitoring** integration
+- **Log aggregation** and analysis
+- **Security event detection**
+- **Mobile notifications** for alerts
+
+**Tasks:**
+
+- [ ] Set up metrics collection
+- [ ] Create monitoring dashboards
+- [ ] Implement alerting rules
+- [ ] Mobile notification integration
+- [ ] Automated report generation
+
+### Phase 12: Backup & Disaster Recovery
+
+**Status:** Design phase  
+**Purpose:** Automated backup and quick recovery
+
+**Features:**
+
+- **Automated certificate backup** with encryption
+- **Configuration versioning** and rollback
+- **Remote backup storage** (cloud integration)
+- **One-click recovery** procedures
+- **Backup verification** and testing
+
+**Tasks:**
+
+- [ ] Design backup strategy
+- [ ] Implement automated backup scripts
+- [ ] Create recovery procedures
+- [ ] Set up backup monitoring
+- [ ] Test disaster recovery scenarios
+
+## File Locations Reference
+
+### Configuration Files
+
+- **SSH configs:** `~/.config/ssh/`, `/etc/ssh/sshd_config.d/`
+- **Zellij configs:** `~/.config/zellij/`
+- **Security configs:** `~/.config/sshguard/`, `~/.config/sops/`
+- **Service configs:** `~/Library/LaunchAgents/`
+
+### Scripts & Tools
+
+- **Setup scripts:** `~/.local/bin/setup_ssh`, `setup_security`, `setup_service`
+- **Mobile tools:** `~/.local/bin/generate_qr_config`, `setup_iphone_guide`
+- **Monitoring:** `~/.local/bin/remote_health_check`, `connection_test`
+- **Maintenance:** `~/.local/bin/cert_status`, `renew_ssh_cert`, `setup_firewall`
+
+### Certificates & Keys
+
+- **CA files:** `~/.ssh/ca/`
+- **User certificates:** `~/.ssh/id_ed25519*`
+- **System trust:** `/etc/ssh/trusted_user_ca_keys`
+- **Encrypted backups:** `~/.config/secure/`
+
+### Logs & Monitoring
+
+- **Service logs:** `/tmp/ssh_keepalive.*`, `/tmp/zellij_restore.*`
+- **System logs:** `/var/log/system.log` (SSH events)
+- **Security logs:** SSHGuard and pf logs
+- **Health reports:** Generated by diagnostic tools
+
+## Conclusion
+
+This enhanced setup provides enterprise-grade remote access with mobile-first design, comprehensive automation, and robust security. The script-based approach eliminates manual configuration errors while providing extensive monitoring and troubleshooting capabilities.
+
+**Key benefits:**
+
+- ⚡ **Fast setup:** Complete configuration in ~15 minutes
+- 🔒 **Secure by default:** Certificate authentication and rate limiting
+- 📱 **Mobile optimized:** QR codes and setup wizards
+- 🛠️ **Self-maintaining:** Automated health checks and certificate renewal
+- 🔍 **Observable:** Comprehensive monitoring and diagnostics

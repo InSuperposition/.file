@@ -1,0 +1,662 @@
+#!/bin/bash
+# Advanced Troubleshooting Assistant for Remote Access
+# Diagnoses and fixes common remote access issues
+
+set -euo pipefail
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+log_info() {
+    echo -e "${GREEN}[INFO]${NC} $1"
+}
+
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+log_debug() {
+    echo -e "${CYAN}[DEBUG]${NC} $1"
+}
+
+log_section() {
+    echo -e "\n${BLUE}=== $1 ===${NC}"
+}
+
+log_fix() {
+    echo -e "${MAGENTA}[FIX]${NC} $1"
+}
+
+# Diagnostic functions
+diagnose_ssh_service() {
+    log_section "SSH Service Diagnostics"
+    
+    local issues=0
+    
+    # Check if SSH is enabled
+    if sudo launchctl list | grep -q ssh 2>/dev/null; then
+        log_info "✓ SSH service is running"
+    else
+        log_error "✗ SSH service is not running"
+        log_fix "Run: sudo systemsetup -setremotelogin on"
+        issues=$((issues + 1))
+    fi
+    
+    # Check SSH configuration
+    if [[ -f "/etc/ssh/sshd_config.d/99_custom.conf" ]]; then
+        log_info "✓ Custom SSH configuration exists"
+        
+        # Validate SSH config
+        if sudo sshd -t 2>/dev/null; then
+            log_info "✓ SSH configuration is valid"
+        else
+            log_error "✗ SSH configuration has errors"
+            log_debug "Check with: sudo sshd -t"
+            issues=$((issues + 1))
+        fi
+    else
+        log_error "✗ Custom SSH configuration missing"
+        log_fix "Run: ~/.local/bin/setup_ssh"
+        issues=$((issues + 1))
+    fi
+    
+    # Check if port 2222 is listening
+    if lsof -i :2222 >/dev/null 2>&1; then
+        log_info "✓ SSH port 2222 is listening"
+        
+        # Show what's listening
+        local listener=$(lsof -i :2222 | grep LISTEN | awk '{print $1}' | head -1)
+        log_debug "Listener: $listener"
+    else
+        log_error "✗ SSH port 2222 is not listening"
+        log_fix "Check SSH service and configuration"
+        issues=$((issues + 1))
+    fi
+    
+    return $issues
+}
+
+diagnose_certificates() {
+    log_section "Certificate Diagnostics"
+    
+    local issues=0
+    
+    # Check CA directory
+    if [[ -d "$HOME/.ssh/ca" ]]; then
+        log_info "✓ CA directory exists"
+        
+        # Check CA private key
+        if [[ -f "$HOME/.ssh/ca/ssh_ca" ]]; then
+            log_info "✓ CA private key exists"
+            
+            # Check permissions
+            local ca_perms=$(stat -f "%A" "$HOME/.ssh/ca/ssh_ca")
+            if [[ "$ca_perms" == "600" ]]; then
+                log_info "✓ CA private key permissions are secure"
+            else
+                log_warn "⚠ CA private key permissions: $ca_perms (should be 600)"
+                log_fix "Run: chmod 600 ~/.ssh/ca/ssh_ca"
+            fi
+        else
+            log_error "✗ CA private key missing"
+            log_fix "Run: ~/.local/bin/setup_ssh"
+            issues=$((issues + 1))
+        fi
+    else
+        log_error "✗ CA directory missing"
+        log_fix "Run: ~/.local/bin/setup_ssh"
+        issues=$((issues + 1))
+    fi
+    
+    # Check user certificate
+    if [[ -f "$HOME/.ssh/id_ed25519-cert.pub" ]]; then
+        log_info "✓ User certificate exists"
+        
+        # Check certificate validity
+        if ssh-keygen -L -f "$HOME/.ssh/id_ed25519-cert.pub" >/dev/null 2>&1; then
+            log_info "✓ Certificate is readable"
+            
+            # Check expiry
+            local cert_info=$(ssh-keygen -L -f "$HOME/.ssh/id_ed25519-cert.pub")
+            local valid_to=$(echo "$cert_info" | grep "Valid:" | sed 's/.*to \([^ ]*\).*/\1/')
+            
+            if [[ -n "$valid_to" ]]; then
+                local expiry_ts=$(date -j -f "%Y-%m-%dT%H:%M:%S" "$valid_to" "+%s" 2>/dev/null || echo "0")
+                local current_ts=$(date "+%s")
+                local days_remaining=$(( (expiry_ts - current_ts) / 86400 ))
+                
+                if [[ $days_remaining -le 0 ]]; then
+                    log_error "✗ Certificate has expired"
+                    log_fix "Run: ~/.local/bin/ssh_cert_renew force"
+                    issues=$((issues + 1))
+                elif [[ $days_remaining -le 7 ]]; then
+                    log_warn "⚠ Certificate expires in $days_remaining days"
+                    log_fix "Run: ~/.local/bin/ssh_cert_renew check"
+                else
+                    log_info "✓ Certificate valid for $days_remaining days"
+                fi
+            fi
+        else
+            log_error "✗ Certificate is invalid or unreadable"
+            log_fix "Run: ~/.local/bin/ssh_cert_renew force"
+            issues=$((issues + 1))
+        fi
+    else
+        log_error "✗ User certificate missing"
+        log_fix "Run: ~/.local/bin/setup_ssh"
+        issues=$((issues + 1))
+    fi
+    
+    # Check trusted CA keys
+    if [[ -f "/etc/ssh/trusted_user_ca_keys" ]]; then
+        log_info "✓ Trusted CA keys installed"
+    else
+        log_error "✗ Trusted CA keys missing"
+        log_fix "Run: ~/.local/bin/setup_ssh"
+        issues=$((issues + 1))
+    fi
+    
+    return $issues
+}
+
+diagnose_network() {
+    log_section "Network Diagnostics"
+    
+    local issues=0
+    
+    # Check network interfaces
+    local ips=$(ifconfig | grep "inet " | grep -v "127.0.0.1" | awk '{print $2}')
+    
+    if [[ -n "$ips" ]]; then
+        log_info "✓ Network interfaces detected:"
+        echo "$ips" | sed 's/^/    /'
+        
+        # Test connectivity to each IP
+        while read -r ip; do
+            if [[ -n "$ip" ]]; then
+                if nc -z "$ip" 2222 2>/dev/null; then
+                    log_info "✓ $ip:2222 is accessible"
+                else
+                    log_warn "⚠ $ip:2222 is not accessible"
+                    log_debug "Test with: nc -z $ip 2222"
+                fi
+            fi
+        done <<< "$ips"
+    else
+        log_error "✗ No network interfaces found"
+        log_fix "Check network connection"
+        issues=$((issues + 1))
+    fi
+    
+    # Check DNS resolution
+    if nslookup localhost >/dev/null 2>&1; then
+        log_info "✓ DNS resolution working"
+    else
+        log_warn "⚠ DNS resolution issues"
+        log_debug "Check /etc/resolv.conf"
+    fi
+    
+    return $issues
+}
+
+diagnose_zellij() {
+    log_section "Zellij Diagnostics"
+    
+    local issues=0
+    
+    # Check if Zellij is available
+    if command -v zellij &> /dev/null; then
+        local zellij_version=$(zellij --version | head -1)
+        log_info "✓ Zellij available: $zellij_version"
+        
+        # Check Zellij path
+        local zellij_path=$(which zellij)
+        log_debug "Zellij path: $zellij_path"
+        
+        # Test session creation
+        if zellij --session troubleshoot-test --detached echo "test" 2>/dev/null; then
+            log_info "✓ Zellij session creation works"
+            zellij kill-session troubleshoot-test 2>/dev/null || true
+        else
+            log_error "✗ Zellij session creation failed"
+            log_debug "Check Zellij configuration"
+            issues=$((issues + 1))
+        fi
+    else
+        log_error "✗ Zellij not found"
+        log_fix "Check mise installation and PATH"
+        issues=$((issues + 1))
+    fi
+    
+    # Check Zellij configuration
+    if [[ -f "$HOME/.config/zellij/config.kdl" ]]; then
+        log_info "✓ Zellij configuration exists"
+    else
+        log_warn "⚠ Zellij configuration missing"
+        log_debug "Using default configuration"
+    fi
+    
+    # Check layouts
+    local layout_count=$(find "$HOME/.config/zellij/layouts" -name "*.kdl" 2>/dev/null | wc -l | tr -d ' ')
+    if [[ $layout_count -gt 0 ]]; then
+        log_info "✓ Zellij layouts available: $layout_count"
+    else
+        log_warn "⚠ No Zellij layouts found"
+        log_debug "Layouts directory: ~/.config/zellij/layouts/"
+    fi
+    
+    return $issues
+}
+
+diagnose_security() {
+    log_section "Security Service Diagnostics"
+    
+    local issues=0
+    
+    # Check SSHGuard
+    if pgrep sshguard > /dev/null; then
+        log_info "✓ SSHGuard is running"
+        
+        # Check SSHGuard configuration
+        if [[ -f "/usr/local/etc/sshguard.conf" ]]; then
+            log_info "✓ SSHGuard configuration exists"
+        else
+            log_warn "⚠ SSHGuard configuration missing"
+        fi
+    else
+        log_warn "⚠ SSHGuard is not running"
+        log_fix "Run: brew services start sshguard"
+    fi
+    
+    # Check pf firewall
+    if sudo pfctl -s info 2>/dev/null | grep -q "Status: Enabled"; then
+        log_info "✓ pf firewall is enabled"
+        
+        # Check SSH rules
+        if sudo pfctl -s rules 2>/dev/null | grep -q "2222"; then
+            log_info "✓ SSH firewall rules active"
+        else
+            log_warn "⚠ SSH firewall rules missing"
+            log_fix "Run: ~/.local/bin/setup_firewall enable"
+        fi
+    else
+        log_warn "⚠ pf firewall is disabled"
+        log_fix "Run: ~/.local/bin/setup_firewall enable"
+    fi
+    
+    # Check blocked IPs
+    local blocked_count=$(sudo pfctl -t ssh_bruteforce -T show 2>/dev/null | wc -l | tr -d ' ')
+    if [[ $blocked_count -gt 0 ]]; then
+        log_warn "⚠ $blocked_count IPs currently blocked"
+        log_debug "View with: sudo pfctl -t ssh_bruteforce -T show"
+    else
+        log_info "✓ No IPs currently blocked"
+    fi
+    
+    return $issues
+}
+
+test_connections() {
+    log_section "Connection Testing"
+    
+    local issues=0
+    
+    # Test local SSH connection
+    log_info "Testing local SSH connection..."
+    if timeout 10 ssh -o ConnectTimeout=5 -p 2222 localhost echo "SSH test successful" 2>/dev/null; then
+        log_info "✓ Local SSH connection works"
+    else
+        log_error "✗ Local SSH connection failed"
+        log_debug "Test manually: ssh -v -p 2222 localhost"
+        issues=$((issues + 1))
+    fi
+    
+    # Test certificate authentication specifically
+    log_info "Testing certificate authentication..."
+    if timeout 10 ssh -o ConnectTimeout=5 -o PreferredAuthentications=publickey \
+        -p 2222 localhost echo "Certificate auth successful" 2>/dev/null; then
+        log_info "✓ Certificate authentication works"
+    else
+        log_error "✗ Certificate authentication failed"
+        log_debug "Check certificate with: ~/.local/bin/cert_status"
+        issues=$((issues + 1))
+    fi
+    
+    # Test SSH + Zellij integration
+    log_info "Testing SSH + Zellij integration..."
+    if timeout 15 ssh -o ConnectTimeout=5 -p 2222 localhost \
+        "zellij --session troubleshoot-integration --detached; zellij kill-session troubleshoot-integration" 2>/dev/null; then
+        log_info "✓ SSH + Zellij integration works"
+    else
+        log_error "✗ SSH + Zellij integration failed"
+        log_debug "Check Zellij availability in SSH session"
+        issues=$((issues + 1))
+    fi
+    
+    # Test Mosh if available
+    if command -v mosh &> /dev/null; then
+        log_info "Testing Mosh connection..."
+        if timeout 15 mosh --server="mosh-server --port=60001" \
+            localhost -- echo "Mosh test successful" 2>/dev/null; then
+            log_info "✓ Mosh connection works"
+        else
+            log_warn "⚠ Mosh connection failed"
+            log_debug "Check UDP ports 60000-61000"
+        fi
+    else
+        log_debug "Mosh not available - skipping test"
+    fi
+    
+    return $issues
+}
+
+check_logs() {
+    log_section "Log Analysis"
+    
+    # Check SSH logs
+    log_info "Recent SSH connection attempts:"
+    sudo tail -20 /var/log/system.log 2>/dev/null | grep sshd | tail -5 | sed 's/^/  /' || log_debug "No recent SSH logs found"
+    
+    # Check SSHGuard logs
+    if pgrep sshguard > /dev/null; then
+        log_info "SSHGuard status:"
+        if [[ -f "/tmp/sshguard.log" ]]; then
+            tail -5 /tmp/sshguard.log | sed 's/^/  /' || log_debug "No SSHGuard logs"
+        else
+            log_debug "SSHGuard log file not found"
+        fi
+    fi
+    
+    # Check service logs
+    if [[ -f "/tmp/ssh_keepalive.err" ]]; then
+        log_info "SSH keepalive errors:"
+        tail -5 /tmp/ssh_keepalive.err | sed 's/^/  /' || log_debug "No SSH keepalive errors"
+    fi
+    
+    if [[ -f "/tmp/zellij_restore.err" ]]; then
+        log_info "Zellij restore errors:"
+        tail -5 /tmp/zellij_restore.err | sed 's/^/  /' || log_debug "No Zellij restore errors"
+    fi
+}
+
+auto_fix_issues() {
+    log_section "Automatic Issue Resolution"
+    
+    local fixes_applied=0
+    
+    # Fix SSH service if not running
+    if ! sudo launchctl list | grep -q ssh 2>/dev/null; then
+        log_fix "Starting SSH service..."
+        if sudo systemsetup -setremotelogin on; then
+            log_info "✓ SSH service started"
+            fixes_applied=$((fixes_applied + 1))
+        else
+            log_error "✗ Failed to start SSH service"
+        fi
+    fi
+    
+    # Fix certificate permissions
+    if [[ -f "$HOME/.ssh/ca/ssh_ca" ]]; then
+        local ca_perms=$(stat -f "%A" "$HOME/.ssh/ca/ssh_ca")
+        if [[ "$ca_perms" != "600" ]]; then
+            log_fix "Fixing CA private key permissions..."
+            chmod 600 "$HOME/.ssh/ca/ssh_ca"
+            log_info "✓ CA permissions fixed"
+            fixes_applied=$((fixes_applied + 1))
+        fi
+    fi
+    
+    # Fix private key permissions
+    if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
+        local key_perms=$(stat -f "%A" "$HOME/.ssh/id_ed25519")
+        if [[ "$key_perms" != "600" ]]; then
+            log_fix "Fixing private key permissions..."
+            chmod 600 "$HOME/.ssh/id_ed25519"
+            log_info "✓ Private key permissions fixed"
+            fixes_applied=$((fixes_applied + 1))
+        fi
+    fi
+    
+    # Start SSHGuard if not running
+    if ! pgrep sshguard > /dev/null; then
+        if command -v sshguard &> /dev/null; then
+            log_fix "Starting SSHGuard..."
+            if brew services start sshguard; then
+                log_info "✓ SSHGuard started"
+                fixes_applied=$((fixes_applied + 1))
+            else
+                log_warn "⚠ Failed to start SSHGuard"
+            fi
+        fi
+    fi
+    
+    # Load services if not loaded
+    if ! launchctl list | grep -q "com.user.ssh_keepalive"; then
+        if [[ -f "$HOME/Library/LaunchAgents/com.user.ssh_keepalive.plist" ]]; then
+            log_fix "Loading SSH keepalive service..."
+            if launchctl load "$HOME/Library/LaunchAgents/com.user.ssh_keepalive.plist"; then
+                log_info "✓ SSH keepalive service loaded"
+                fixes_applied=$((fixes_applied + 1))
+            fi
+        fi
+    fi
+    
+    log_info "Applied $fixes_applied automatic fixes"
+    return $fixes_applied
+}
+
+generate_report() {
+    log_section "Diagnostic Report"
+    
+    local report_file="troubleshoot_report_$(date +%Y%m%d_%H%M%S).txt"
+    
+    {
+        echo "Remote Access Troubleshooting Report"
+        echo "Generated: $(date)"
+        echo "System: $(uname -a)"
+        echo ""
+        
+        echo "=== SSH Service Status ==="
+        sudo launchctl list | grep ssh || echo "SSH service not running"
+        echo ""
+        
+        echo "=== Network Configuration ==="
+        ifconfig | grep -E "inet |status" || echo "No network info"
+        echo ""
+        
+        echo "=== Certificate Status ==="
+        if [[ -f "$HOME/.ssh/id_ed25519-cert.pub" ]]; then
+            ssh-keygen -L -f "$HOME/.ssh/id_ed25519-cert.pub" || echo "Certificate unreadable"
+        else
+            echo "No certificate found"
+        fi
+        echo ""
+        
+        echo "=== Zellij Status ==="
+        if command -v zellij &> /dev/null; then
+            zellij --version
+            zellij list-sessions 2>/dev/null || echo "No active sessions"
+        else
+            echo "Zellij not available"
+        fi
+        echo ""
+        
+        echo "=== Security Services ==="
+        pgrep sshguard >/dev/null && echo "SSHGuard: Running" || echo "SSHGuard: Not running"
+        sudo pfctl -s info 2>/dev/null | grep "Status:" || echo "pf status unknown"
+        echo ""
+        
+        echo "=== Recent Logs ==="
+        sudo tail -10 /var/log/system.log 2>/dev/null | grep sshd || echo "No SSH logs"
+        
+    } > "$report_file"
+    
+    log_info "Diagnostic report saved: $report_file"
+    return 0
+}
+
+interactive_troubleshoot() {
+    clear
+    
+    echo -e "${MAGENTA}"
+    echo "╔══════════════════════════════════════════════════════════════╗"
+    echo "║                Advanced Troubleshooting Assistant            ║"
+    echo "║                   Remote Access Diagnostics                  ║"
+    echo "╚══════════════════════════════════════════════════════════════╝"
+    echo -e "${NC}"
+    
+    echo ""
+    log_info "Starting comprehensive diagnostics..."
+    
+    local total_issues=0
+    
+    # Run diagnostics
+    local ssh_issues
+    ssh_issues=$(diagnose_ssh_service)
+    total_issues=$((total_issues + ssh_issues))
+    
+    local cert_issues
+    cert_issues=$(diagnose_certificates)
+    total_issues=$((total_issues + cert_issues))
+    
+    local network_issues
+    network_issues=$(diagnose_network)
+    total_issues=$((total_issues + network_issues))
+    
+    local zellij_issues
+    zellij_issues=$(diagnose_zellij)
+    total_issues=$((total_issues + zellij_issues))
+    
+    local security_issues
+    security_issues=$(diagnose_security)
+    total_issues=$((total_issues + security_issues))
+    
+    local connection_issues
+    connection_issues=$(test_connections)
+    total_issues=$((total_issues + connection_issues))
+    
+    # Show log analysis
+    check_logs
+    
+    # Summary
+    log_section "Diagnostic Summary"
+    
+    if [[ $total_issues -eq 0 ]]; then
+        log_info "🎉 No issues detected! System appears to be working correctly."
+    else
+        log_warn "⚠️  Found $total_issues issue(s) that need attention"
+        
+        # Offer automatic fixes
+        echo ""
+        echo "Would you like to attempt automatic fixes? (y/N)"
+        read -r response
+        
+        if [[ "$response" =~ ^[Yy]$ ]]; then
+            auto_fix_issues
+            
+            echo ""
+            log_info "Re-running critical tests after fixes..."
+            test_connections
+        fi
+    fi
+    
+    # Offer to generate report
+    echo ""
+    echo "Generate detailed diagnostic report? (y/N)"
+    read -r response
+    
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        generate_report
+    fi
+    
+    echo ""
+    log_info "Troubleshooting complete!"
+    
+    if [[ $total_issues -gt 0 ]]; then
+        echo ""
+        echo "For additional help:"
+        echo "  • Review setup: ~/.local/bin/setup_iphone_guide"
+        echo "  • Health check: ~/.local/bin/remote_health_check"
+        echo "  • Documentation: ~/.file/doc/remote_access.md"
+    fi
+}
+
+show_help() {
+    echo "Advanced Troubleshooting Assistant"
+    echo ""
+    echo "Usage: $0 [command]"
+    echo ""
+    echo "Commands:"
+    echo "  interactive  - Run interactive diagnostics (default)"
+    echo "  ssh          - Diagnose SSH service issues"
+    echo "  certs        - Diagnose certificate issues"
+    echo "  network      - Diagnose network connectivity"
+    echo "  zellij       - Diagnose Zellij issues"
+    echo "  security     - Diagnose security services"
+    echo "  test         - Test connections only"
+    echo "  logs         - Analyze system logs"
+    echo "  autofix      - Attempt automatic fixes"
+    echo "  report       - Generate diagnostic report"
+    echo "  help         - Show this help"
+    echo ""
+    echo "Examples:"
+    echo "  $0              # Run full interactive diagnostics"
+    echo "  $0 ssh          # Diagnose SSH issues only"
+    echo "  $0 autofix      # Attempt automatic fixes"
+    echo "  $0 report       # Generate diagnostic report"
+}
+
+main() {
+    case "${1:-interactive}" in
+        "interactive")
+            interactive_troubleshoot
+            ;;
+        "ssh")
+            diagnose_ssh_service
+            ;;
+        "certs")
+            diagnose_certificates
+            ;;
+        "network")
+            diagnose_network
+            ;;
+        "zellij")
+            diagnose_zellij
+            ;;
+        "security")
+            diagnose_security
+            ;;
+        "test")
+            test_connections
+            ;;
+        "logs")
+            check_logs
+            ;;
+        "autofix")
+            auto_fix_issues
+            ;;
+        "report")
+            generate_report
+            ;;
+        "help"|"-h"|"--help")
+            show_help
+            ;;
+        *)
+            log_error "Unknown command: $1"
+            show_help
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"

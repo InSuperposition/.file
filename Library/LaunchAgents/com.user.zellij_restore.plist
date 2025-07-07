@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.user.zellij_restore</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/$(whoami)/.local/share/mise/installs/zellij/0.42.2/zellij</string>
+        <string>--session</string>
+        <string>main</string>
+        <string>--layout</string>
+        <string>/Users/$(whoami)/.config/zellij/layouts/simple.kdl</string>
+        <string>--detached</string>
+    </array>
+    
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+        <key>Crashed</key>
+        <true/>
+    </dict>
+    
+    <key>StandardErrorPath</key>
+    <string>/tmp/zellij_restore.err</string>
+    
+    <key>StandardOutPath</key>
+    <string>/tmp/zellij_restore.out</string>
+    
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/$(whoami)/.local/share/mise/installs/zellij/0.42.2:/usr/local/bin:/usr/bin:/bin</string>
+        <key>HOME</key>
+        <string>/Users/$(whoami)</string>
+        <key>XDG_CONFIG_HOME</key>
+        <string>/Users/$(whoami)/.config</string>
+        <key>XDG_CACHE_HOME</key>
+        <string>/Users/$(whoami)/.cache</string>
+        <key>XDG_DATA_HOME</key>
+        <string>/Users/$(whoami)/.local/share</string>
+        <key>XDG_STATE_HOME</key>
+        <string>/Users/$(whoami)/.local/state</string>
+        <key>TERM</key>
+        <string>xterm-256color</string>
+        <key>COLORTERM</key>
+        <string>truecolor</string>
+    </dict>
+    
+    <key>StartInterval</key>
+    <integer>60</integer>
+    
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+    
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>

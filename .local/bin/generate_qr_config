@@ -1,0 +1,326 @@
+#!/bin/bash
+# QR Code Generator for Mobile SSH Setup
+# Generates QR codes for easy mobile configuration
+
+set -euo pipefail
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+log_info() {
+    echo -e "${GREEN}[INFO]${NC} $1"
+}
+
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+check_dependencies() {
+    local missing_tools=()
+    
+    if ! command -v qrencode &> /dev/null; then
+        missing_tools+=("qrencode")
+    fi
+    
+    if [ ${#missing_tools[@]} -gt 0 ]; then
+        log_error "Missing required tools: ${missing_tools[*]}"
+        log_info "Install with: brew install ${missing_tools[*]}"
+        return 1
+    fi
+    
+    return 0
+}
+
+get_network_info() {
+    log_info "Detecting network configuration..."
+    
+    # Get primary IP addresses
+    local ip1=$(ifconfig | grep "inet 10.0.0" | head -1 | awk '{print $2}' || echo "")
+    local ip2=$(ifconfig | grep "inet 10.0.0" | tail -1 | awk '{print $2}' || echo "")
+    
+    if [[ -z "$ip1" ]]; then
+        log_error "Unable to detect local IP address"
+        log_info "Please check your network connection"
+        return 1
+    fi
+    
+    echo "Primary IP: $ip1"
+    if [[ -n "$ip2" && "$ip2" != "$ip1" ]]; then
+        echo "Secondary IP: $ip2"
+    fi
+    
+    # Store for use in configurations
+    PRIMARY_IP="$ip1"
+    SECONDARY_IP="$ip2"
+}
+
+generate_ssh_config_qr() {
+    local output_file="${1:-ssh_config.png}"
+    
+    log_info "Generating SSH configuration QR code..."
+    
+    # Create SSH config for mobile
+    local ssh_config=$(cat << EOF
+Host macbook
+    HostName $PRIMARY_IP
+    Port 2222
+    User $(whoami)
+    IdentityFile ~/.ssh/id_ed25519
+    CertificateFile ~/.ssh/id_ed25519-cert.pub
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    PreferredAuthentications publickey
+    RemoteCommand zellij attach main || zellij --session main
+    RequestTTY yes
+
+Host macbook-dev
+    HostName $PRIMARY_IP
+    Port 2222
+    User $(whoami)
+    IdentityFile ~/.ssh/id_ed25519
+    CertificateFile ~/.ssh/id_ed25519-cert.pub
+    RemoteCommand zellij attach dev || zellij --session dev --layout ~/.config/zellij/layouts/development.kdl
+    RequestTTY yes
+EOF
+)
+    
+    # Generate QR code
+    echo "$ssh_config" | qrencode -o "$output_file" -s 10 -m 2
+    
+    log_info "SSH config QR code saved to: $output_file"
+}
+
+generate_blink_config_qr() {
+    local output_file="${1:-blink_config.png}"
+    
+    log_info "Generating Blink Shell configuration QR code..."
+    
+    # Create Blink config
+    local blink_config=$(cat << EOF
+host "macbook" {
+  hostname = "$PRIMARY_IP"
+  port = 2222
+  user = "$(whoami)"
+  identityFile = "~/.ssh/id_ed25519"
+  certificateFile = "~/.ssh/id_ed25519-cert.pub"
+  moshServer = "/usr/local/bin/mosh-server"
+  moshPort = "60000:61000"
+  strictHostKeyChecking = "no"
+  remoteCommand = "zellij attach main || zellij --session main"
+}
+
+host "macbook-dev" {
+  hostname = "$PRIMARY_IP"
+  port = 2222
+  user = "$(whoami)"
+  identityFile = "~/.ssh/id_ed25519"
+  certificateFile = "~/.ssh/id_ed25519-cert.pub"
+  moshServer = "/usr/local/bin/mosh-server"
+  remoteCommand = "zellij attach dev || zellij --session dev --layout ~/.config/zellij/layouts/development.kdl"
+}
+EOF
+)
+    
+    # Generate QR code
+    echo "$blink_config" | qrencode -o "$output_file" -s 10 -m 2
+    
+    log_info "Blink config QR code saved to: $output_file"
+}
+
+generate_connection_info_qr() {
+    local output_file="${1:-connection_info.png}"
+    
+    log_info "Generating connection information QR code..."
+    
+    # Create connection info
+    local connection_info=$(cat << EOF
+MacBook SSH Access
+
+Primary IP: $PRIMARY_IP
+Secondary IP: $SECONDARY_IP
+SSH Port: 2222
+Username: $(whoami)
+Auth: SSH Certificate
+
+Mosh Ports: 60000-61000
+
+Quick Commands:
+- Main: zellij attach main
+- Dev: zellij attach dev
+- Monitor: zellij attach monitor
+- List: zellij list-sessions
+
+Certificate files needed:
+- ~/.ssh/id_ed25519 (private key)
+- ~/.ssh/id_ed25519-cert.pub (certificate)
+- ~/.ssh/ca/ssh_ca.pub (CA public key)
+EOF
+)
+    
+    # Generate QR code
+    echo "$connection_info" | qrencode -o "$output_file" -s 8 -m 2
+    
+    log_info "Connection info QR code saved to: $output_file"
+}
+
+generate_termius_json_qr() {
+    local output_file="${1:-termius_config.png}"
+    
+    log_info "Generating Termius configuration QR code..."
+    
+    # Create minimal Termius config for QR
+    local termius_config=$(cat << EOF
+{
+  "name": "MacBook Main",
+  "hostname": "$PRIMARY_IP",
+  "port": 2222,
+  "username": "$(whoami)",
+  "auth": "certificate",
+  "mosh": true,
+  "post_command": "zellij attach main"
+}
+EOF
+)
+    
+    # Generate QR code
+    echo "$termius_config" | qrencode -o "$output_file" -s 10 -m 2
+    
+    log_info "Termius config QR code saved to: $output_file"
+}
+
+copy_certificates() {
+    local cert_dir="./mobile_certs"
+    
+    log_info "Copying certificates for mobile transfer..."
+    
+    mkdir -p "$cert_dir"
+    
+    # Copy necessary files
+    if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
+        cp "$HOME/.ssh/id_ed25519" "$cert_dir/"
+        log_info "Private key copied"
+    else
+        log_error "Private key not found: $HOME/.ssh/id_ed25519"
+    fi
+    
+    if [[ -f "$HOME/.ssh/id_ed25519-cert.pub" ]]; then
+        cp "$HOME/.ssh/id_ed25519-cert.pub" "$cert_dir/"
+        log_info "Certificate copied"
+    else
+        log_error "Certificate not found: $HOME/.ssh/id_ed25519-cert.pub"
+    fi
+    
+    if [[ -f "$HOME/.ssh/ca/ssh_ca.pub" ]]; then
+        cp "$HOME/.ssh/ca/ssh_ca.pub" "$cert_dir/"
+        log_info "CA public key copied"
+    else
+        log_error "CA public key not found: $HOME/.ssh/ca/ssh_ca.pub"
+    fi
+    
+    # Create transfer instructions
+    cat > "$cert_dir/TRANSFER_INSTRUCTIONS.txt" << EOF
+Certificate Transfer Instructions
+================================
+
+1. Transfer these files to your iPhone/iPad:
+   - id_ed25519 (private key)
+   - id_ed25519-cert.pub (user certificate)
+   - ssh_ca.pub (CA public key)
+
+2. In your SSH client app:
+   - Import the private key (id_ed25519)
+   - Import the certificate (id_ed25519-cert.pub)
+   - Import the CA public key for host verification
+
+3. Connection settings:
+   - Host: $PRIMARY_IP
+   - Port: 2222
+   - Username: $(whoami)
+   - Authentication: Certificate
+
+4. Post-login command:
+   - zellij attach main || zellij --session main
+
+Security Note:
+- Keep these files secure during transfer
+- Delete from temporary locations after import
+- The private key should never be shared
+EOF
+    
+    log_info "Transfer instructions created in: $cert_dir/TRANSFER_INSTRUCTIONS.txt"
+    log_info "Certificate files ready in: $cert_dir/"
+}
+
+show_help() {
+    echo "QR Code Generator for Mobile SSH Setup"
+    echo ""
+    echo "Usage: $0 <command> [output_file]"
+    echo ""
+    echo "Commands:"
+    echo "  ssh        - Generate SSH config QR code"
+    echo "  blink      - Generate Blink Shell config QR code"
+    echo "  termius    - Generate Termius config QR code"
+    echo "  info       - Generate connection info QR code"
+    echo "  certs      - Copy certificates for mobile transfer"
+    echo "  all        - Generate all QR codes and copy certificates"
+    echo "  help       - Show this help"
+    echo ""
+    echo "Examples:"
+    echo "  $0 ssh my_ssh_config.png"
+    echo "  $0 all"
+    echo "  $0 info connection_details.png"
+}
+
+main() {
+    log_info "Mobile SSH configuration generator"
+    
+    check_dependencies || exit 1
+    get_network_info || exit 1
+    
+    case "${1:-help}" in
+        "ssh")
+            generate_ssh_config_qr "${2:-ssh_config.png}"
+            ;;
+        "blink")
+            generate_blink_config_qr "${2:-blink_config.png}"
+            ;;
+        "termius")
+            generate_termius_json_qr "${2:-termius_config.png}"
+            ;;
+        "info")
+            generate_connection_info_qr "${2:-connection_info.png}"
+            ;;
+        "certs")
+            copy_certificates
+            ;;
+        "all")
+            generate_ssh_config_qr "ssh_config.png"
+            generate_blink_config_qr "blink_config.png"
+            generate_termius_json_qr "termius_config.png"
+            generate_connection_info_qr "connection_info.png"
+            copy_certificates
+            log_info "All QR codes and certificates generated!"
+            ;;
+        "help"|"-h"|"--help")
+            show_help
+            ;;
+        *)
+            log_error "Unknown command: $1"
+            show_help
+            exit 1
+            ;;
+    esac
+    
+    echo ""
+    log_info "QR codes can be scanned with your iPhone camera or SSH client app"
+    log_info "Certificates must be manually transferred and imported"
+}
+
+main "$@"

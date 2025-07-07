@@ -1,0 +1,31 @@
+# SOPS Configuration for Encrypted Configuration Management
+# Manages encrypted sensitive files using age encryption
+
+creation_rules:
+  # Encrypted YAML files
+  - path_regex: \.enc\.yaml$
+    age: >-
+      AGE_PUBLIC_KEY_PLACEHOLDER
+  
+  # Encrypted JSON files  
+  - path_regex: \.enc\.json$
+    age: >-
+      AGE_PUBLIC_KEY_PLACEHOLDER
+      
+  # Encrypted environment files
+  - path_regex: \.enc\.env$
+    age: >-
+      AGE_PUBLIC_KEY_PLACEHOLDER
+      
+  # Encrypted KDL files (Zellij layouts)
+  - path_regex: \.enc\.kdl$
+    age: >-
+      AGE_PUBLIC_KEY_PLACEHOLDER
+      
+  # Encrypted configuration files
+  - path_regex: \.enc\.conf$
+    age: >-
+      AGE_PUBLIC_KEY_PLACEHOLDER
+
+# Note: Replace AGE_PUBLIC_KEY_PLACEHOLDER with actual age public key
+# Generated during setup process

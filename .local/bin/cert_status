@@ -1,0 +1,425 @@
+#!/bin/bash
+# SSH Certificate Status and Management Script
+# Displays detailed certificate information and status
+
+set -euo pipefail
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+log_info() {
+    echo -e "${GREEN}[INFO]${NC} $1"
+}
+
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+log_section() {
+    echo -e "\n${BLUE}=== $1 ===${NC}"
+}
+
+show_ca_status() {
+    log_section "Certificate Authority Status"
+    
+    local ca_dir="$HOME/.ssh/ca"
+    
+    if [[ -d "$ca_dir" ]]; then
+        echo "  ✓ CA directory exists: $ca_dir"
+        
+        # Check CA private key
+        if [[ -f "$ca_dir/ssh_ca" ]]; then
+            echo "  ✓ CA private key exists"
+            local ca_fingerprint=$(ssh-keygen -l -f "$ca_dir/ssh_ca" 2>/dev/null | awk '{print $2}' || echo "unknown")
+            echo "    Fingerprint: $ca_fingerprint"
+            
+            # Check key permissions
+            local ca_perms=$(stat -f "%A" "$ca_dir/ssh_ca" 2>/dev/null || echo "unknown")
+            if [[ "$ca_perms" == "600" ]]; then
+                echo "    ✓ Permissions: $ca_perms (secure)"
+            else
+                echo "    ⚠ Permissions: $ca_perms (should be 600)"
+            fi
+        else
+            echo "  ✗ CA private key missing"
+        fi
+        
+        # Check CA public key
+        if [[ -f "$ca_dir/ssh_ca.pub" ]]; then
+            echo "  ✓ CA public key exists"
+            local ca_pub_fingerprint=$(ssh-keygen -l -f "$ca_dir/ssh_ca.pub" 2>/dev/null | awk '{print $2}' || echo "unknown")
+            echo "    Fingerprint: $ca_pub_fingerprint"
+        else
+            echo "  ✗ CA public key missing"
+        fi
+        
+        # Check if CA is installed system-wide
+        if [[ -f "/etc/ssh/trusted_user_ca_keys" ]]; then
+            echo "  ✓ CA public key installed system-wide"
+            if sudo grep -q "$(cat "$ca_dir/ssh_ca.pub" 2>/dev/null | awk '{print $2}')" /etc/ssh/trusted_user_ca_keys 2>/dev/null; then
+                echo "    ✓ CA key matches system installation"
+            else
+                echo "    ⚠ CA key does not match system installation"
+            fi
+        else
+            echo "  ✗ CA public key not installed system-wide"
+        fi
+    else
+        echo "  ✗ CA directory missing: $ca_dir"
+        log_warn "Run ~/.local/bin/setup_ssh to create CA"
+    fi
+}
+
+show_user_certificate() {
+    log_section "User Certificate Status"
+    
+    local cert_file="$HOME/.ssh/id_ed25519-cert.pub"
+    local key_file="$HOME/.ssh/id_ed25519"
+    
+    if [[ -f "$cert_file" ]]; then
+        echo "  ✓ User certificate exists: $cert_file"
+        
+        # Get certificate details
+        local cert_info=$(ssh-keygen -L -f "$cert_file" 2>/dev/null || echo "")
+        
+        if [[ -n "$cert_info" ]]; then
+            echo ""
+            echo "Certificate Details:"
+            echo "==================="
+            
+            # Parse certificate information
+            local cert_type=$(echo "$cert_info" | grep "Type:" | awk '{print $2}' || echo "unknown")
+            local public_key=$(echo "$cert_info" | grep "Public key:" | cut -d' ' -f3- || echo "unknown")
+            local signing_ca=$(echo "$cert_info" | grep "Signing CA:" | cut -d' ' -f3- || echo "unknown")
+            local key_id=$(echo "$cert_info" | grep "Key ID:" | cut -d'"' -f2 || echo "unknown")
+            local serial=$(echo "$cert_info" | grep "Serial:" | awk '{print $2}' || echo "unknown")
+            local valid_from=$(echo "$cert_info" | grep "Valid:" | sed 's/.*from \([^ ]*\).*/\1/' || echo "unknown")
+            local valid_to=$(echo "$cert_info" | grep "Valid:" | sed 's/.*to \([^ ]*\).*/\1/' || echo "unknown")
+            local principals=$(echo "$cert_info" | grep "Valid for" | cut -d':' -f2- | xargs || echo "none")
+            
+            echo "  Certificate Type: $cert_type"
+            echo "  Key ID: $key_id"
+            echo "  Serial: $serial"
+            echo "  Valid From: $valid_from"
+            echo "  Valid To: $valid_to"
+            echo "  Valid For Users: $principals"
+            echo "  Public Key: $public_key"
+            echo "  Signing CA: $signing_ca"
+            
+            # Check validity period
+            if [[ "$valid_to" != "unknown" ]]; then
+                local expiry_ts=$(date -j -f "%Y-%m-%dT%H:%M:%S" "$valid_to" "+%s" 2>/dev/null || echo "0")
+                local current_ts=$(date "+%s")
+                local days_remaining=$(( (expiry_ts - current_ts) / 86400 ))
+                
+                echo ""
+                if [[ $days_remaining -gt 30 ]]; then
+                    echo "  ✓ Certificate expires in $days_remaining days"
+                elif [[ $days_remaining -gt 7 ]]; then
+                    echo "  ⚠ Certificate expires in $days_remaining days (renewal recommended)"
+                elif [[ $days_remaining -gt 0 ]]; then
+                    echo "  ⚠ Certificate expires in $days_remaining days (renewal urgent)"
+                else
+                    echo "  ✗ Certificate has expired"
+                fi
+            fi
+            
+            # Check extensions
+            local extensions=$(echo "$cert_info" | grep -A 20 "Extensions:" | grep -v "Extensions:" | grep -v "^$" || echo "")
+            if [[ -n "$extensions" ]]; then
+                echo ""
+                echo "  Extensions:"
+                echo "$extensions" | sed 's/^/    /'
+            fi
+        else
+            echo "  ✗ Cannot read certificate information"
+        fi
+    else
+        echo "  ✗ User certificate missing: $cert_file"
+    fi
+    
+    # Check corresponding private key
+    if [[ -f "$key_file" ]]; then
+        echo ""
+        echo "  ✓ Private key exists: $key_file"
+        
+        # Check key permissions
+        local key_perms=$(stat -f "%A" "$key_file" 2>/dev/null || echo "unknown")
+        if [[ "$key_perms" == "600" ]]; then
+            echo "    ✓ Permissions: $key_perms (secure)"
+        else
+            echo "    ⚠ Permissions: $key_perms (should be 600)"
+        fi
+        
+        # Check if key and certificate match
+        if [[ -f "$cert_file" ]]; then
+            local key_fingerprint=$(ssh-keygen -l -f "$key_file" 2>/dev/null | awk '{print $2}' || echo "unknown")
+            local cert_fingerprint=$(ssh-keygen -l -f "$cert_file" 2>/dev/null | awk '{print $2}' || echo "unknown")
+            
+            if [[ "$key_fingerprint" == "$cert_fingerprint" ]]; then
+                echo "    ✓ Private key matches certificate"
+            else
+                echo "    ✗ Private key does not match certificate"
+            fi
+        fi
+    else
+        echo "  ✗ Private key missing: $key_file"
+    fi
+}
+
+show_host_certificate() {
+    log_section "Host Certificate Status"
+    
+    local host_cert="/etc/ssh/ssh_host_ed25519_key-cert.pub"
+    local host_key="/etc/ssh/ssh_host_ed25519_key.pub"
+    
+    if [[ -f "$host_cert" ]]; then
+        echo "  ✓ Host certificate exists: $host_cert"
+        
+        # Get host certificate details
+        local host_cert_info=$(sudo ssh-keygen -L -f "$host_cert" 2>/dev/null || echo "")
+        
+        if [[ -n "$host_cert_info" ]]; then
+            echo ""
+            echo "Host Certificate Details:"
+            echo "========================"
+            
+            local host_key_id=$(echo "$host_cert_info" | grep "Key ID:" | cut -d'"' -f2 || echo "unknown")
+            local host_valid_from=$(echo "$host_cert_info" | grep "Valid:" | sed 's/.*from \([^ ]*\).*/\1/' || echo "unknown")
+            local host_valid_to=$(echo "$host_cert_info" | grep "Valid:" | sed 's/.*to \([^ ]*\).*/\1/' || echo "unknown")
+            local host_principals=$(echo "$host_cert_info" | grep "Valid for" | cut -d':' -f2- | xargs || echo "none")
+            
+            echo "  Key ID: $host_key_id"
+            echo "  Valid From: $host_valid_from"
+            echo "  Valid To: $host_valid_to"
+            echo "  Valid For Hosts: $host_principals"
+            
+            # Check host certificate validity
+            if [[ "$host_valid_to" != "unknown" ]]; then
+                local host_expiry_ts=$(date -j -f "%Y-%m-%dT%H:%M:%S" "$host_valid_to" "+%s" 2>/dev/null || echo "0")
+                local current_ts=$(date "+%s")
+                local host_days_remaining=$(( (host_expiry_ts - current_ts) / 86400 ))
+                
+                echo ""
+                if [[ $host_days_remaining -gt 30 ]]; then
+                    echo "  ✓ Host certificate expires in $host_days_remaining days"
+                elif [[ $host_days_remaining -gt 0 ]]; then
+                    echo "  ⚠ Host certificate expires in $host_days_remaining days"
+                else
+                    echo "  ✗ Host certificate has expired"
+                fi
+            fi
+        else
+            echo "  ✗ Cannot read host certificate information"
+        fi
+    else
+        echo "  ✗ Host certificate missing: $host_cert"
+    fi
+    
+    # Check host public key
+    if [[ -f "$host_key" ]]; then
+        echo ""
+        echo "  ✓ Host public key exists: $host_key"
+    else
+        echo "  ✗ Host public key missing: $host_key"
+    fi
+}
+
+test_certificate_auth() {
+    log_section "Certificate Authentication Test"
+    
+    log_info "Testing certificate-based authentication..."
+    
+    # Test local connection with certificate
+    if ssh -o ConnectTimeout=5 -o PreferredAuthentications=publickey \
+        -p 2222 localhost "echo 'Certificate authentication successful'" 2>/dev/null; then
+        echo "  ✓ Certificate authentication: WORKING"
+    else
+        echo "  ✗ Certificate authentication: FAILED"
+        log_error "Check certificate configuration and SSH service"
+    fi
+    
+    # Test certificate validation
+    if [[ -f "$HOME/.ssh/id_ed25519-cert.pub" ]]; then
+        local validation_result=$(ssh-keygen -L -f "$HOME/.ssh/id_ed25519-cert.pub" 2>&1)
+        if [[ $? -eq 0 ]]; then
+            echo "  ✓ Certificate validation: PASSED"
+        else
+            echo "  ✗ Certificate validation: FAILED"
+            echo "    Error: $validation_result"
+        fi
+    fi
+}
+
+show_renewal_info() {
+    log_section "Certificate Renewal Information"
+    
+    if [[ -f "$HOME/.ssh/id_ed25519-cert.pub" ]]; then
+        local cert_info=$(ssh-keygen -L -f "$HOME/.ssh/id_ed25519-cert.pub" 2>/dev/null || echo "")
+        local valid_to=$(echo "$cert_info" | grep "Valid:" | sed 's/.*to \([^ ]*\).*/\1/' || echo "unknown")
+        
+        if [[ "$valid_to" != "unknown" ]]; then
+            local expiry_ts=$(date -j -f "%Y-%m-%dT%H:%M:%S" "$valid_to" "+%s" 2>/dev/null || echo "0")
+            local current_ts=$(date "+%s")
+            local days_remaining=$(( (expiry_ts - current_ts) / 86400 ))
+            
+            echo "  Current certificate expires: $valid_to"
+            echo "  Days remaining: $days_remaining"
+            echo ""
+            
+            if [[ $days_remaining -le 7 ]]; then
+                echo "  🚨 URGENT: Certificate renewal needed!"
+                echo "  Run: ~/.local/bin/renew_ssh_cert force"
+            elif [[ $days_remaining -le 30 ]]; then
+                echo "  ⚠️  Certificate renewal recommended soon"
+                echo "  Run: ~/.local/bin/renew_ssh_cert check"
+            else
+                echo "  ✅ Certificate is valid for a good time"
+                echo "  Next check recommended: $(date -j -v+${days_remaining}d -v-7d '+%Y-%m-%d')"
+            fi
+        else
+            echo "  ✗ Cannot determine certificate expiry"
+        fi
+    else
+        echo "  ✗ No certificate found for renewal check"
+    fi
+    
+    echo ""
+    echo "Renewal commands:"
+    echo "  ~/.local/bin/renew_ssh_cert check   - Check if renewal needed"
+    echo "  ~/.local/bin/renew_ssh_cert force   - Force certificate renewal"
+    echo "  ~/.local/bin/renew_ssh_cert status  - Show detailed status"
+}
+
+show_backup_info() {
+    log_section "Certificate Backup Information"
+    
+    local backup_dir="$HOME/.ssh/backups"
+    
+    if [[ -d "$backup_dir" ]]; then
+        echo "  ✓ Backup directory exists: $backup_dir"
+        
+        local backup_count=$(find "$backup_dir" -name "*.backup.*" 2>/dev/null | wc -l | tr -d ' ')
+        if [[ $backup_count -gt 0 ]]; then
+            echo "  ✓ Certificate backups found: $backup_count"
+            echo ""
+            echo "Recent backups:"
+            find "$backup_dir" -name "*.backup.*" -exec ls -la {} \; 2>/dev/null | tail -5 | sed 's/^/    /'
+        else
+            echo "  ⚠ No certificate backups found"
+        fi
+    else
+        echo "  ⚠ No backup directory found"
+        echo "    Backups are created automatically during renewal"
+    fi
+    
+    echo ""
+    echo "Backup recommendations:"
+    echo "  - Certificate backups are created automatically during renewal"
+    echo "  - Keep CA private key secure and backed up separately"
+    echo "  - Consider encrypting backups with SOPS: ~/.local/bin/secure_config"
+}
+
+show_mobile_setup_info() {
+    log_section "Mobile Setup Information"
+    
+    echo "For iPhone/iPad setup, you need:"
+    echo ""
+    echo "Required files:"
+    echo "  1. Private key: ~/.ssh/id_ed25519"
+    echo "  2. Certificate: ~/.ssh/id_ed25519-cert.pub"
+    echo "  3. CA public key: ~/.ssh/ca/ssh_ca.pub"
+    echo ""
+    echo "Connection settings:"
+    local ips=$(ifconfig | grep "inet " | grep -v "127.0.0.1" | awk '{print $2}')
+    if [[ -n "$ips" ]]; then
+        echo "  Host IPs:"
+        echo "$ips" | sed 's/^/    /'
+    fi
+    echo "  Port: 2222"
+    echo "  Username: $(whoami)"
+    echo "  Authentication: Certificate"
+    echo ""
+    echo "Setup tools:"
+    echo "  ~/.local/bin/generate_qr_config all  - Generate QR codes for easy setup"
+    echo "  ~/.local/bin/generate_qr_config certs - Copy certificates for transfer"
+}
+
+show_help() {
+    echo "SSH Certificate Status Script"
+    echo ""
+    echo "Usage: $0 [command]"
+    echo ""
+    echo "Commands:"
+    echo "  ca          - Show CA status"
+    echo "  user        - Show user certificate status"
+    echo "  host        - Show host certificate status"
+    echo "  test        - Test certificate authentication"
+    echo "  renewal     - Show renewal information"
+    echo "  backup      - Show backup information"
+    echo "  mobile      - Show mobile setup information"
+    echo "  all         - Show all information (default)"
+    echo "  help        - Show this help"
+    echo ""
+    echo "Examples:"
+    echo "  $0          # Show complete certificate status"
+    echo "  $0 user     # Show only user certificate details"
+    echo "  $0 test     # Test certificate authentication"
+    echo "  $0 renewal  # Check if renewal is needed"
+}
+
+main() {
+    case "${1:-all}" in
+        "ca")
+            show_ca_status
+            ;;
+        "user")
+            show_user_certificate
+            ;;
+        "host")
+            show_host_certificate
+            ;;
+        "test")
+            test_certificate_auth
+            ;;
+        "renewal")
+            show_renewal_info
+            ;;
+        "backup")
+            show_backup_info
+            ;;
+        "mobile")
+            show_mobile_setup_info
+            ;;
+        "all")
+            log_info "SSH Certificate Status Report"
+            log_info "Date: $(date)"
+            
+            show_ca_status
+            show_user_certificate
+            show_host_certificate
+            test_certificate_auth
+            show_renewal_info
+            show_backup_info
+            show_mobile_setup_info
+            ;;
+        "help"|"-h"|"--help")
+            show_help
+            ;;
+        *)
+            log_error "Unknown command: $1"
+            show_help
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"

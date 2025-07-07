@@ -1,0 +1,296 @@
+#!/bin/bash
+# macOS Service Setup Script
+# Manages LaunchAgent services for SSH and Zellij
+
+set -euo pipefail
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+log_info() {
+    echo -e "${GREEN}[INFO]${NC} $1"
+}
+
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Service paths
+SSH_KEEPALIVE_PLIST="com.user.ssh_keepalive.plist"
+ZELLIJ_RESTORE_PLIST="com.user.zellij_restore.plist"
+LAUNCH_AGENTS_DIR="$HOME/Library/LaunchAgents"
+
+install_services() {
+    log_info "Installing LaunchAgent services..."
+    
+    # Create LaunchAgents directory if it doesn't exist
+    mkdir -p "$LAUNCH_AGENTS_DIR"
+    
+    # Copy SSH keepalive service
+    if [[ -f "$HOME/.file/Library/LaunchAgents/$SSH_KEEPALIVE_PLIST" ]]; then
+        cp "$HOME/.file/Library/LaunchAgents/$SSH_KEEPALIVE_PLIST" "$LAUNCH_AGENTS_DIR/"
+        
+        # Replace $(whoami) with actual username
+        local username=$(whoami)
+        sed -i.bak "s/\$(whoami)/$username/g" "$LAUNCH_AGENTS_DIR/$SSH_KEEPALIVE_PLIST"
+        sed -i.bak "s/\$(echo \$HOME)/$HOME/g" "$LAUNCH_AGENTS_DIR/$SSH_KEEPALIVE_PLIST"
+        
+        log_info "SSH keepalive service installed"
+    else
+        log_error "SSH keepalive plist not found"
+    fi
+    
+    # Copy Zellij restore service
+    if [[ -f "$HOME/.file/Library/LaunchAgents/$ZELLIJ_RESTORE_PLIST" ]]; then
+        cp "$HOME/.file/Library/LaunchAgents/$ZELLIJ_RESTORE_PLIST" "$LAUNCH_AGENTS_DIR/"
+        
+        # Replace $(whoami) with actual username
+        local username=$(whoami)
+        sed -i.bak "s/\$(whoami)/$username/g" "$LAUNCH_AGENTS_DIR/$ZELLIJ_RESTORE_PLIST"
+        
+        log_info "Zellij restore service installed"
+    else
+        log_error "Zellij restore plist not found"
+    fi
+    
+    # Clean up backup files
+    rm -f "$LAUNCH_AGENTS_DIR"/*.bak
+}
+
+load_services() {
+    log_info "Loading LaunchAgent services..."
+    
+    # Load SSH keepalive service
+    if [[ -f "$LAUNCH_AGENTS_DIR/$SSH_KEEPALIVE_PLIST" ]]; then
+        launchctl unload "$LAUNCH_AGENTS_DIR/$SSH_KEEPALIVE_PLIST" 2>/dev/null || true
+        launchctl load "$LAUNCH_AGENTS_DIR/$SSH_KEEPALIVE_PLIST"
+        log_info "SSH keepalive service loaded"
+    fi
+    
+    # Load Zellij restore service
+    if [[ -f "$LAUNCH_AGENTS_DIR/$ZELLIJ_RESTORE_PLIST" ]]; then
+        launchctl unload "$LAUNCH_AGENTS_DIR/$ZELLIJ_RESTORE_PLIST" 2>/dev/null || true
+        launchctl load "$LAUNCH_AGENTS_DIR/$ZELLIJ_RESTORE_PLIST"
+        log_info "Zellij restore service loaded"
+    fi
+}
+
+unload_services() {
+    log_info "Unloading LaunchAgent services..."
+    
+    # Unload SSH keepalive service
+    if launchctl list | grep -q "com.user.ssh_keepalive"; then
+        launchctl unload "$LAUNCH_AGENTS_DIR/$SSH_KEEPALIVE_PLIST"
+        log_info "SSH keepalive service unloaded"
+    fi
+    
+    # Unload Zellij restore service
+    if launchctl list | grep -q "com.user.zellij_restore"; then
+        launchctl unload "$LAUNCH_AGENTS_DIR/$ZELLIJ_RESTORE_PLIST"
+        log_info "Zellij restore service unloaded"
+    fi
+}
+
+remove_services() {
+    log_warn "Removing LaunchAgent services..."
+    
+    # Unload first
+    unload_services
+    
+    # Remove plist files
+    rm -f "$LAUNCH_AGENTS_DIR/$SSH_KEEPALIVE_PLIST"
+    rm -f "$LAUNCH_AGENTS_DIR/$ZELLIJ_RESTORE_PLIST"
+    
+    log_info "LaunchAgent services removed"
+}
+
+show_status() {
+    log_info "LaunchAgent service status:"
+    
+    # Check SSH keepalive
+    if launchctl list | grep -q "com.user.ssh_keepalive"; then
+        local ssh_status=$(launchctl list | grep "com.user.ssh_keepalive" | awk '{print $1}')
+        if [[ "$ssh_status" == "-" ]]; then
+            echo "  ✓ SSH keepalive: Running"
+        else
+            echo "  ⚠ SSH keepalive: Stopped (exit code: $ssh_status)"
+        fi
+    else
+        echo "  ✗ SSH keepalive: Not loaded"
+    fi
+    
+    # Check Zellij restore
+    if launchctl list | grep -q "com.user.zellij_restore"; then
+        local zellij_status=$(launchctl list | grep "com.user.zellij_restore" | awk '{print $1}')
+        if [[ "$zellij_status" == "-" ]]; then
+            echo "  ✓ Zellij restore: Running"
+        else
+            echo "  ⚠ Zellij restore: Stopped (exit code: $zellij_status)"
+        fi
+    else
+        echo "  ✗ Zellij restore: Not loaded"
+    fi
+    
+    # Check Zellij sessions
+    if command -v zellij &> /dev/null; then
+        local session_count=$(zellij list-sessions 2>/dev/null | wc -l | tr -d ' ')
+        echo "  📊 Active Zellij sessions: $session_count"
+        
+        if [[ "$session_count" -gt 0 ]]; then
+            echo "     Sessions:"
+            zellij list-sessions 2>/dev/null | sed 's/^/       /'
+        fi
+    else
+        echo "  ✗ Zellij not available"
+    fi
+}
+
+restart_services() {
+    log_info "Restarting LaunchAgent services..."
+    unload_services
+    sleep 2
+    load_services
+    log_info "Services restarted"
+}
+
+show_logs() {
+    local service="${1:-}"
+    
+    case "$service" in
+        "ssh"|"keepalive")
+            log_info "SSH keepalive logs:"
+            echo "--- stdout ---"
+            tail -20 /tmp/ssh_keepalive.out 2>/dev/null || echo "No stdout logs"
+            echo "--- stderr ---"
+            tail -20 /tmp/ssh_keepalive.err 2>/dev/null || echo "No stderr logs"
+            ;;
+        "zellij"|"restore")
+            log_info "Zellij restore logs:"
+            echo "--- stdout ---"
+            tail -20 /tmp/zellij_restore.out 2>/dev/null || echo "No stdout logs"
+            echo "--- stderr ---"
+            tail -20 /tmp/zellij_restore.err 2>/dev/null || echo "No stderr logs"
+            ;;
+        "")
+            log_info "All service logs:"
+            echo ""
+            echo "=== SSH Keepalive ==="
+            tail -10 /tmp/ssh_keepalive.out 2>/dev/null || echo "No stdout logs"
+            echo ""
+            echo "=== Zellij Restore ==="
+            tail -10 /tmp/zellij_restore.out 2>/dev/null || echo "No stdout logs"
+            ;;
+        *)
+            log_error "Unknown service: $service"
+            echo "Available services: ssh, zellij"
+            ;;
+    esac
+}
+
+validate_setup() {
+    log_info "Validating service setup..."
+    
+    local errors=0
+    
+    # Check if Zellij is available
+    if ! command -v zellij &> /dev/null; then
+        log_error "Zellij not found in PATH"
+        errors=$((errors + 1))
+    fi
+    
+    # Check if Zellij layouts exist
+    if [[ ! -f "$HOME/.config/zellij/layouts/simple.kdl" ]]; then
+        log_error "Zellij simple layout not found"
+        errors=$((errors + 1))
+    fi
+    
+    # Check if SSH is configured
+    if [[ ! -f "$HOME/.ssh/id_ed25519-cert.pub" ]]; then
+        log_warn "SSH certificate not found - run setup_ssh first"
+        errors=$((errors + 1))
+    fi
+    
+    # Check if SSH service is running
+    if ! sudo launchctl list | grep -q ssh 2>/dev/null; then
+        log_warn "SSH service not running - enable with: sudo systemsetup -setremotelogin on"
+        errors=$((errors + 1))
+    fi
+    
+    if [[ $errors -eq 0 ]]; then
+        log_info "✓ All validations passed"
+        return 0
+    else
+        log_warn "⚠ $errors validation issues found"
+        return 1
+    fi
+}
+
+show_help() {
+    echo "macOS Service Setup Script"
+    echo ""
+    echo "Usage: $0 <command> [service]"
+    echo ""
+    echo "Commands:"
+    echo "  install     - Install service plist files"
+    echo "  load        - Load services into launchd"
+    echo "  unload      - Unload services from launchd"
+    echo "  remove      - Remove service files completely"
+    echo "  status      - Show service status"
+    echo "  restart     - Restart all services"
+    echo "  logs [svc]  - Show service logs (ssh|zellij)"
+    echo "  validate    - Validate service setup"
+    echo "  help        - Show this help"
+    echo ""
+    echo "Examples:"
+    echo "  $0 install     # Install service files"
+    echo "  $0 status      # Check service status"
+    echo "  $0 logs ssh    # Show SSH keepalive logs"
+    echo "  $0 restart     # Restart all services"
+}
+
+main() {
+    case "${1:-status}" in
+        "install")
+            install_services
+            load_services
+            ;;
+        "load")
+            load_services
+            ;;
+        "unload")
+            unload_services
+            ;;
+        "remove")
+            remove_services
+            ;;
+        "status")
+            show_status
+            ;;
+        "restart")
+            restart_services
+            ;;
+        "logs")
+            show_logs "${2:-}"
+            ;;
+        "validate")
+            validate_setup
+            ;;
+        "help"|"-h"|"--help")
+            show_help
+            ;;
+        *)
+            log_error "Unknown command: $1"
+            show_help
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"
