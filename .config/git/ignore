@@ -1,11 +1,15 @@
 .DS_Store
 
+**/.claude/settings.local.json
+**/CLAUDE.local.md
+
 **/.calva/output-window/output.calva-repl
 **/.calva/repl.calva-repl
+
 **/.clj-kondo/.cache/
 **/.clj-kondo/imports/
+
 **/.lsp/.cache/
 **/.portal/vs-code.edn
-**/.cpcache
 
-**/.claude/settings.local.json
+**/.cpcache

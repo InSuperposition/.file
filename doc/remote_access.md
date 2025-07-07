@@ -2,7 +2,7 @@
 
 ## Overview
 
-This updated plan swaps tmux for Zellij, which offers modern features like WebAssembly plugins, better mouse support, floating panes, and a more intuitive interface. The setup prioritizes local network access first, with WireGuard added last, focusing on simplicity and security with SSH certificates.
+This setup uses Zellij, which offers modern features like WebAssembly plugins, mouse support, floating panes, and a more intuitive interface. The setup prioritizes local network access first, with WireGuard added last, focusing on simplicity and security with SSH certificates.
 
 ## Phase 1: SSH Server Setup with Certificate Authentication
 
@@ -898,7 +898,7 @@ export ZELLIJ_CACHE_DIR="${HOME}/.cache/zellij"
    ```bash
    # Monitor SSH attempts
    tail -f /var/log/system.log | grep sshd
-   
+
    # Monitor Zellij sessions
    zellij action query-tab-names
    ```
