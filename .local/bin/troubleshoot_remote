@@ -137,18 +137,18 @@ diagnose_certificates() {
                 
                 if [[ $days_remaining -le 0 ]]; then
                     log_error "✗ Certificate has expired"
-                    log_fix "Run: ~/.local/bin/ssh_cert_renew force"
+                    log_fix "Run: ~/.local/bin/renew_ssh_cert force"
                     issues=$((issues + 1))
                 elif [[ $days_remaining -le 7 ]]; then
                     log_warn "⚠ Certificate expires in $days_remaining days"
-                    log_fix "Run: ~/.local/bin/ssh_cert_renew check"
+                    log_fix "Run: ~/.local/bin/renew_ssh_cert check"
                 else
                     log_info "✓ Certificate valid for $days_remaining days"
                 fi
             fi
         else
             log_error "✗ Certificate is invalid or unreadable"
-            log_fix "Run: ~/.local/bin/ssh_cert_renew force"
+            log_fix "Run: ~/.local/bin/renew_ssh_cert force"
             issues=$((issues + 1))
         fi
     else

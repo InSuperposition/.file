@@ -96,30 +96,88 @@ mise install
 4. **Version control** - All configurations are tracked in Git
 5. **Reproducibility** - Setup can be replicated on any compatible system
 
-## Special Considerations
+## Remote Access & Security Features
 
-### Security
+### iPhone Terminal Access System
 
-- SSH certificates for authentication
-- SOPS for encrypted configuration storage
-- Comprehensive security hardening in remote access setup
+This repository includes a comprehensive system for secure iPhone terminal access with automated setup scripts:
+
+**Core Components:**
+
+- **SSH Certificate Authentication** - Enterprise-grade security with automatic CA management
+- **Zellij Terminal Multiplexer** - Modern tmux replacement optimized for mobile use
+- **Mosh Integration** - Mobile-resilient connections over unreliable networks
+- **Security Hardening** - SSHGuard, pf firewall, and SOPS encryption
+
+**Automated Setup Scripts (`.local/bin/`):**
+
+- `setup_ssh` - SSH certificate authority and server configuration
+- `setup_security` - SSHGuard, SOPS, and firewall configuration
+- `setup_service` - macOS LaunchAgent service management
+- `setup_firewall` - pf firewall management with rate limiting
+- `setup_iphone_guide` - Interactive mobile setup wizard
+- `renew_ssh_cert` - Certificate renewal automation
+
+**Management & Troubleshooting:**
+
+- `remote_health_check` - Comprehensive system health monitoring
+- `connection_test` - Connection testing suite
+- `cert_status` - Certificate management and status
+- `troubleshoot_remote` - Advanced diagnostic and repair tools
+- `generate_qr_config` - QR code generator for mobile configuration
+
+### Security Features
+
+- **Certificate-based SSH authentication** with automatic CA management
+- **SOPS encryption** for sensitive configuration storage
+- **Rate limiting** with pf firewall rules to prevent brute force attacks
+- **SSHGuard integration** for real-time intrusion prevention
+- **Automated certificate renewal** with expiry monitoring
+- **Mobile-optimized security** with QR code setup for easy certificate transfer
 
 ### Maintenance
 
 - Regular symlink cleanup with `symlinks -dvr ~/.config`
 - Package updates via `brew bundle install`
 - Language version management through `mise outdated`
+- **Certificate monitoring** with `cert_status` and automated renewal alerts
+- **Security monitoring** with `remote_health_check` and firewall status checks
 
 ## Documentation Sources
 
 When working with this repository, always reference:
 
 1. **readme.md** for user-facing setup and usage instructions
-2. **doc/remote-access.md** for security and remote access configuration
-3. **Individual `.config/[tool]/` directories** for tool-specific configurations
-4. **`.stow-local-ignore`** to understand what gets symlinked
-5. **`.zshenv`** for the critical zsh directory redirection
+2. **doc/remote-access.md** for comprehensive remote access setup and security configuration
+3. **doc/iphone_setup.md** for detailed mobile terminal access instructions
+4. **Individual `.config/[tool]/` directories** for tool-specific configurations
+5. **`.stow-local-ignore`** to understand what gets symlinked
+6. **`.zshenv`** for the critical zsh directory redirection
 
 **Note**: File casing matters in this repository - use lowercase `readme.md`, not `README.md`.
 
-This repository represents a modern, well-organized approach to dotfiles management with strong emphasis on security, modularity, and XDG compliance.
+This repository represents a modern, well-organized approach to dotfiles management with strong emphasis on security, modularity, XDG compliance, and comprehensive iPhone terminal access capabilities.
+
+## Recent Updates
+
+### Script Naming Standardization (Current)
+
+- Renamed 6 scripts with proper prefixes for better organization:
+  - `ssh_setup` → `setup_ssh`
+  - `security_setup` → `setup_security`
+  - `service_setup` → `setup_service`
+  - `firewall_setup` → `setup_firewall`
+  - `iphone_setup_guide` → `setup_iphone_guide`
+  - `ssh_cert_renew` → `renew_ssh_cert`
+- Updated all documentation and internal script references for consistency
+- Improved script discoverability with logical grouping by function
+
+### iPhone Terminal Access System (Previous)
+
+- Created comprehensive automated setup system with 13 scripts and configuration files
+- Implemented SSH certificate-based authentication with automatic CA management
+- Added security hardening with SSHGuard, pf firewall rate limiting, and SOPS encryption
+- Integrated Zellij terminal multiplexer for mobile-optimized experience
+- Built QR code generation system for easy mobile certificate transfer
+- Developed comprehensive monitoring, troubleshooting, and health check tools
+- Rewrote documentation to reflect script-based automation approach

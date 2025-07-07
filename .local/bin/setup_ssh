@@ -156,7 +156,7 @@ main() {
     log_info "Next steps:"
     echo "1. Run: ~/.local/bin/connection_test"
     echo "2. Configure your iPhone with the generated certificates"
-    echo "3. Use ~/.local/bin/iphone_setup_guide for mobile setup"
+    echo "3. Use ~/.local/bin/setup_iphone_guide for mobile setup"
 }
 
 main "$@"
