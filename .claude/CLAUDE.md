@@ -54,7 +54,9 @@ Claude should read documentation files in the following order for optimal unders
 - Apply security and performance practices from code_design.md
 - Leverage existing patterns identified in feature.md
 - Use appropriate tools and technologies from implementation.md
-- **Use markdownlint-cli2** to format `*.md` documents the have been edited by or created.- see config file at ~/.config/markdownlint/markdownlint.jsonc
+- **Use markdownlint-cli2** to lint and format `*.md` documents the have been edited by or created.
+- **markdownlint rules** - https://raw.githubusercontent.com/markdownlint/markdownlint/refs/heads/main/docs/RULES.md
+- **markdownlint rules configuration** - see config file at ~/.config/markdownlint/markdownlint.jsonc
 
 ## Important Reminders
 
