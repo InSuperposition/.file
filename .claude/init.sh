@@ -1,3 +1,3 @@
 #!/bin/sh
 
-alias claude="$HOME/.claude/local/claude"
+alias claude="$HOME/.claude/"

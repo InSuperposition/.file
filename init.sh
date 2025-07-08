@@ -24,7 +24,7 @@ export EDITOR=hx
 export VISUAL=code
 
 # Load tool-specific configurations
-. $HOME/.claude/init.sh
+# . $HOME/.claude/init.sh
 . $XDG_CONFIG_HOME/cargo/init.sh
 . $XDG_CONFIG_HOME/gnugpg/init.sh
 . $XDG_CONFIG_HOME/homebrew/init.sh
