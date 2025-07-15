@@ -60,9 +60,7 @@ Claude should read documentation files in the following order for optimal unders
 
 ## Important Reminders
 
-- Do what has been asked; nothing more, nothing less
-- NEVER create files unless absolutely necessary for achieving the goal
-- ALWAYS prefer editing existing files to creating new ones
-- NEVER proactively create documentation files unless explicitly requested
+- make sure knowledge is up to date
+- value simplicity over easy - keep it simple stupid
 - Read all documentation files in both global and project .claude/doc folders for complete context
 - ALWAYS read .gitignore first before editing to avoid adding duplicate references folders or files, (e.g. \*\*/.claude/settings.local.json)
