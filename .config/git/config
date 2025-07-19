@@ -1,32 +1,71 @@
 [alias]
+	# Branch and checkout
 	br = branch
-	bl = blame -w -C -C -C -L
-	cm = commit
+	clean-branches = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D"
 	co = checkout
-	lg = log --oneline --decorate --all --graph
-	pf = push --force-with-lease
-	ps = push --signed
-	rmsub = "!f() { git submodule deinit -f $1 && git rm -f $1 && rm -rf .git/modules/$1; }; f"
-	st = status
-	sh = stash --all
 
+	# Commit-related
+	amend = commit --amend --no-edit
+	cm = commit
+	fixup = commit --fixup
+	undo = reset --soft HEAD^
+	wip = commit -m "WIP" --no-verify
+
+	# Log and history
+	hist = log --pretty=format:'%C(yellow)%h%Creset %C(cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph --all
+	l = log --oneline --graph --decorate --all -n 20
+	lg = log --oneline --decorate --all --graph
+
+	# Push and pull
+	pf = push --force-with-lease
+	pr = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f"
+	ps = push --signed
+
+	# Rebase and stash
+	rb = rebase -i
+	rbs = rebase -i --autosquash
+	sh = stash --all
+	unstage = reset HEAD --
+
+	# Remotes
+	radd = remote add
+	rrm = remote remove
+
+	# Status and diff
+	bl = blame -w -C -C -C -L
+	d = diff
+	ds = diff --staged
+	s = status
+
+	# Submodules
+	rmsub = "!f() { for sub in \"$@\"; do git submodule deinit -f \"$sub\" && git rm -f \"$sub\" && rm -rf .git/modules/\"$sub\"; done; }; f"
 
 [branch]
 	sort = -committerdate
 
-[core]
-	editor = code --wait
-	fsmonitor = true
-	untrackedCache = true
-
 [color]
 	ui = true
 
+[commit]
+	# gpgsign = true
+
+[core]
+	autocrlf = input
+	editor = code --wait
+	fsmonitor = true
+	pager = bat --paging=always
+	untrackedCache = true
+
 [diff]
+	colorMoved = default
+	mnemonicprefix = true
 	tool = vscode-diff
 
 [difftool "vscode-diff"]
 	cmd = code --wait --diff $LOCAL $REMOTE
+
+[fetch]
+	showForcedUpdates = true
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -37,14 +76,33 @@
 [init]
 	defaultBranch = main
 
+[maintenance]
+	auto = true
+	strategy = incremental
+
 [merge]
+	ff = only
 	tool = vscode-merge
 
 [mergetool "vscode-merge"]
 	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
+[pull]
+	ff = only
+
+[push]
+	default = current
+
 [rerere]
+	autoupdate = true
 	enabled = true
+
+[submodule]
+	recurse = true
+
+[transfer]
+	fsckObjects = true
+
 
 [user]
 	email = f.galloway@gmail.com
