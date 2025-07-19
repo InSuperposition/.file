@@ -16,35 +16,36 @@
 
 [core]
 	editor = code --wait
+	fsmonitor = true
 	untrackedCache = true
 
 [color]
 	ui = true
 
 [diff]
-	tool = code-difftool
+	tool = vscode-diff
 
-[difftool "code-difftool"]
+[difftool "vscode-diff"]
 	cmd = code --wait --diff $LOCAL $REMOTE
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+	smudge = git-lfs smudge -- %f
 
 [init]
 	defaultBranch = main
 
 [merge]
-	tool = code-mergetool
+	tool = vscode-merge
 
-[mergetool "code-mergetool"]
+[mergetool "vscode-merge"]
 	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [rerere]
 	enabled = true
 
 [user]
-	name = InSuperposition
 	email = f.galloway@gmail.com
+	name = InSuperposition
