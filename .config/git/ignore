@@ -1,8 +1,5 @@
 .DS_Store
 
-**/.claude/settings.local.json
-**/CLAUDE.local.md
-
 **/.calva/output-window/output.calva-repl
 **/.calva/repl.calva-repl
 
@@ -13,3 +10,6 @@
 **/.portal/vs-code.edn
 
 **/.cpcache
+
+**/CLAUDE.local.md
+**/.claude/settings.local.json
