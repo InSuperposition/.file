@@ -13,3 +13,6 @@ ripgrep = "latest"
 rust = "stable"
 sops = "latest"
 zellij = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = []
