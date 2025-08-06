@@ -46,13 +46,9 @@
 [color]
 	ui = true
 
-[commit]
-	# gpgsign = true
-
 [core]
 	autocrlf = input
 	editor = code --wait
-	# fsmonitor = true
 	pager = bat --paging=always
 	untrackedCache = true
 
@@ -81,14 +77,10 @@
 	strategy = incremental
 
 [merge]
-	ff = only
 	tool = vscode-merge
 
 [mergetool "vscode-merge"]
 	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
-
-[pull]
-	ff = only
 
 [push]
 	default = current
@@ -102,7 +94,6 @@
 
 [transfer]
 	fsckObjects = true
-
 
 [user]
 	email = f.galloway@gmail.com
