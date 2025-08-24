@@ -92,7 +92,6 @@ mouse-scroll-multiplier = 3
 
 # Terminal behavior
 term = xterm-256color
-scrollback-limit = 100000
 
 # Mouse
 mouse-hide-while-typing = true
