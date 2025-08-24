@@ -51,7 +51,7 @@ link-url = true
 shell-integration-features = cursor, sudo, title
 
 # Scrollback and history
-scrollback-limit = 50000
+scrollback-limit = 8000000
 
 # Cursor customization
 cursor-style = "block"
