@@ -9,4 +9,6 @@ alias brew_init="brew bundle dump --force && brew bundle install"
 if type brew &>/dev/null; then
   HOMEBREW_PREFIX=$(brew --prefix)
   export PATH="$HOMEBREW_PREFIX/sbin:$PATH"
+  # For building postgresql with pkg-config
+  export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/bin/pkg-config:$(brew --prefix icu4c)/lib/pkgconfig:$(brew --prefix curl)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig"
 fi
