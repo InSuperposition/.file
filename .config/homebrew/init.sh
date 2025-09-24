@@ -10,5 +10,6 @@ if type brew &>/dev/null; then
   HOMEBREW_PREFIX=$(brew --prefix)
   export PATH="$HOMEBREW_PREFIX/sbin:$PATH"
   # For building pkg-config, which is needed for some things like postgresql
+  # https://github.com/pkgconf/pkgconf
   export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/bin/pkg-config:$(brew --prefix icu4c)/lib/pkgconfig:$(brew --prefix curl)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig"
 fi
