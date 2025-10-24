@@ -3,7 +3,8 @@
 .gitmodules
 .gitignore
 .stowrc
-doc/
+/doc
+/etc
 readme.md
 /CLAUDE.md
 ^/[^/]*\.sh$
