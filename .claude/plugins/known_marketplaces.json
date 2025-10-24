@@ -1,0 +1,10 @@
+{
+  "anthropic-agent-skills": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/skills"
+    },
+    "installLocation": "/Users/fgalloway/.claude/plugins/marketplaces/anthropic-agent-skills",
+    "lastUpdated": "2025-10-24T09:08:50.766Z"
+  }
+}
