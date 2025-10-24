@@ -18,7 +18,7 @@ This document establishes consistent conventions for code structure, naming, and
 
 ### Container Conventions
 
-- **Containerfile**: Use `Containerfile` instead of `Dockerfile`
+- **Containerfile naming convention**: Use `Containerfile` instead of `Dockerfile`, or `Containerfile.api`, etc. if specificity is required
 - **Container names**: Use descriptive names with hyphens
   - ✅ `my-app:development`, `api-server:v1.0`
   - ❌ `myapp:dev`, `server:latest`
