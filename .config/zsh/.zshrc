@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source $HOME/.file/init.sh
+source $XDG_CONFIG_HOME/.file/init.sh
 
 export HISTFILE=$XDG_STATE_HOME/zsh/.zsh_history
 export HISTSIZE=10000

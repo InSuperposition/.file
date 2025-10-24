@@ -34,4 +34,4 @@ export VISUAL=code
 . $XDG_CONFIG_HOME/zellij/init.sh
 
 # Load user-specific aliases
-. $HOME/.file/alias.sh
+. $XDG_CONFIG_HOME/.file/alias.sh
