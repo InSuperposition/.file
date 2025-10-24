@@ -4,10 +4,10 @@
 alias ls='ls --color=always'
 
 # List directory contents in long format with human-readable file sizes
-alias ll='ls -lh'
+alias ll='lsd -lh'
 
 # List all files including hidden ones in long format with human-readable file sizes
-alias la='ls -lha'
+alias la='lsd -lha'
 
 # Navigate up the directory tree
 alias ..='cd ..'
