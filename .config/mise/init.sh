@@ -1,3 +1,5 @@
 #!/bin/sh
 
-eval "$(mise activate zsh)"
+if [[ -z "$MISE_SHELL" ]]; then
+    eval "$(mise activate zsh)"
+fi
