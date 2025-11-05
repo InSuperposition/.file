@@ -92,26 +92,3 @@ mise install
 3. **Tool isolation** - Each tool's config is self-contained
 4. **Version control** - All configurations are tracked in Git
 5. **Reproducibility** - Setup can be replicated on any compatible system
-
-## Recent Updates
-
-### Script Naming Standardization (Current)
-
-- Renamed 6 scripts with proper prefixes for better organization:
-  - `ssh_setup` → `setup_ssh`
-  - `security_setup` → `setup_security`
-  - `service_setup` → `setup_service`
-  - `firewall_setup` → `setup_firewall`
-  - `iphone_setup_guide` → `setup_iphone_guide`
-  - `ssh_cert_renew` → `renew_ssh_cert`
-- Updated all documentation and internal script references for consistency
-- Improved script discoverability with logical grouping by function
-
-### iPhone Terminal Access System (Previous)
-
-- Created comprehensive automated setup system with 13 scripts and configuration files
-- Implemented SSH certificate-based authentication with automatic CA management
-- Added security hardening with SSHGuard, pf firewall rate limiting, and SOPS encryption
-- Built QR code generation system for easy mobile certificate transfer
-- Developed comprehensive monitoring, troubleshooting, and health check tools
-- Rewrote documentation to reflect script-based automation approach
