@@ -8,12 +8,9 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
 # XDG_RUNTIME_DIR - https://wiki.gentoo.org/wiki/XDG/Base_Directories
-if [ -z "${XDG_RUNTIME_DIR}" ]; then
-	export XDG_RUNTIME_DIR="/tmp/${UID}-runtime-dir/"
-	if [ ! -d "${XDG_RUNTIME_DIR}" ]; then
-		mkdir "${XDG_RUNTIME_DIR}"
-		chmod 0700 "${XDG_RUNTIME_DIR}"
-	fi
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+    export XDG_RUNTIME_DIR="/tmp/$(id -u)-runtime"
+    [ ! -d "$XDG_RUNTIME_DIR" ] && mkdir -m 0700 "$XDG_RUNTIME_DIR"
 fi
 
 LOCAL_BIN_HOME=$HOME/.local/bin

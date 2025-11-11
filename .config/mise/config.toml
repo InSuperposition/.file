@@ -1,10 +1,13 @@
 [tools]
 age = "latest"
 bun = "latest"
+cheat = "latest"
 claude = "latest"
 clojure = "latest"
 deno = "latest"
 fzf = "latest"
+git-cliff = "latest"
+gitu = "latest"
 helix = "latest"
 java = "oracle-graalvm"
 node = "24"
