@@ -35,4 +35,4 @@ alias ez="code $ZSHRC_PATH"
 alias sz="source $ZSHRC_PATH"
 
 eval "$(atuin init zsh)"
-source /usr/local/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source "$(brew --prefix)/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"

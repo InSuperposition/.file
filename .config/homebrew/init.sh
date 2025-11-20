@@ -4,7 +4,7 @@ export HOMEBREW_BUNDLE_FILE_GLOBAL=$XDG_CONFIG_HOME/homebrew/Brewfile
 export HOMEBREW_BUNDLE_FILE=$XDG_CONFIG_HOME/homebrew/Brewfile
 
 alias brew_lock="brew bundle dump --force && brew bundle install --no-upgrade"
-alias brew_init="brew bundle dump --force && brew bundle install"
+alias brew_init="brew bundle install --file=~/.config/homebrew/Brewfile"
 
 if type brew &>/dev/null; then
   HOMEBREW_PREFIX=$(brew --prefix)
