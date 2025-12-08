@@ -1,14 +1,15 @@
 [alias]
 	# Branch and checkout
 	br = branch
-	clean-branches = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D"
 	co = checkout
+	discard = checkout --
+	reset-origin = "!f() { git fetch origin && git reset --hard origin/$(git branch --show-current); }; f"
 
 	# Commit-related
 	amend = commit --amend --no-edit
 	cm = commit
 	fixup = commit --fixup
-	undo = reset --soft HEAD^
+	uncommit = reset --soft HEAD^
 	wip = commit -m "WIP" --no-verify
 
 	# Log and history
@@ -42,9 +43,16 @@
 
 [branch]
 	sort = -committerdate
+	autoSetupMerge = simple    # Only track same-named remote branches
 
-[color]
-	ui = true
+[column]
+	ui = auto                  # Use columns when output is to terminal
+	branch = auto              # Columnize branch list
+	tag = auto                 # Columnize tag list
+
+[commit]
+	verbose = true             # Show diff in commit message editor
+	cleanup = scissors         # Remove everything below scissor line
 
 [core]
 	autocrlf = input
@@ -56,9 +64,14 @@
 	colorMoved = default
 	mnemonicprefix = true
 	tool = vscode-diff
+	algorithm = histogram      # Better diff algorithm
+	renames = copies           # Detect both renames and copies
 
 [difftool "vscode-diff"]
 	cmd = code --wait --diff $LOCAL $REMOTE
+
+[feature]
+	manyFiles = true   # Optimize for repos with many files
 
 [fetch]
 	showForcedUpdates = true
@@ -69,8 +82,19 @@
 	required = true
 	smudge = git-lfs smudge -- %f
 
+[grep]
+	lineNumber = true          # Always show line numbers
+	extendedRegexp = true      # Use extended regex by default
+
 [init]
 	defaultBranch = main
+
+[log]
+	abbrevCommit = true        # Use short commit hashes
+	follow = true              # Follow file renames in git log
+	decorate = auto            # Show refs in log output
+	date = relative            # Use relative dates (2 days ago)
+	showSignature = true       # Show GPG signature info
 
 [maintenance]
 	auto = true
@@ -82,19 +106,48 @@
 [mergetool "vscode-merge"]
 	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
+[pull]
+	rebase = true    # or 'false' for merge, but be explicit
+	ff = only        # Only allow fast-forward merges
+
 [push]
 	default = current
+	autoSetupRemote = true     # Automatically set up remote tracking
+	followTags = true          # Push annotated tags with commits
+
+[rebase]
+	autoSquash = true          # Auto-arrange fixup/squash commits
+	autoStash = true           # Auto-stash before rebase, pop after
+	updateRefs = true          # Update dependent branches during rebase
+	missingCommitsCheck = warn # Warn about removed commits in interactive rebase
+	# strategyOption = theirs   # Use 'theirs' strategy option by default
 
 [rerere]
 	autoupdate = true
 	enabled = true
 
+[status]
+	showStash = true           # Show stash count in status
+	submoduleSummary = true    # Show submodule changes summary
+	short = false              # Use detailed status by default
+	branch = true              # Always show branch info
+
 [submodule]
 	recurse = true
+
+[tag]
+	sort = -version:refname    # Sort tags by version (v2.0 > v1.9)
+	gpgSign = false            # Set to true if you GPG-sign tags
 
 [transfer]
 	fsckObjects = true
 
+[url "git@github.com:"]
+	insteadOf = gh:            # Use: git clone gh:user/repo
+
 [user]
 	email = f.galloway@gmail.com
 	name = InSuperposition
+
+[worktree]
+	guessRemote = true
