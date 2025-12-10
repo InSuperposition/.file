@@ -98,11 +98,11 @@ format = '[[($all_status$ahead_behind )](fg:color_fg0 bg:color_aqua)]($style)'
 
 [git_commit]
 commit_hash_length = 7
-tag_symbol = ""
+tag_symbol = "  "
 only_detached = true
 tag_disabled = false
 style = "bg:color_aqua"
-format = '[[($hash) ($tag) ](fg:color_fg0 bg:color_aqua)]($style)'
+format = '[[ =◉ ($hash) ($tag) ](fg:color_fg0 bg:color_aqua)]($style)'
 
 [nodejs]
 symbol = ""
@@ -110,7 +110,7 @@ style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [c]
-symbol = " "
+symbol = ""
 style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
