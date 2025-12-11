@@ -6,10 +6,10 @@ This file provides universal guidance for Claude Code across all projects.
 
 Claude should read documentation files in the following order for optimal understanding:
 
-1. **[doc/convention.md]** - Coding and naming conventions
-2. **[doc/implementation.md]** - Technology stack and tool references
-3. **[doc/code_design.md]** - Security, performance, and design best practices
-4. **[doc/feature.md]** - Feature development guidelines and patterns
+1. **[Coding and naming conventions](doc/convention.md)**
+2. **[Technology stack and tool references](doc/implementation.md)**
+3. **[Security, performance, and design best practices](doc/code_design.md)**
+4. **[Feature development guidelines and patterns](doc/feature.md)**
 
 ### Global Documentation
 
