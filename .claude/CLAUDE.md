@@ -6,14 +6,14 @@ This file provides universal guidance for Claude Code across all projects.
 
 Claude should read documentation files in the following order for optimal understanding:
 
-1. **convention.md** - Coding and naming conventions
-2. **implementation.md** - Technology stack and tool references
-3. **code_design.md** - Security, performance, and design best practices
-4. **feature.md** - Feature development guidelines and patterns
+1. **[doc/convention.md]** - Coding and naming conventions
+2. **[doc/implementation.md]** - Technology stack and tool references
+3. **[doc/code_design.md]** - Security, performance, and design best practices
+4. **[doc/feature.md]** - Feature development guidelines and patterns
 
 ### Global Documentation
 
-- Global templates available in `/Users/fgalloway/.claude/doc/`
+- Global templates available in `~/.claude/doc/`
 - Provides universal patterns and best practices
 - Reference for new project setup
 
@@ -24,6 +24,13 @@ Claude should read documentation files in the following order for optimal unders
 - Combines global and project documentation for complete context
 
 ## Universal Guidelines
+
+### Plan mode
+
+- Keep things simple
+- Use First principles thought method
+- Always ask questions if there are gaps in the plan
+- No hallucinations, do not assume, ask questions
 
 ### Resources and Documentation
 
