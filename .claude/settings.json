@@ -1,9 +1,12 @@
 {
-	"env": {},
-	"permissions": {
-		"allow": [],
-		"deny": []
-	},
-	"enabledPlugins": {},
-	"alwaysThinkingEnabled": true
+  "env": {},
+  "permissions": {
+    "allow": [],
+    "deny": []
+  },
+  "enabledPlugins": {
+    "git@InSuperposition": true,
+    "first-principles@InSuperposition": true
+  },
+  "alwaysThinkingEnabled": true
 }
