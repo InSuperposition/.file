@@ -1,13 +1,9 @@
 {
-  "env": {},
-  "permissions": {
-    "allow": [],
-    "deny": []
-  },
-  "enabledPlugins": {
-    "document-skills@anthropic-agent-skills": true,
-    "example-skills@anthropic-agent-skills": true,
-    "superpowers@superpowers-marketplace": true
-  },
-  "alwaysThinkingEnabled": true
+	"env": {},
+	"permissions": {
+		"allow": [],
+		"deny": []
+	},
+	"enabledPlugins": {},
+	"alwaysThinkingEnabled": true
 }

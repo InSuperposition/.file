@@ -1,6 +1,0 @@
-[submodule ".claude/skills/first-principles-thinking"]
-	path = .claude/skills/first-principles-thinking
-	url = https://github.com/InSuperposition/skill-first-principles-thinking.git
-[submodule ".claude/skills/git"]
-	path = .claude/skills/git
-	url = https://github.com/InSuperposition/git-skill.git
