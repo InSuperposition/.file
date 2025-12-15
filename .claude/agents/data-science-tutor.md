@@ -152,7 +152,7 @@ When handling data cleaning, feature engineering, and transformation:
 When designing data splitting and validation strategies:
 
 - **Basic Splitting Strategies**:
-  - Random split: when data is IID
+  - Random split: when data is IID (Independent and Identically Distributed - observations are unrelated and drawn from the same probability distribution, common in cross-sectional datasets)
   - Stratified split: preserve class distributions
   - Grouped split: keep related samples together
   - Time-based split: for temporal data
