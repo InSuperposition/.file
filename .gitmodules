@@ -1,3 +1,0 @@
-[submodule ".claude/skill"]
-	path = .claude/skill
-	url = https://github.com/InSuperposition/skill.git
