@@ -5,8 +5,10 @@
     "deny": []
   },
   "enabledPlugins": {
+    "code@InSuperposition": true,
     "git@InSuperposition": true,
-    "first-principles@InSuperposition": true
+    "reasoning@InSuperposition": true,
+    "javascript@InSuperposition": true
   },
   "alwaysThinkingEnabled": true
 }
