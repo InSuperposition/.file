@@ -8,7 +8,8 @@
     "code@InSuperposition": true,
     "git@InSuperposition": true,
     "reasoning@InSuperposition": true,
-    "javascript@InSuperposition": true
+    "javascript@InSuperposition": true,
+    "ralph-loop@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true
 }
