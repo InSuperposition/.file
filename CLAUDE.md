@@ -25,15 +25,15 @@ This is a **dotfiles repository** that manages shell and application configurati
 ### Essential Reference Files
 
 1. **[readme.md](readme.md)** - Complete setup instructions, architecture overview, and user documentation
-2. **[init.sh](init.sh)** - Main bootstrap script that sets up XDG environment variables
-3. **[alias.sh](alias.sh)** - Global shell aliases available across all sessions
+2. **[.config/.file/init.sh](.config/.file/init.sh)** - Main bootstrap script that sets up XDG environment variables
+3. **[.config/.file/alias.sh](.config/.file/alias.sh)** - Global shell aliases available across all sessions
 
 ### Configuration Structure
 
 ```shell
 .config/
 ├── [tool]/
-│   ├── alias.sh          # Tool-specific aliases
+│   ├── alias.sh         # Tool-specific aliases
 │   ├── init.sh          # Tool-specific initialization
 │   ├── config files     # Tool configurations
 │   └── ...
@@ -60,7 +60,7 @@ This is a **dotfiles repository** that manages shell and application configurati
 3. **Use modular initialization** - Create `init.sh` files for new tools
 4. **Update documentation** - Keep readme.md current with changes
 5. **Test with Stow** - Ensure symlinks work correctly
-6. **Respect file casing** - Use lowercase filenames (`readme.md`, not `README.md`)
+6. **Respect file casing** - Use lowercase filenames (`readme.md`, not `README.md`) with `snake_case`
 
 ### Understanding Tool Integration
 
@@ -71,7 +71,7 @@ This is a **dotfiles repository** that manages shell and application configurati
 
 ### Common Operations
 
-```bash
+```shell
 # Deploy configurations
 stow .
 
