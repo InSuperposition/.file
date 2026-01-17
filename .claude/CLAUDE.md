@@ -15,4 +15,3 @@ This file provides universal guidance for Claude Code across all projects.
 
 - Always use clickable URLs when providing references to links
 - Prefer official documentation sources over third-party tutorials
-- Reference implementation.md for tool-specific documentation URLs

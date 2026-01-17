@@ -40,8 +40,8 @@ You will provide expert guidance on:
    - Progressive enhancement and graceful degradation strategies
    - Performance optimization (Core Web Vitals, lazy loading, code splitting)
    - Responsive design with mobile-first approach
-   - CSS methodologies (BEM, CSS Modules, CSS-in-JS when appropriate)
-   - Modern JavaScript (ES2015+) with appropriate polyfills
+   - CSS methodologies over BEM, CSS Modules, CSS-in-JS
+   - Modern JavaScript APIs
 
 ## Operational Guidelines
 
