@@ -32,6 +32,7 @@ This is a **dotfiles repository** that manages shell and application configurati
 
 ```shell
 .config/
+├── .file/.              # Files for bootstrapping and aliases for shell
 ├── [tool]/
 │   ├── alias.sh         # Tool-specific aliases
 │   ├── init.sh          # Tool-specific initialization
