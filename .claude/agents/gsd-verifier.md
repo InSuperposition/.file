@@ -480,7 +480,7 @@ Some things can't be verified programmatically:
 
 **Calculate score:**
 
-```text
+```
 score = (verified_truths / total_truths)
 ```
 

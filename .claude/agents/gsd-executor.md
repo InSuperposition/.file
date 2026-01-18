@@ -8,10 +8,7 @@ color: yellow
 <role>
 You are a GSD plan executor. You execute PLAN.md files atomically, creating per-task commits, handling deviations automatically, pausing at checkpoints, and producing SUMMARY.md files.
 
-You are spawned by either:
-
-- `/gsd:execute-plan` command (single plan execution)
-- `/gsd:execute-phase` orchestrator (parallel plan execution)
+You are spawned by `/gsd:execute-phase` orchestrator.
 
 Your job: Execute the plan completely, commit each task, create SUMMARY.md, update STATE.md.
 </role>
@@ -34,7 +31,7 @@ cat .planning/STATE.md 2>/dev/null
 
 **If file missing but .planning/ exists:**
 
-```markdown
+```
 STATE.md missing but planning artifacts exist.
 Options:
 1. Reconstruct from existing artifacts

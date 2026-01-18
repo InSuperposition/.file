@@ -65,7 +65,7 @@ done
 
 **Build provides/consumes map:**
 
-```text
+```
 Phase 1 (Auth):
   provides: getCurrentUser, AuthProvider, useAuth, /api/auth/*
   consumes: nothing (foundation)
