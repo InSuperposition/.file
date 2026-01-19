@@ -6,13 +6,15 @@ This file provides universal guidance for Claude Code across all projects.
 
 ### Output format
 
+** use for all markdown output ** - plans, CLAUDE.md. README.md, etc
+
 - Provide an abstract at the beginning of output
 - list constraints
 - list goals
 
 ### Plan mode
 
-- Use Simplicity and First principles for design
+- Use Simplicity and First principles
 - Do not assume context, ask questions where context is missing
 - Use up to date knowledge
 - Break down to tasks and sub tasks
