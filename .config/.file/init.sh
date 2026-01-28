@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 # XDG Base Directory Specification - https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
@@ -27,6 +26,7 @@ export VISUAL=code
 . $XDG_CONFIG_HOME/kaggle/init.sh
 . $XDG_CONFIG_HOME/mise/init.sh
 . $XDG_CONFIG_HOME/rustup/init.sh
+. $XDG_CONFIG_HOME/ssh/init.sh
 . $XDG_CONFIG_HOME/starship/init.sh
 . $XDG_CONFIG_HOME/zellij/init.sh
 
