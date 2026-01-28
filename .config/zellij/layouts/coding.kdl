@@ -1,4 +1,24 @@
+// =============================================================================
+// Coding Layout - IDE-like Development Environment
+// =============================================================================
+// A focused layout for software development with dedicated tabs for editing,
+// terminal work, building, and testing.
+//
+// Tabs:
+//   1. editor   - Main Neovim editing pane (focused on startup)
+//   2. terminal - Split terminal with lazygit for version control
+//   3. build    - Continuous build watcher (make watch)
+//   4. test     - Test runner with log tailing
+// =============================================================================
+
 layout {
+
+    // -------------------------------------------------------------------------
+    // Default Tab Template
+    // -------------------------------------------------------------------------
+    // Applied to all tabs. Provides consistent UI with:
+    //   - Tab bar at top (1 row)
+    //   - zjstatus bar at bottom (2 rows) for enhanced status display
     default_tab_template {
         pane size=1 borderless=true {
             plugin location="zellij:tab-bar"
@@ -9,12 +29,26 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 1: Editor - Primary code editing
+    // -------------------------------------------------------------------------
+    // Full-screen Neovim instance. This tab receives focus on startup.
     tab name="editor" focus=true {
         pane {
             command "nvim"
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 2: Terminal - Shell and Git operations
+    // -------------------------------------------------------------------------
+    // Layout:
+    //   +------------------+----------+
+    //   |                  |  shell   |
+    //   |   main shell    +----------+
+    //   |     (70%)       | lazygit  |
+    //   |                  |  (30%)   |
+    //   +------------------+----------+
     tab name="terminal" {
         pane split_direction="vertical" {
             pane size="70%"
@@ -27,6 +61,11 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 3: Build - Continuous build watcher
+    // -------------------------------------------------------------------------
+    // Runs `make watch` for live rebuilds on file changes.
+    // Useful for compiled languages or projects with build steps.
     tab name="build" {
         pane {
             command "make"
@@ -34,6 +73,17 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 4: Test - Test runner and log monitoring
+    // -------------------------------------------------------------------------
+    // Layout:
+    //   +------------------------+
+    //   |    make test-watch     |
+    //   +------------------------+
+    //   |    tail -f test.log    |
+    //   +------------------------+
+    // Top: Continuous test runner (make test-watch)
+    // Bottom: Live test log output
     tab name="test" {
         pane split_direction="horizontal" {
             pane {

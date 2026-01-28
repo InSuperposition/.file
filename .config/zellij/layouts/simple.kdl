@@ -1,8 +1,35 @@
+// =============================================================================
+// Simple Layout - Minimal Multi-Terminal
+// =============================================================================
+// A minimal layout for basic terminal multiplexing without extra tooling.
+// Good for quick tasks, SSH sessions, or when you just need multiple shells.
+//
+// Tabs:
+//   1. main    - Single focused pane (focused on startup)
+//   2. servers - Side-by-side terminals for parallel work
+// =============================================================================
+
 layout {
+
+    // -------------------------------------------------------------------------
+    // Tab 1: Main - Single focused pane
+    // -------------------------------------------------------------------------
+    // A clean, single pane for focused work. This tab receives focus on startup.
     tab name="main" focus=true {
         pane
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 2: Servers - Side-by-side terminals
+    // -------------------------------------------------------------------------
+    // Layout:
+    //   +-----------+-----------+
+    //   |           |           |
+    //   |   pane    |   pane    |
+    //   |           |           |
+    //   +-----------+-----------+
+    // Two equal-width panes for parallel operations.
+    // Useful for: comparing outputs, running client/server, managing multiple SSH sessions
     tab name="servers" {
         pane split_direction="vertical" {
             pane

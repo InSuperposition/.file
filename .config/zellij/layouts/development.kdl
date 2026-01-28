@@ -1,4 +1,29 @@
+// =============================================================================
+// Development Layout - General Development with Container Support
+// =============================================================================
+// A versatile layout for development workflows involving containers and
+// orchestration. Includes system monitoring, Docker, Kubernetes, and logs.
+//
+// Tabs:
+//   1. main   - Primary workspace with system monitor (focused on startup)
+//   2. docker - Docker container monitoring
+//   3. k8s    - Kubernetes pod watching
+//   4. logs   - System log tailing
+//
+// Features:
+//   - Pre-configured floating pane for quick tasks
+//   - btop for system resource monitoring
+//   - Live container and pod status updates
+// =============================================================================
+
 layout {
+
+    // -------------------------------------------------------------------------
+    // Default Tab Template
+    // -------------------------------------------------------------------------
+    // Applied to all tabs. Provides consistent UI with:
+    //   - Tab bar at top (1 row)
+    //   - zjstatus bar at bottom (2 rows) for enhanced status display
     default_tab_template {
         pane size=1 borderless=true {
             plugin location="zellij:tab-bar"
@@ -9,6 +34,19 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 1: Main - Primary development workspace
+    // -------------------------------------------------------------------------
+    // Layout:
+    //   +------------------+----------+
+    //   |                  |   btop   |
+    //   |   main shell    +----------+
+    //   |     (70%)       | projects |
+    //   |                  |  shell   |
+    //   +------------------+----------+
+    // Left: Main working shell
+    // Right top: btop system monitor
+    // Right bottom: Shell opened to ~/projects directory
     tab name="main" focus=true {
         pane split_direction="vertical" {
             pane size="70%" {
@@ -26,6 +64,17 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 2: Docker - Container monitoring
+    // -------------------------------------------------------------------------
+    // Layout:
+    //   +------------------------+
+    //   |  docker ps (watch)     |
+    //   +------------------------+
+    //   |       shell            |
+    //   +------------------------+
+    // Top: Live view of running containers (updates every 2 seconds)
+    // Bottom: Shell for docker commands
     tab name="docker" {
         pane split_direction="horizontal" {
             pane {
@@ -38,6 +87,17 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 3: K8s - Kubernetes pod monitoring
+    // -------------------------------------------------------------------------
+    // Layout:
+    //   +------------------------+
+    //   |  kubectl get pods      |
+    //   +------------------------+
+    //   |       shell            |
+    //   +------------------------+
+    // Top: Live view of all pods across namespaces (updates every 5 seconds)
+    // Bottom: Shell for kubectl commands
     tab name="k8s" {
         pane split_direction="horizontal" {
             pane {
@@ -50,6 +110,10 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 4: Logs - System log monitoring
+    // -------------------------------------------------------------------------
+    // Full-screen tail of system.log for debugging system-level issues
     tab name="logs" {
         pane {
             command "tail"
@@ -57,6 +121,12 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Floating Panes - Quick access terminal
+    // -------------------------------------------------------------------------
+    // Pre-configured floating pane covering 90% of the screen.
+    // Toggle with Alt+f or Ctrl+p then 'w'.
+    // Useful for quick commands without leaving current context.
     floating_panes {
         pane command="zsh" {
             x "5%"

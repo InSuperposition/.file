@@ -1,4 +1,33 @@
+// =============================================================================
+// Monitor Layout - System Monitoring Dashboard
+// =============================================================================
+// A dashboard layout for monitoring system status, services, and connections.
+// Useful for server administration and debugging.
+//
+// Tabs:
+//   1. overview - Combined status dashboard (sessions, SSH, Docker, resources)
+//   2. logs     - System and SSH daemon logs
+//   3. network  - Active network connections
+//
+// Note: Some commands require elevated privileges (sudo) and may prompt
+// for authentication.
+// =============================================================================
+
 layout {
+
+    // -------------------------------------------------------------------------
+    // Tab 1: Overview - Combined status dashboard
+    // -------------------------------------------------------------------------
+    // Layout:
+    //   +------------------+----------+
+    //   |                  |   btop   |
+    //   | Zellij sessions +----------+
+    //   | + SSH status    |  Docker  |
+    //   |     (50%)       |  status  |
+    //   +------------------+----------+
+    // Left: Zellij sessions list and active SSH connection count (port 2222)
+    // Right top: btop system resource monitor
+    // Right bottom: Docker container status (updates every 5 seconds)
     tab name="overview" focus=true {
         pane split_direction="vertical" {
             pane size="50%" {
@@ -17,6 +46,17 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 2: Logs - System and service logs
+    // -------------------------------------------------------------------------
+    // Layout:
+    //   +------------------------+
+    //   |   /var/log/system.log  |
+    //   +------------------------+
+    //   |   journalctl sshd      |
+    //   +------------------------+
+    // Top: macOS system log (tail -f)
+    // Bottom: SSH daemon logs via journalctl (Linux systems)
     tab name="logs" {
         pane split_direction="horizontal" {
             pane {
@@ -30,6 +70,11 @@ layout {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Tab 3: Network - Active connections
+    // -------------------------------------------------------------------------
+    // Shows all active TCP connections using netstat.
+    // Requires sudo for full connection details.
     tab name="network" {
         pane {
             command "sudo"
