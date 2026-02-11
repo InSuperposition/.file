@@ -17,6 +17,9 @@ ripgrep = "latest"
 rust = "stable"
 sops = "latest"
 zellij = "latest"
+zig = "latest"
+zigmod = "latest"
+zls = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

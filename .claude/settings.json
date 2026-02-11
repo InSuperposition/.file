@@ -4,6 +4,7 @@
     "allow": [],
     "deny": []
   },
+  "model": "sonnet",
   "hooks": {
     "PreCompact": [
       {
@@ -46,17 +47,14 @@
     "claude-md-management@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
-    "code@InSuperposition": true,
     "commit-commands@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "explanatory-output-style@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
-    "git@InSuperposition": true,
     "github@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
     "huggingface-skills@claude-plugins-official": true,
-    "javascript@InSuperposition": true,
     "marketing-skills@marketingskills": true,
     "playwright@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
@@ -66,6 +64,5 @@
     "security-guidance@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
-  "model": "sonnet"
+  "alwaysThinkingEnabled": true
 }
