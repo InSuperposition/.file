@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export ZIG_GLOBAL_CACHE_DIR="$XDG_CACHE_HOME/zig"
+export ZIG_LOCAL_CACHE_DIR="$XDG_CACHE_HOME/zig"

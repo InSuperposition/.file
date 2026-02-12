@@ -1,0 +1,4 @@
+command script import ~/.config/zig/tools/lldb_pretty_printers.py
+type category enable zig.lang
+type category enable zig.std
+type category enable zig.stage2
