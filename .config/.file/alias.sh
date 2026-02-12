@@ -9,6 +9,8 @@ alias ll='lsd -lh'
 # List all files including hidden ones in long format with human-readable file sizes
 alias la='lsd -lha'
 
+alias lpth='echo $PATH | tr ":" "\n"'
+
 # Navigate up the directory tree
 alias ..='cd ..'
 alias ...='cd ../..'
