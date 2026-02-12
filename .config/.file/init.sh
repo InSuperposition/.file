@@ -20,6 +20,8 @@ export EDITOR=hx
 export VISUAL=code
 
 # Load tool-specific configurations
+. $HOME/.lmstudio/init.sh
+
 . $XDG_CONFIG_HOME/cargo/init.sh
 . $XDG_CONFIG_HOME/gnupg/init.sh
 . $XDG_CONFIG_HOME/homebrew/init.sh
