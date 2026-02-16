@@ -4,7 +4,6 @@
     "allow": [],
     "deny": []
   },
-  "model": "sonnet",
   "hooks": {
     "PreCompact": [
       {
@@ -62,7 +61,8 @@
     "reasoning@InSuperposition": true,
     "rust-analyzer-lsp@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "worktrunk@worktrunk": true
   },
   "alwaysThinkingEnabled": true
 }
