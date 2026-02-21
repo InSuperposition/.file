@@ -1,68 +1,68 @@
 {
-  "env": {},
-  "permissions": {
-    "allow": [],
-    "deny": []
-  },
-  "hooks": {
-    "PreCompact": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bd prime"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"$HOME/.claude/hooks/gsd-check-update.js\""
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bd prime"
-          }
-        ]
-      }
-    ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "node \"/Users/tensor/.claude/hooks/gsd-statusline.js\""
-  },
-  "enabledPlugins": {
-    "agent-sdk-dev@claude-plugins-official": true,
-    "claude-code-setup@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "explanatory-output-style@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
-    "github@claude-plugins-official": true,
-    "hookify@claude-plugins-official": true,
-    "huggingface-skills@claude-plugins-official": true,
-    "marketing-skills@marketingskills": true,
-    "playwright@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "reasoning@InSuperposition": true,
-    "rust-analyzer-lsp@claude-plugins-official": false,
-    "security-guidance@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "worktrunk@worktrunk": true
-  },
-  "alwaysThinkingEnabled": true
+	"env": {},
+	"permissions": {
+		"allow": [],
+		"deny": []
+	},
+	"model": "sonnet",
+	"hooks": {
+		"PreCompact": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "bd prime"
+					}
+				]
+			}
+		],
+		"SessionStart": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$HOME/.claude/hooks/gsd-check-update.js\""
+					}
+				]
+			},
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "bd prime"
+					}
+				]
+			}
+		]
+	},
+	"statusLine": {
+		"type": "command",
+		"command": "node \"/Users/tensor/.claude/hooks/gsd-statusline.js\""
+	},
+	"enabledPlugins": {
+		"agent-sdk-dev@claude-plugins-official": true,
+		"claude-code-setup@claude-plugins-official": true,
+		"claude-md-management@claude-plugins-official": true,
+		"code-review@claude-plugins-official": true,
+		"code-simplifier@claude-plugins-official": true,
+		"commit-commands@claude-plugins-official": true,
+		"context7@claude-plugins-official": true,
+		"explanatory-output-style@claude-plugins-official": true,
+		"feature-dev@claude-plugins-official": true,
+		"frontend-design@claude-plugins-official": true,
+		"github@claude-plugins-official": true,
+		"hookify@claude-plugins-official": true,
+		"huggingface-skills@claude-plugins-official": true,
+		"marketing-skills@marketingskills": true,
+		"playwright@claude-plugins-official": true,
+		"plugin-dev@claude-plugins-official": true,
+		"ralph-loop@claude-plugins-official": true,
+		"rust-analyzer-lsp@claude-plugins-official": false,
+		"security-guidance@claude-plugins-official": true,
+		"superpowers@claude-plugins-official": true,
+		"worktrunk@worktrunk": true
+	},
+	"alwaysThinkingEnabled": true
 }
