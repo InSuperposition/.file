@@ -24,6 +24,7 @@ export VISUAL=code
 
 . $XDG_CONFIG_HOME/cargo/init.sh
 . $XDG_CONFIG_HOME/gnupg/init.sh
+. $XDG_CONFIG_HOME/huggingface/init.sh
 . $XDG_CONFIG_HOME/homebrew/init.sh
 . $XDG_CONFIG_HOME/kaggle/init.sh
 . $XDG_CONFIG_HOME/mise/init.sh
