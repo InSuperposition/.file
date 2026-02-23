@@ -22,12 +22,14 @@ export VISUAL=code
 # Load tool-specific configurations
 . $HOME/.lmstudio/init.sh
 
+. $XDG_CONFIG_HOME/.bun/init.sh
 . $XDG_CONFIG_HOME/cargo/init.sh
 . $XDG_CONFIG_HOME/gnupg/init.sh
 . $XDG_CONFIG_HOME/huggingface/init.sh
 . $XDG_CONFIG_HOME/homebrew/init.sh
 . $XDG_CONFIG_HOME/kaggle/init.sh
 . $XDG_CONFIG_HOME/mise/init.sh
+. $XDG_CONFIG_HOME/orbstack/init.sh
 . $XDG_CONFIG_HOME/rustup/init.sh
 . $XDG_CONFIG_HOME/ssh/init.sh
 . $XDG_CONFIG_HOME/starship/init.sh

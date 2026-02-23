@@ -94,4 +94,4 @@ This file provides universal guidance for Claude Code across all projects.
 - Always use clickable URLs when providing references to links
 - Prefer official documentation and source code over third-party tutorials
 
-@RTK.md
+@skills/RTK.md
