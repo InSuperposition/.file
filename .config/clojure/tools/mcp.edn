@@ -1,1 +1,1 @@
-{:lib io.github.bhauman/clojure-mcp, :coord {:git/tag "v0.2.3", :git/sha "bbefc7a"}}
+{:lib io.github.bhauman/clojure-mcp, :coord {:git/tag "v0.2.6", :git/sha "bbefc7a"}}
