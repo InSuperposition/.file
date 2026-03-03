@@ -1,0 +1,28 @@
+{
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "/Users/tensor/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-03-02T13:29:22.012Z"
+  },
+  "everything-claude-code": {
+    "source": {
+      "source": "github",
+      "repo": "affaan-m/everything-claude-code"
+    },
+    "installLocation": "/Users/tensor/.claude/plugins/marketplaces/everything-claude-code",
+    "lastUpdated": "2026-03-02T11:48:39.059Z",
+    "autoUpdate": true
+  },
+  "worktrunk": {
+    "source": {
+      "source": "github",
+      "repo": "max-sixty/worktrunk"
+    },
+    "installLocation": "/Users/tensor/.claude/plugins/marketplaces/worktrunk",
+    "lastUpdated": "2026-03-02T13:41:28.462Z",
+    "autoUpdate": true
+  }
+}

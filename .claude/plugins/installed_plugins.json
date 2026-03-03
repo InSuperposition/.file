@@ -1,0 +1,246 @@
+{
+  "version": 2,
+  "plugins": {
+    "playwright@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/playwright/236752ad9ab3",
+        "version": "236752ad9ab3",
+        "installedAt": "2026-01-17T11:09:36.261Z",
+        "lastUpdated": "2026-02-06T08:15:13.802Z",
+        "gitCommitSha": "96276205880a60fd66bbae981f5ab568e70c4cbf"
+      }
+    ],
+    "code-simplifier@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/code-simplifier/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-17T11:09:36.403Z",
+        "lastUpdated": "2026-01-17T11:09:44.683Z",
+        "gitCommitSha": "96276205880a60fd66bbae981f5ab568e70c4cbf"
+      }
+    ],
+    "plugin-dev@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/plugin-dev/236752ad9ab3",
+        "version": "236752ad9ab3",
+        "installedAt": "2026-01-17T11:09:36.568Z",
+        "lastUpdated": "2026-02-06T08:15:13.850Z",
+        "gitCommitSha": "96276205880a60fd66bbae981f5ab568e70c4cbf"
+      }
+    ],
+    "rust-analyzer-lsp@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/rust-analyzer-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-17T11:09:36.698Z",
+        "lastUpdated": "2026-01-17T11:09:44.683Z",
+        "gitCommitSha": "96276205880a60fd66bbae981f5ab568e70c4cbf"
+      }
+    ],
+    "frontend-design@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/frontend-design/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:56.670Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "context7@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/context7/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:56.838Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "code-review@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/code-review/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:57.010Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "github@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/github/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:57.177Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "feature-dev@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/feature-dev/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:57.347Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "ralph-loop@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/ralph-loop/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:57.795Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "commit-commands@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/commit-commands/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:57.964Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "security-guidance@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/security-guidance/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:58.138Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "agent-sdk-dev@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/agent-sdk-dev/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:58.308Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "explanatory-output-style@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/explanatory-output-style/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:59.269Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "hookify@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/hookify/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-01-28T19:05:59.623Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "huggingface-skills@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/huggingface-skills/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-28T19:06:00.577Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "462a39896c44a7bbaf2c39aa49056a43af228d55"
+      }
+    ],
+    "claude-md-management@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/claude-md-management/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-28T19:06:00.673Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "claude-code-setup@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/claude-code-setup/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-28T19:06:00.768Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "everything-claude-code@everything-claude-code": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/code/silo",
+        "installPath": "/Users/tensor/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.4.1",
+        "version": "1.4.1",
+        "installedAt": "2026-01-29T10:10:45.250Z",
+        "lastUpdated": "2026-02-10T09:48:44.875Z",
+        "gitCommitSha": "c9ef02ba42d29385a4b20669665e231cc0f8b8cb"
+      }
+    ],
+    "worktrunk@worktrunk": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/worktrunk/worktrunk/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-14T16:32:58.387Z",
+        "lastUpdated": "2026-02-21T15:54:18.607Z",
+        "gitCommitSha": "9497ad2361d73b88355e8243f8fae39f9502e537"
+      }
+    ],
+    "superpowers@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/tensor/.file",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/superpowers/4.3.0",
+        "version": "4.3.0",
+        "installedAt": "2026-02-21T15:54:19.611Z",
+        "lastUpdated": "2026-02-21T15:54:19.611Z",
+        "gitCommitSha": "a0b9ecce2b25aa7d703138f17650540c2e8b2cde"
+      }
+    ],
+    "playground@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/tensor/.claude/plugins/cache/claude-plugins-official/playground/55b58ec6e564",
+        "version": "55b58ec6e564",
+        "installedAt": "2026-02-23T20:00:37.167Z",
+        "lastUpdated": "2026-02-28T10:37:36.624Z",
+        "gitCommitSha": "aa296ec81e8ccb49c9784f167c2c0aa625a86cec"
+      }
+    ]
+  }
+}
