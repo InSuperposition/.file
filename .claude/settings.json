@@ -67,8 +67,23 @@
     "ralph-loop@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": false,
-    "worktrunk@worktrunk": true,
-    "context-mode@claude-context-mode": true
+    "worktrunk@worktrunk": true
+  },
+  "extraKnownMarketplaces": {
+    "grepai-skills": {
+      "source": {
+        "source": "github",
+        "repo": "yoanbernabeu/grepai-skills"
+      },
+      "autoUpdate": true
+    },
+    "context-mode": {
+      "source": {
+        "source": "github",
+        "repo": "mksglu/context-mode"
+      },
+      "autoUpdate": true
+    }
   },
   "alwaysThinkingEnabled": true
 }
