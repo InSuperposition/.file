@@ -81,11 +81,6 @@ background-blur-radius = 40
 # Auto-update check
 auto-update = "check"
 
-# macOS-specific performance options
-macos-option-as-alt = true
-mouse-scroll-multiplier = 3
-
-
 # Mouse
 mouse-hide-while-typing = true
 mouse-shift-capture = true

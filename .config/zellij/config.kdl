@@ -24,6 +24,8 @@
 
 keybinds clear-defaults=true {
 
+     unbind "Ctrl m"
+
     // -------------------------------------------------------------------------
     // Locked Mode - Disables all keybindings except unlock
     // -------------------------------------------------------------------------
