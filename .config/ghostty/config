@@ -1,41 +1,38 @@
+
 font-family = Hasklug Nerd Font
-font-size = 14
+font-size = 16
 
-# theme = Cobalt2  # Using custom VS Code Cobalt2 colors below
-
-# Color handling - Match VS Code Cobalt2 terminal colors exactly
-# Background and foreground to match VS Code terminal
-background = #122738
-foreground = #ffffff
-
-# ANSI color palette
-palette = 0=#939393
-palette = 1=#ff628c
-palette = 2=#3ad900
-palette = 3=#ffc600
-palette = 4=#0088ff
-palette = 5=#fb94ff
-palette = 6=#80fcff
-palette = 7=#ffffff
-palette = 8=#7999c8
-palette = 9=#ff628c
-palette = 10=#3ad900
-palette = 11=#ffc600
-palette = 12=#0088ff
-palette = 13=#fb94ff
-palette = 14=#80fcff
-palette = 15=#ffffff
-
-
-# Use font variations for better rendering
 font-thicken = true
-font-variation = "wght=400"
+
+font-variation = "wght=420"
 font-variation-bold = "wght=700"
 font-variation-italic = "ital=1"
 
+# cobalt2
+background = #122738
+foreground = #e6f3ff
+
+palette = 0=#1c3b4d
+palette = 1=#ff5c8a
+palette = 2=#3aff88
+palette = 3=#ffd166
+palette = 4=#52a8ff
+palette = 5=#c792ea
+palette = 6=#4be3ff
+palette = 7=#d6eaff
+
+palette = 8=#5b7c95
+palette = 9=#ff7aa2
+palette = 10=#59ffa1
+palette = 11=#ffe08a
+palette = 12=#70b7ff
+palette = 13=#d6a4ff
+palette = 14=#6ff1ff
+palette = 15=#ffffff
+
 
 # Modern rendering options
-unfocused-split-opacity = 0.9
+unfocused-split-opacity = 0.8
 
 # Window configuration
 window-padding-x = 10
@@ -51,18 +48,16 @@ link-url = true
 shell-integration-features = cursor, sudo, title
 
 # Scrollback and history
-scrollback-limit = 8000000
+scrollback-limit = 32000000
 
 # Cursor customization
+cursor-invert-fg-bg = true
 cursor-style = "block"
 cursor-style-blink = false
 cursor-color = "#7aa2f7"
 
 
 # Advanced features
-gtk-titlebar = false
-# Experimental features
-gtk-tabs-location = "top"
 macos-titlebar-style = transparent
 confirm-close-surface = false
 
@@ -80,8 +75,8 @@ clipboard-paste-protection = true
 clipboard-paste-bracketed-safe = true
 
 # Background blur (macOS)
-background-opacity = 0.95
-background-blur-radius = 20
+background-opacity = 0.9
+background-blur-radius = 40
 
 # Auto-update check
 auto-update = "check"
@@ -90,8 +85,6 @@ auto-update = "check"
 macos-option-as-alt = true
 mouse-scroll-multiplier = 3
 
-# Terminal behavior
-term = xterm-256color
 
 # Mouse
 mouse-hide-while-typing = true
@@ -101,5 +94,4 @@ mouse-shift-capture = true
 shell-integration = detect
 shell-integration-features = cursor,sudo,title
 
-# custom-shader = ~/.local/share/ghostty/shader/crt/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix.glsl
-keybind = shift+enter=text:\n
+auto-update = check
