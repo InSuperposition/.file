@@ -5,17 +5,7 @@
     "deny": []
   },
   "hooks": {
-    "PreCompact": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bd prime"
-          }
-        ]
-      }
-    ],
+    "PreCompact": [],
     "PreToolUse": [
       {
         "matcher": "Bash",

@@ -2,7 +2,7 @@
 
 This file provides universal guidance for Claude Code across all projects.
 
-## Unified Design & Programming Principles
+## Unified Design & Programming Principles for planning
 
 ### Negative Space Software Architecture and Design
 
@@ -73,6 +73,13 @@ This file provides universal guidance for Claude Code across all projects.
 17. **Expression-Oriented Programming** – Everything is an expression that returns a value; statements become expressions.
 18. **Functional Core, Imperative Shell** – Keep the core logic pure and functional, pushing side effects to the boundaries of the system.
 
+### Naming conventions
+
+- files, folders and functions should have correct and descriptive names
+- semantic action based names for functions.
+
+---
+
 ### Output format
 
 ** use for all markdown output ** - plans, CLAUDE.md. README.md, etc
@@ -84,9 +91,10 @@ This file provides universal guidance for Claude Code across all projects.
 ### Plan mode
 
 - Use Simplicity and First principles
-- Ask questions where context is missing. Do not assume context.
+- Ask questions if context is missing. Do not assume context.
+- When providing options for path forward, provide explanation, benefit, drawbacks with mitigations.
 - Use up to date information
-- Group by logical phases
+- Order and Group by logical phases
 - Break down to tasks and sub tasks
 
 ### Resources and Documentation
