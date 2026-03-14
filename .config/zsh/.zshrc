@@ -36,3 +36,5 @@ alias sz="source $ZSHRC_PATH"
 
 eval "$(atuin init zsh)"
 source "$(brew --prefix)/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+
+. $XDG_CONFIG_HOME/curl/init.sh

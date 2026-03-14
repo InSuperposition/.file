@@ -14,7 +14,7 @@ fi
 
 LOCAL_BIN_HOME=$HOME/.local/bin
 
-export PATH="$PATH:$LOCAL_BIN_HOME"
+export PATH="$LOCAL_BIN_HOME:$PATH"
 
 export EDITOR=hx
 export VISUAL=code
