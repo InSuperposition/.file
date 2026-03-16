@@ -31,7 +31,6 @@ export VISUAL=code
 . $XDG_CONFIG_HOME/mise/init.sh
 . $XDG_CONFIG_HOME/orbstack/init.sh
 . $XDG_CONFIG_HOME/rustup/init.sh
-. $XDG_CONFIG_HOME/ssh/init.sh
 . $XDG_CONFIG_HOME/starship/init.sh
 . $XDG_CONFIG_HOME/zellij/init.sh
 . $XDG_CONFIG_HOME/zig/init.sh
