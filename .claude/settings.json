@@ -38,7 +38,8 @@
     "ralph-loop@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": false,
-    "worktrunk@worktrunk": true
+    "worktrunk@worktrunk": true,
+    "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "grepai-skills": {
@@ -56,5 +57,6 @@
       "autoUpdate": true
     }
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high"
 }
