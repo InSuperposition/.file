@@ -1,0 +1,1 @@
+/Users/tensor/.file/.claude/skills/gstack/plan-ceo-review/SKILL.md

@@ -4,6 +4,7 @@
     "allow": [],
     "deny": []
   },
+  "model": "opus[1m]",
   "hooks": {
     "PreCompact": [],
     "PreToolUse": [
@@ -13,6 +14,10 @@
           {
             "type": "command",
             "command": "/Users/tensor/.claude/hooks/rtk-rewrite.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/tensor/.claude/hooks/playwright-cli-filename-guard.sh"
           }
         ]
       }
@@ -35,11 +40,14 @@
     "playground@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": false,
     "worktrunk@worktrunk": true,
-    "superpowers@claude-plugins-official": true
+    "visual-explainer@visual-explainer-marketplace": true,
+    "last30days@last30days-skill": true,
+    "caveman@caveman": true,
+    "mempalace@mempalace": true,
+    "andrej-karpathy-skills@karpathy-skills": true
   },
   "extraKnownMarketplaces": {
     "grepai-skills": {
@@ -49,10 +57,38 @@
       },
       "autoUpdate": true
     },
-    "context-mode": {
+    "visual-explainer-marketplace": {
       "source": {
         "source": "github",
-        "repo": "mksglu/context-mode"
+        "repo": "nicobailon/visual-explainer"
+      },
+      "autoUpdate": true
+    },
+    "last30days-skill": {
+      "source": {
+        "source": "github",
+        "repo": "mvanhorn/last30days-skill"
+      },
+      "autoUpdate": true
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      },
+      "autoUpdate": true
+    },
+    "mempalace": {
+      "source": {
+        "source": "github",
+        "repo": "milla-jovovich/mempalace"
+      },
+      "autoUpdate": true
+    },
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "forrestchang/andrej-karpathy-skills"
       },
       "autoUpdate": true
     }

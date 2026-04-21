@@ -1,0 +1,1 @@
+/Users/tensor/.file/.claude/skills/gstack/autoplan/SKILL.md

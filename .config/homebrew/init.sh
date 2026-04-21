@@ -6,6 +6,7 @@ export HOMEBREW_BUNDLE_FILE=$XDG_CONFIG_HOME/homebrew/Brewfile
 alias brew_lock="brew bundle dump --force && brew bundle install --no-upgrade"
 alias brew_init="brew bundle install"
 
+
 HOMEBREW_PREFIX=$(brew --prefix)
 eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
 
