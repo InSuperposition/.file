@@ -8,5 +8,5 @@
 readme.md
 /CLAUDE.md
 ^/[^/]*\.sh$
-.clj-kondo/
-.lsp/
+/.clj-kondo
+/.lsp
