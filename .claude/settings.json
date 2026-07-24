@@ -43,7 +43,6 @@
     "rust-analyzer-lsp@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": false,
     "worktrunk@worktrunk": true,
-    "visual-explainer@visual-explainer-marketplace": true,
     "last30days@last30days-skill": true,
     "caveman@caveman": true,
     "mempalace@mempalace": true,

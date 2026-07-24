@@ -1,253 +1,562 @@
-tap "borkdude/brew"
-tap "bysiber/cleardisk"
-tap "cirruslabs/cli"
-tap "coleam00/archon"
-tap "hcavarsan/kftray"
-tap "metalbear-co/mirrord"
-tap "mongodb/brew"
-tap "opencode-ai/tap"
-tap "steipete/tap"
-tap "teamookla/speedtest"
-tap "terror/tap"
-tap "tldev/tap"
-tap "wasmcloud/wasmcloud"
-tap "ymtdzzz/tap"
-tap "yoanbernabeu/tap"
+tap "babashka/brew", trusted: true
+tap "borkdude/brew", trusted: true
+tap "clojurewasm/tap"
+tap "coleam00/archon", trusted: true
+tap "hcavarsan/kftray", trusted: true
+tap "jundot/omlx", "https://github.com/jundot/omlx", trusted: true
+tap "matthart1983/tap"
+tap "metalbear-co/mirrord", trusted: true
+tap "modem-dev/tap"
+tap "mongodb/brew", trusted: true
+tap "opencode-ai/tap", trusted: true
+tap "steipete/tap", trusted: true
+tap "teamookla/speedtest", trusted: true
+tap "terror/tap", trusted: true
+tap "tldev/tap", trusted: true
+tap "wasmcloud/wasmcloud", trusted: true
+tap "ymtdzzz/tap", trusted: true
+tap "yoanbernabeu/tap", trusted: true
+# Architectural Decision Record tool in Rust
+brew "adrs"
+# Simple, modern, secure file encryption
 brew "age"
+# Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
+# Command-line interface for SQLite
 brew "sqlite"
+# Browser automation CLI for AI agents
 brew "agent-browser"
+# Reactive CLI that generates commit messages for Git and Jujutsu with AI
 brew "aicommit2"
+# AI pair programming in your terminal
 brew "aider"
+# Apple Intelligence from the command-line, with OpenAi-compatible API server
 brew "apfel"
+# App Store Connect CLI to manage apps, versions, and screenshots
+brew "asccli"
+# Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
+# Sync server for atuin - Improved shell history for zsh, bash, fish and nushell
 brew "atuin-server"
+# Generate waveform data and render waveform images from audio files
 brew "audiowaveform"
+# Markdown‑native Task Manager & Kanban visualizer for any Git repository
 brew "backlog-md"
+# CLI to audit posture and evaluate compromise blast radius
 brew "bagel"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# TUI for managing Homebrew, Flatpak, and Mac App Store packages
+brew "bbrew"
+# Music library manager and tagger
+brew "beets"
+# Compiler infrastructure and toolchain library for WebAssembly
 brew "binaryen"
+# Toolchain of the web
 brew "biome"
+# Open source, extensible AI agent that goes beyond code suggestions
 brew "block-goose-cli"
+# Terminal EPUB Book Reader
 brew "bookokrat"
+# CLI tool for datetime arithmetic, parsing, formatting and more
+brew "bttf"
+# Compile shell scripts to static binaries
 brew "bunster"
+# Powerful, enterprise-ready, open source web server with automatic HTTPS
 brew "caddy"
+# Calendar for the command-line
 brew "carl"
-brew "sdl2"
-brew "ffmpeg", link: false
+# SDL2 compatibility layer that uses SDL3 behind the scenes
+brew "sdl2-compat"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Tool for extracting closed captions from video files
 brew "ccextractor"
+# TUI web browser with CSS, inline image and JavaScript support
 brew "chawan"
+# Browse, inspect, and launch movie torrents directly from your terminal
 brew "cinecli"
+# CLI tool for configuring and monitoring Claude Code
 brew "claude-code-templates"
+# Copy files from your terminal that actually paste into GUI apps
 brew "clippy"
+# See where your AI coding tokens go - by task, tool, model, and project
+brew "codeburn"
+# Create and run Linux containers using lightweight virtual machines
 brew "container"
+# Test and validate container requirements against versioned manifests
 brew "container-canary"
+# Dev envs for coding agents. Run multiple agents safely with your stack
+brew "container-use"
+# Up-to-date code documentation for LLMs and AI code editors
 brew "context7-mcp"
+# GNU File, Shell, and Text utilities
 brew "coreutils"
+# Container Signing
 brew "cosign"
+# Manage AI coding skills and documentation context
 brew "ctx7"
+# Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# List system USB buses and devices
 brew "cyme"
+# Tool for visualizing dependencies between files and enforcing dependency rules
 brew "dep-tree"
+# Harden package manager configs against supply chain attacks
+brew "depsguard"
+# TUI system monitor for Apple Silicon
 brew "devcockpit"
+# Load/unload environment variables based on $PWD
 brew "direnv"
+# Cross-platform disk diagnostics TUI
+brew "diskwatch"
+# Tool for exploring each layer in a docker image
 brew "dive"
-brew "docker"
+# Agent Builder and Runtime by Docker Engineering
 brew "docker-agent"
+# Terminal document viewer for .docx files
 brew "doxx"
+# Opinionated Dockerfile linter
+brew "droast"
+# More intuitive version of du in rust
 brew "dust"
+# Select default apps for documents and URL schemes on macOS
 brew "duti"
+# Simple command-line tool for creating clusters on Amazon EKS
 brew "eksctl"
+# GNU Emacs text editor
 brew "emacs"
+# Modern, maintained replacement for ls
 brew "eza"
+# Free, open-source local AWS cloud emulator for integration testing
+brew "fakecloud"
+# Efficient Duplicate File Finder
 brew "fclones"
+# Simple, fast and user-friendly alternative to find
 brew "fd"
+# Detect license usage restrictions in your project
 brew "feluda"
+# FFmpeg automation layer
 brew "ffmate"
+# Multipurpose automation tool for content
 brew "flexget"
+# S3 object store so reliable you can run it outside datacenters
 brew "garage"
+# GNU debugger
 brew "gdb"
-brew "gemini-cli"
+# GitHub command-line tool
 brew "gh"
+# Distributed revision control system
 brew "git"
+# Quickly rewrite git repository history
 brew "git-filter-repo"
+# List, fetch and generate .gitignore templates
 brew "git-ignore"
+# Git extension for versioning large files
 brew "git-lfs"
+# Turn any Git repository into a prompt-friendly text ingest for LLMs
 brew "gitingest"
+# Audit git repos for secrets
 brew "gitleaks"
+# Create `.gitignore` using templates from TopTal, GitHub or your own collection
 brew "gitnr"
+# Keyless Git signing using Sigstore
 brew "gitsign"
+# Blazing fast terminal-ui for git written in rust
 brew "gitui"
+# Autonomous agent orchestrator for long-running coding tasks
+brew "gnhf"
+# Library for loading images as SDL surfaces and textures
 brew "sdl2_image"
+# Version Control Visualization Tool
 brew "gource"
+# Graph visualization software from AT&T and Bell Labs
 brew "graphviz"
+# Like cURL, but for gRPC
 brew "grpcurl"
+# Grammar Checker for Developers
+brew "harper"
+# Kubernetes package manager
 brew "helm"
+# Self-improving AI agent that creates skills from experience
+brew "hermes-agent"
+# Command-line hex viewer
+brew "hexyl"
+# Client library for huggingface.co hub
 brew "hf"
+# HTTP request visualizer with phase-by-phase timing breakdown
 brew "httptap"
+# Run and Test HTTP Requests with plain text and curl
 brew "hurl"
+# Interactive grep
 brew "igrep"
+# Like IntelliSense, but for shells
 brew "intelli-shell"
+# Install and debug iPhone apps from the command-line
 brew "ios-deploy"
+# Check the internet as fast as possible
 brew "is-fast"
+# Git-compatible distributed version control system
 brew "jj"
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# Handy way to save and run project-specific commands
 brew "just"
+# TUI for decoding and encoding JWT tokens
+brew "jwt-ui"
+# Kubernetes CLI To Manage Your Clusters In Style!
+brew "k9s"
+# Simple and fast dashboard for Kubernetes
+brew "kdash"
+# Run local Kubernetes cluster in Docker
 brew "kind"
+# Tool to move from `docker-compose` to Kubernetes
 brew "kompose"
+# Kafka TUI client
 brew "ktea"
+# FAST Kubernetes manifests validator, with support for Custom Resources!
+brew "kubeconform"
+# Bulk port forwarding Kubernetes services for local development
 brew "kubefwd"
+# Kubernetes command-line interface
 brew "kubernetes-cli"
+# Offers a Cloud-Native Dev Environment that connects to your K8s cluster network
 brew "kubevpn"
+# Template-free customization of Kubernetes YAML manifests
 brew "kustomize"
+# Kubernetes WithOut Kubelet - Simulates thousands of Nodes and Clusters
 brew "kwok"
+# Apache Iceberg REST Catalog
 brew "lakekeeper"
+# Simple terminal UI for git commands
 brew "lazygit"
+# Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
+# Build tool for Clojure
 brew "leiningen"
+# Pager program similar to more
 brew "less"
+# Library to communicate with iOS devices natively
 brew "libimobiledevice"
+# Fast, distributed, high performance gradient boosting framework
 brew "lightgbm"
+# Command-line utility to interact with linkerd
 brew "linkerd"
+# Next-gen compiler infrastructure
 brew "llvm"
+# Find what models run on your hardware
 brew "llmfit"
+# Clone of ls with colorful output, file type icons, and more
 brew "lsd"
+# Fast, minimalist directory tree viewer
 brew "lstr"
+# Fast Markdown linter written in Rust
+brew "mado"
+# Fast and accurate AI powered file content types detection
 brew "magika"
+# Fast, flexible, config-based cli for linting Markdown/CommonMark files
 brew "markdownlint-cli2"
+# Mac App Store command-line interface
 brew "mas"
+# Java-based project management
 brew "maven"
+# Terminal image, video, directory, and Markdown viewer
 brew "mcat"
-brew "mcp-get"
+# Visual testing tool for MCP servers
 brew "mcp-inspector"
+# Publisher CLI tool for the Official Model Context Protocol (MCP) Registry
 brew "mcp-publisher"
+# MCP Server for kubernetes management commands
 brew "mcp-server-kubernetes"
+# CLI host for LLMs to interact with tools via MCP
 brew "mcphost"
+# TUI for tracking home projects, maintenance schedules, appliances and quotes
 brew "micasa"
+# Minify and secure Docker images
 brew "mintoolkit"
+# Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# Simple tool to make locally trusted development certificates
 brew "mkcert"
+# Tool for smooth Git handover in mob programming sessions
 brew "mob"
+# Deep clean and optimize your Mac
 brew "mole"
+# Downloads course content fast from Moodle (e.g., lecture PDFs)
 brew "moodle-dl"
+# Nice to use pager for humans
 brew "moor"
+# Remote terminal application
 brew "mosh"
+# Archive a lifetime of email and chat with offline search and analytics
+brew "msgvault"
+# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Network scanner with features like WiFi scanning, packetdump and more
 brew "netscanner"
+# Port scanning utility for large networks
 brew "nmap"
+# Libraries for security-enabled client and server applications
 brew "nss"
+# Tiny autonomous AI assistant infrastructure written in Zig
 brew "nullclaw"
+# Modern shell for the GitHub era
 brew "nushell"
+# Create, run, and share large language models (LLMs)
 brew "ollama"
-brew "openapv"
+# Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# AI coding agent, built for the terminal
 brew "opencode"
+# CLI for web reconnaissance, directory discovery, and exposure assessment
+brew "opendoor"
+# Universal skills loader for AI coding agents
 brew "openskills"
+# Swiss-army knife of markup format conversion
 brew "pandoc"
+# Peek inside Parquet files right from your terminal
 brew "parqeye"
+# QR Code generation
 brew "qrencode"
+# Password manager
 brew "pass"
+# Git credential helper interfacing with pass
 brew "pass-git-helper"
+# PDF files password cracker
 brew "pdfcrack"
+# Open-source vector similarity search for Postgres
 brew "pgvector"
+# CLI tool for seamless parallel development with Git worktrees
 brew "phantom"
+# Execute binaries from Python packages in isolated environments
 brew "pipx"
+# Package compiler and linker metadata toolkit
 brew "pkgconf"
+# CLI for Playwright: record/generate code, inspect selectors, take screenshots
 brew "playwright-cli"
+# Fast, disk space efficient package manager
 brew "pnpm"
+# PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
+# App artifacts, tools, configs, and logic packaged as distributable installer
 brew "porter"
+# Convert bitmaps to vector graphics
 brew "potrace"
+# AI-powered command-line workflow tool for developers
 brew "qwen-code"
+# Sovereign code forge built on Git
 brew "radicle"
+# Multi-agent orchestration framework for autonomous AI task completion
 brew "ralph-orchestrator"
+# Reattach process (e.g., tmux) to background
 brew "reattach-to-user-namespace"
+# Retry a command with exponential backoff and jitter
 brew "recur"
+# Terminal client for .http/.rest files with HTTP, GraphQL, and gRPC support
 brew "resterm"
+# Readline wrapper: adds readline support to tools that lack it
 brew "rlwrap"
+# Extremely fast tool to remove dupes and other lint from your filesystem
 brew "rmlint"
+# Filesystem cleaning tool
 brew "rmrfrs"
+# CLI proxy to minimize LLM token consumption
 brew "rtk"
+# Universal multi-language runner and smart REPL
 brew "run-kit"
+# Sample multi-channel audio mixer library
 brew "sdl2_mixer"
+# Semantic version control CLI with entity-level diffs and blame
 brew "sem-cli"
+# Small local inference server with OpenAI-compatible GGUF endpoints
 brew "shimmy"
+# AI-powered natural language end-to-end testing framework
 brew "shortest"
+# Sync skills across AI CLI tools
 brew "skillshare"
+# S/MIME signing utility for use with Git
 brew "smimesign"
+# Cross-platform application to monitor your network traffic
 brew "sniffnet"
+# Prettier way to inspect network connections
 brew "snitch"
+# Run a command at a particular time
 brew "snooze"
+# Human-friendly alternative to netstat for socket and port monitoring
 brew "somo"
+# SOund eXchange: universal sound sample translator
 brew "sox"
+# Toolkit to help you get started with Spec-Driven Development
 brew "specify"
+# SQLite extension providing 256-bit AES encryption
 brew "sqlcipher"
+# SSH server & client auditing
 brew "ssh-audit"
+# Protect from brute force attacks against SSH
 brew "sshguard"
+# Cross-shell prompt for astronauts
 brew "starship"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
+# Standard Operating Procedures for AI agents using natural language
 brew "strands-agents-sops"
+# Feature-rich command-line audio/video downloader
 brew "yt-dlp"
+# Multi-modal AI tool to extract and summarize content
 brew "summarize"
+# Generate scripting interfaces to C/C++ code
 brew "swig"
+# Symbolic link maintenance utility
 brew "symlinks"
+# Interactive TUI for Homebrew
+brew "taproom"
+# Very fast implementation of tldr in Rust
+brew "tealdeer"
+# CLI for interacting with TektonCD
 brew "tektoncd-cli"
+# Record, share and export your terminal as a animated SVG image
 brew "termsvg"
+# Tool which checks for the support of TLS/SSL ciphers and flaws
 brew "testssl"
+# Define your dev environment as code. For microservice apps on Kubernetes
 brew "tilt"
+# Package manager for Kubernetes, powered by CUE and inspired by Helm
+brew "timoni"
+# Detect terminal injection, homograph, and pipe-to-shell attacks
+brew "tirith"
+# Terminal multiplexer
 brew "tmux"
+# Modern traceroute/mtr-style TUI with hop stats and ASN/geo enrichment
+brew "ttl"
+# Terminal UI OS (Terminal Multiplexer)
 brew "tuios"
+# Customize your Claude Code themes, thinking verbs, and more
 brew "tweakcc"
+# AI-powered git commit assistant written in Go
 brew "vibecheck"
+# CLI Semantic Coding Agent
 brew "vtcode"
+# Lightweight, high-performance, and extensible WebAssembly runtime
 brew "wasmedge"
+# Security-oriented runtime that runs WebAssembly Components via MCP
 brew "wassette"
+# Watch files and take action when they change
 brew "watchman"
+# Entity-level semantic merge driver for Git using tree-sitter
 brew "weave"
+# Command-line client for WebSockets
 brew "websocat"
+# Internet file retriever
 brew "wget"
+# LAN discovery tool with a modern TUI written in Go
 brew "whosthere"
+# Tools for the WireGuard secure network tunnel
 brew "wireguard-tools"
+# Network analyzer and capture tool - without graphical user interface
 brew "wireshark"
+# CLI for Git worktree management, designed for parallel AI agent workflows
 brew "worktrunk"
+# CSV CLI magician written in Rust
 brew "xan"
+# Generate your Xcode project from a spec file and your folder structure
 brew "xcodegen"
+# Check your $HOME for unwanted files and directories
 brew "xdg-ninja", args: ["HEAD"]
+# Terminal Excel viewer with an interactive TUI
 brew "xleak"
+# JavaScript package manager
 brew "yarn"
+# Terminal coding agent you own
+brew "zero"
+# Rust-first autonomous agent runtime
 brew "zeroclaw"
+# Shell extension to navigate your filesystem faster
 brew "zoxide"
+# UNIX shell (command interpreter)
 brew "zsh"
+# Feature-rich syntax highlighting for Zsh
 brew "zsh-fast-syntax-highlighting"
+# Blazingly fast Zsh syntax highlighter
+brew "zsh-patina"
+# Native, fast starting Clojure interpreter for scripting.
 brew "borkdude/brew/babashka"
-brew "cirruslabs/cli/tart"
+brew "babashka/brew/neil"
+# JVM-free Clojure runtime in Zig, with a WebAssembly FFI
+brew "clojurewasm/tap/cljw", trusted: true
+# Remote agentic coding platform - control AI assistants from anywhere
 brew "coleam00/archon/archon"
+# LLM inference server optimized for Apple Silicon
+brew "jundot/omlx/omlx"
+# Real-time network diagnostics in your terminal — zero config, instant visibility
+brew "matthart1983/tap/netwatch", trusted: true
+# Connect your local process and your cloud environment
 brew "metalbear-co/mirrord/mirrord"
+# Desktop-inspired terminal diff viewer for agent-authored changesets
+brew "modem-dev/tap/hunk", trusted: true
+# This package contains standard utilities for interacting with MongoDB.
 brew "mongodb/brew/mongodb-database-tools"
+# Ookla Speedtest
 brew "teamookla/speedtest/speedtest"
+# Language server for just
 brew "terror/tap/just-lsp"
+# WAsmcloud SHell - a comprehensive command-line tool for wasmCloud development
 brew "wasmcloud/wasmcloud/wash"
+# Privacy-first semantic code search CLI
 brew "yoanbernabeu/tap/grepai"
+# Keep your computer awake while AI coding agents are working
+cask "adrafinil"
+# Note editor and whiteboard
 cask "affine"
+# Browse, search and analyse your past AI coding sessions
+cask "agentsview"
+# AI-powered meeting assistant
 cask "altar-ai"
+# Secure, peer-to-peer file transfer app
+cask "altersend"
+# AI dictation app
 cask "amical"
+# Transfer files from and to an Android smartphone
 cask "android-file-transfer"
+# Keyboard-driven screen annotation tool
+cask "annotate"
+# Autonomous multi-session AI coding
 cask "auto-claude"
+# Subtitle generator for audio and video files
+cask "auto-subs"
+# Screen recorder
 cask "bettercapture"
+# Replacement for the built-in Cmd+Tab app switcher
+cask "bettercmdtab"
+# Open source, extensible AI agent that goes beyond code suggestions
 cask "block-goose"
+# Open-source agentic browser
 cask "browseros"
-cask "chatgpt"
+# Infinite zoomable canvas with editor, terminal, and browser panels
+cask "cate"
+# Anthropic's official Claude AI desktop app
 cask "claude"
+# Visualise and analyse Claude Code session executions
 cask "claude-devtools"
-cask "bysiber/cleardisk/cleardisk"
+# Ghostty-based terminal with vertical tabs and notifications for AI coding agents
 cask "cmux"
+# OpenAI's coding agent that runs in your terminal
 cask "codex"
-cask "codex-app"
+# Menu bar usage monitor for Codex and Claude
 cask "steipete/tap/codexbar"
+# MCP client and inspector
 cask "context"
+# Reverse-engineered reimplementation of Twilight Princess
+cask "dusklight"
+# UI for running multiple coding agents in parallel
 cask "emdash"
+# Frontend for browsing and launching games from your multi-platform collection
 cask "es-de"
+# Run AI models locally across multiple devices
+cask "exo"
+# Per-application volume mixer, equalizer, and audio router
 cask "finetune"
+# Web browser
+cask "firefox"
 cask "font-3270-nerd-font"
 cask "font-aclonica"
 cask "font-agave-nerd-font"
@@ -306,59 +615,145 @@ cask "font-tinos-nerd-font"
 cask "font-ubuntu-mono-nerd-font"
 cask "font-ubuntu-nerd-font"
 cask "font-victor-mono-nerd-font"
+# Kubernetes IDE
 cask "freelens"
+# GIS platform
+cask "geolibre"
+# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Git client for simultaneous branches on top of your existing workflow
 cask "gitbutler"
+# Git GUI
+cask "gitcomet"
+# Cast media files to Smart TVs and Chromecast devices
+cask "go2tv"
+# Web browser
 cask "google-chrome"
+# Speech to text application
 cask "handy"
+# Menu bar application that displays the CPU speed limit due to thermal issues
 cask "hot"
+# Free and open-source media player
+cask "iina"
+# Open-source keystroke visualiser
 cask "keycastr"
+# A tray to manage your Kubernetes port-forwarding
 cask "hcavarsan/kftray/kftray"
+# Tool to show what is persistently installed on the computer
+cask "knockknock"
+# Free and open-source media player
 cask "kodi"
+# Free and open-source painting and sketching program
 cask "krita"
-cask "launchos"
+# Audible audiobook manager and liberator
+cask "libation"
+# Discover, download, and run local LLMs
 cask "lm-studio"
+# Privacy-first, open-source platform for knowledge sharing and management
 cask "logseq"
+# Agent-native code editor
+cask "lumide"
+# Archive manager
 cask "macpacker"
+# Local speech-to-text, transcription, and meeting recording
+cask "macparakeet"
+# Screenshot and screen recording tool
 cask "macshot"
+# Tool to create bootable USB installers
 cask "macusb"
+# AI agent command center
 cask "maestro"
+# Multi-platform web browser
 cask "microsoft-edge"
+# Middle-click and middle-drag via three-finger trackpad gestures
 cask "middledrag"
+# Interactive tool for analyzing MongoDB data
 cask "mongodb-compass"
+# Menubar app to easily manage external drives
 cask "mountmate"
+# Local-first dictation and meeting transcription
+cask "muesli"
+# VPN client for secure internet access and private browsing
 cask "nordvpn"
+# Cloud gaming platform
 cask "nvidia-geforce-now"
+# Utility for launching applications and containers on remote Linux systems
 cask "nvidia-sync"
+# Replacement for Docker Desktop
 cask "orbstack"
+# Native GUI for Apple Containers
 cask "orchard"
+# Create live window previews for any application
 cask "overview"
+# Home media server
 cask "plex-media-server"
+# Reports power adapter and battery status
+cask "power-monitor"
+# Easy to use Disk Cleanup Tools
 cask "prettyclean"
+# Third-party Remote Play client for PlayStation consoles
 cask "pxplay"
+# Geographic Information System
+cask "qgis"
+# Disk space analyzer
+cask "radix"
+# Desktop app for inspecting React JS and React Native projects
 cask "reactotron"
+# Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
+# Menu bar dashboard for GitHub repository health
 cask "steipete/tap/repobar"
+# Sketch and take handwritten notes
 cask "rnote"
+# Open-source AI coworker, with memory
 cask "rowboat"
+# Open source virtual/remote desktop application
 cask "rustdesk"
+# GUI for Claude Code
 cask "sculptor"
+# System monitor for Apple Silicon with ANE, Media Engine and bandwidth tracking
+cask "siliconscope"
+# Video game console emulator
 cask "snes9x"
+# Dictation and transcription app with AI-powered editing
 cask "spokenly"
+# Video game digital distribution service
 cask "steam"
+# Run multiple Claude Code instances simultaneously using git worktrees
 cask "stravu-crystal"
+# Open-source media center
+cask "stremio"
+# Terminal for orchestrating agents
 cask "superset"
+# Dictation tool including LLM reformatting
 cask "superwhisper"
+# Native database client for many database types
 cask "tablepro"
+# Mesh VPN based on WireGuard
 cask "tailscale-app"
+# Native GUI for Homebrew package management
 cask "taphouse"
+# Desktop application to install, manage, and run MCP servers
+cask "toolhive-studio"
+# Paste-once, run-once clipboard cleaner for terminal snippets
 cask "steipete/tap/trimmy"
+# Virtual machines UI using QEMU
 cask "utm"
+# Open-source code editor
 cask "visual-studio-code"
+# Multimedia player
+cask "vlc"
+# Menu bar toolkit with keep-awake, system monitor and volume mixer
+cask "vorssaint"
+# Manage Homebrew packages with a UI
 cask "wailbrew"
+# Menu bar app for USB-C cable diagnostics
+cask "whatcable"
+# Network protocol analyzer
 cask "wireshark-app"
+# Open-source version of the X.Org X Window System
 cask "xquartz"
-cask "zen"
+# Video communication and virtual meeting platform
 cask "zoom"
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
@@ -369,11 +764,12 @@ vscode "adpyke.codesnap"
 vscode "ahebrank.yaml2json"
 vscode "ahmadalli.vscode-nginx-conf"
 vscode "anthropic.claude-code"
-vscode "arrterian.nix-env-selector"
 vscode "betterthantomorrow.calva"
+vscode "betterthantomorrow.calva-backseat-driver"
+vscode "betterthantomorrow.calva-power-tools"
 vscode "betterthantomorrow.calva-spritz"
+vscode "betterthantomorrow.joyride"
 vscode "bierner.emojisense"
-vscode "bierner.markdown-mermaid"
 vscode "biomejs.biome"
 vscode "bowlerr.sqlite-intelliview-vscode"
 vscode "charliermarsh.ruff"
@@ -384,24 +780,24 @@ vscode "codezombiech.gitignore"
 vscode "connor4312.nodejs-testing"
 vscode "davidanson.vscode-markdownlint"
 vscode "devfile.vscode-devfile"
+vscode "djblue.portal"
 vscode "docker.docker"
 vscode "eamodio.gitlens"
 vscode "editorconfig.editorconfig"
 vscode "efanzh.graphviz-preview"
+vscode "elijah-potter.harper"
 vscode "firefox-devtools.vscode-firefox-debug"
 vscode "github.codespaces"
-vscode "github.copilot-chat"
 vscode "github.github-vscode-theme"
 vscode "github.remotehub"
 vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
 vscode "google.colab"
 vscode "google.gemini-cli-vscode-ide-companion"
-vscode "gruntfuggly.todo-tree"
 vscode "hediet.vscode-drawio"
 vscode "helixdb.helixql"
+vscode "immanueltikhonov.droast"
 vscode "jebbs.plantuml"
-vscode "jnoortheen.nix-ide"
 vscode "johnpapa.vscode-peacock"
 vscode "joshmu.periscope"
 vscode "juanallo.vscode-dependency-cruiser"
@@ -412,7 +808,6 @@ vscode "medo64.render-crlf"
 vscode "metalbear.mirrord"
 vscode "mightbesimon.emoji-icons"
 vscode "mindaro-dev.file-downloader"
-vscode "mkhl.direnv"
 vscode "mkxml.vscode-filesize"
 vscode "ms-azuretools.vscode-containers"
 vscode "ms-azuretools.vscode-docker"
@@ -461,7 +856,6 @@ vscode "oderwat.indent-rainbow"
 vscode "openai.chatgpt"
 vscode "orta.vscode-jest"
 vscode "oven.bun-vscode"
-vscode "pinage404.nix-extension-pack"
 vscode "pomber.git-file-history"
 vscode "pranaygp.vscode-css-peek"
 vscode "redhat.java"
@@ -488,7 +882,6 @@ vscode "vscjava.vscode-java-debug"
 vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"
 vscode "vscjava.vscode-java-test"
-vscode "vscjava.vscode-java-upgrade"
 vscode "vscjava.vscode-maven"
 vscode "vscode-icons-team.vscode-icons"
 vscode "vsls-contrib.codetour"
@@ -498,7 +891,6 @@ vscode "wesbos.theme-cobalt2"
 vscode "wix.vscode-import-cost"
 vscode "xabikos.reactsnippets"
 vscode "yoavbls.pretty-ts-errors"
-vscode "yzhang.markdown-all-in-one"
 vscode "zenml.zenml-vscode"
 vscode "ziglang.vscode-zig"
 go "cmd/go"
@@ -515,3 +907,6 @@ cargo "cargo-sweep"
 cargo "cargo-watch"
 cargo "grcov"
 cargo "krokiet"
+uv "graphifyy"
+uv "headroom-ai[all]"
+npm "corepack"

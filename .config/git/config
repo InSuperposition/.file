@@ -94,7 +94,7 @@
 	follow = true              # Follow file renames in git log
 	decorate = auto            # Show refs in log output
 	date = relative            # Use relative dates (2 days ago)
-	showSignature = true       # Show GPG signature info
+	# showSignature = true       # Show GPG signature info
 
 [maintenance]
 	auto = true

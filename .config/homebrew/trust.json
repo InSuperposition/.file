@@ -1,0 +1,26 @@
+{
+  "trustedformulae": [
+    "clojurewasm/tap/cljw",
+    "matthart1983/tap/netwatch",
+    "modem-dev/tap/hunk"
+  ],
+  "trustedtaps": [
+    "babashka/brew",
+    "borkdude/brew",
+    "bysiber/cleardisk",
+    "cirruslabs/cli",
+    "coleam00/archon",
+    "hcavarsan/kftray",
+    "https://github.com/jundot/omlx",
+    "metalbear-co/mirrord",
+    "mongodb/brew",
+    "opencode-ai/tap",
+    "steipete/tap",
+    "teamookla/speedtest",
+    "terror/tap",
+    "tldev/tap",
+    "wasmcloud/wasmcloud",
+    "ymtdzzz/tap",
+    "yoanbernabeu/tap"
+  ]
+}
