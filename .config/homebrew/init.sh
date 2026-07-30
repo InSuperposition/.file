@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export HOMEBREW_BUNDLE_FILE_GLOBAL="$XDG_CONFIG_HOME/homebrew/Brewfile"
 export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/homebrew/Brewfile"
@@ -11,7 +11,7 @@ HOMEBREW_PREFIX=$(brew --prefix)
 eval "$("$HOMEBREW_PREFIX/bin/brew" shellenv)"
 
 # deduplicate path
-typeset -U PATH path
+typeset -U PATH
 
 if type brew &>/dev/null; then
   # For building pkg-config, which is needed for some things like PostgreSQL

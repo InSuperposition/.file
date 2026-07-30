@@ -38,6 +38,7 @@ eval "$(atuin init zsh)"
 # source "$(brew --prefix)/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 eval "$($(brew --prefix)/bin/zsh-patina activate)"
 
+eval "$(direnv hook zsh)"
 
 # https://tirith.sh/
 eval "$(tirith init --shell zsh)"

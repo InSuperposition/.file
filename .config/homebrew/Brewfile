@@ -32,6 +32,8 @@ brew "aicommit2"
 brew "aider"
 # Apple Intelligence from the command-line, with OpenAi-compatible API server
 brew "apfel"
+# Dependency manager for AI agent configuration
+brew "apm"
 # App Store Connect CLI to manage apps, versions, and screenshots
 brew "asccli"
 # Improved shell history for zsh, bash, fish and nushell
@@ -48,6 +50,8 @@ brew "bagel"
 brew "bat"
 # TUI for managing Homebrew, Flatpak, and Mac App Store packages
 brew "bbrew"
+# Next-gen compiler infrastructure
+brew "llvm"
 # Music library manager and tagger
 brew "beets"
 # Compiler infrastructure and toolchain library for WebAssembly
@@ -186,6 +190,8 @@ brew "hexyl"
 brew "hf"
 # HTTP request visualizer with phase-by-phase timing breakdown
 brew "httptap"
+# Adversarial security testing engine, SDK, and CLI for AI agents
+brew "humanbound"
 # Run and Test HTTP Requests with plain text and curl
 brew "hurl"
 # Interactive grep
@@ -242,8 +248,6 @@ brew "libimobiledevice"
 brew "lightgbm"
 # Command-line utility to interact with linkerd
 brew "linkerd"
-# Next-gen compiler infrastructure
-brew "llvm"
 # Find what models run on your hardware
 brew "llmfit"
 # Clone of ls with colorful output, file type icons, and more
@@ -268,8 +272,8 @@ brew "mcp-inspector"
 brew "mcp-publisher"
 # MCP Server for kubernetes management commands
 brew "mcp-server-kubernetes"
-# CLI host for LLMs to interact with tools via MCP
-brew "mcphost"
+# Transparent proxy and TUI for debugging MCP traffic
+brew "mcpsnoop"
 # TUI for tracking home projects, maintenance schedules, appliances and quotes
 brew "micasa"
 # Minify and secure Docker images
@@ -300,10 +304,14 @@ brew "nmap"
 brew "nss"
 # Tiny autonomous AI assistant infrastructure written in Zig
 brew "nullclaw"
+# Management console for the Null ecosystem
+brew "nullhub"
 # Modern shell for the GitHub era
 brew "nushell"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
+# Provides a software solution to manage, store, and distribute sensitive data
+brew "openbao"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # AI coding agent, built for the terminal
@@ -366,6 +374,8 @@ brew "rtk"
 brew "run-kit"
 # Sample multi-channel audio mixer library
 brew "sdl2_mixer"
+# Declarative secrets management tool
+brew "secretspec"
 # Semantic version control CLI with entity-level diffs and blame
 brew "sem-cli"
 # Small local inference server with OpenAI-compatible GGUF endpoints
@@ -545,6 +555,8 @@ cask "codex"
 cask "steipete/tap/codexbar"
 # MCP client and inspector
 cask "context"
+# Write, edit, and chat about your code with AI
+cask "cursor"
 # Reverse-engineered reimplementation of Twilight Princess
 cask "dusklight"
 # UI for running multiple coding agents in parallel
@@ -631,6 +643,8 @@ cask "go2tv"
 cask "google-chrome"
 # Speech to text application
 cask "handy"
+# Open-source desktop AI agent
+cask "hermes-desktop"
 # Menu bar application that displays the CPU speed limit due to thermal issues
 cask "hot"
 # Free and open-source media player
@@ -673,6 +687,8 @@ cask "mongodb-compass"
 cask "mountmate"
 # Local-first dictation and meeting transcription
 cask "muesli"
+# Read-only disk space visualiser
+cask "neodisk"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
 # Cloud gaming platform
@@ -778,6 +794,7 @@ vscode "christian-kohler.path-intellisense"
 vscode "chrmarti.regex"
 vscode "codezombiech.gitignore"
 vscode "connor4312.nodejs-testing"
+vscode "cweijan.vscode-office"
 vscode "davidanson.vscode-markdownlint"
 vscode "devfile.vscode-devfile"
 vscode "djblue.portal"
@@ -798,16 +815,19 @@ vscode "hediet.vscode-drawio"
 vscode "helixdb.helixql"
 vscode "immanueltikhonov.droast"
 vscode "jebbs.plantuml"
+vscode "jetmartin.bats"
 vscode "johnpapa.vscode-peacock"
 vscode "joshmu.periscope"
 vscode "juanallo.vscode-dependency-cruiser"
 vscode "kdl-org.kdl-v1"
+vscode "kherring.bats-test-runner"
 vscode "llvm-vs-code-extensions.lldb-dap"
 vscode "mechatroner.rainbow-csv"
 vscode "medo64.render-crlf"
 vscode "metalbear.mirrord"
 vscode "mightbesimon.emoji-icons"
 vscode "mindaro-dev.file-downloader"
+vscode "mkhl.direnv"
 vscode "mkxml.vscode-filesize"
 vscode "ms-azuretools.vscode-containers"
 vscode "ms-azuretools.vscode-docker"
@@ -854,6 +874,7 @@ vscode "naumovs.color-highlight"
 vscode "nefrob.vscode-just-syntax"
 vscode "oderwat.indent-rainbow"
 vscode "openai.chatgpt"
+vscode "opentofu.vscode-opentofu"
 vscode "orta.vscode-jest"
 vscode "oven.bun-vscode"
 vscode "pomber.git-file-history"
@@ -871,6 +892,7 @@ vscode "supabase.postgrestools"
 vscode "tamasfe.even-better-toml"
 vscode "tilt-dev.tiltfile"
 vscode "tim-koehler.helm-intellisense"
+vscode "timonwong.shellcheck"
 vscode "tombonnike.vscode-status-bar-format-toggle"
 vscode "tomoki1207.pdf"
 vscode "uctakeoff.vscode-counter"
@@ -888,6 +910,7 @@ vscode "vsls-contrib.codetour"
 vscode "weaveworks.vscode-gitops-tools"
 vscode "wenbopan.vscode-terminal-osc-notifier"
 vscode "wesbos.theme-cobalt2"
+vscode "wgsl-analyzer.wgsl-analyzer"
 vscode "wix.vscode-import-cost"
 vscode "xabikos.reactsnippets"
 vscode "yoavbls.pretty-ts-errors"

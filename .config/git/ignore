@@ -8,6 +8,7 @@
 
 **/.lsp/.cache/
 **/.portal/vs-code.edn
+**/.joyride/
 
 **/.cpcache
 
