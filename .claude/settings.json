@@ -4,7 +4,7 @@
     "allow": [],
     "deny": []
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "hooks": {
     "PreCompact": [],
     "PreToolUse": [
@@ -45,8 +45,9 @@
     "worktrunk@worktrunk": true,
     "last30days@last30days-skill": true,
     "caveman@caveman": true,
-    "mempalace@mempalace": true,
-    "andrej-karpathy-skills@karpathy-skills": true
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "mattpocock-skills@claude-plugins-official": true,
+    "claude-mermaid@claude-mermaid": true
   },
   "extraKnownMarketplaces": {
     "grepai-skills": {
@@ -77,19 +78,18 @@
       },
       "autoUpdate": true
     },
-    "mempalace": {
-      "source": {
-        "source": "github",
-        "repo": "milla-jovovich/mempalace"
-      },
-      "autoUpdate": true
-    },
     "karpathy-skills": {
       "source": {
         "source": "github",
         "repo": "forrestchang/andrej-karpathy-skills"
       },
       "autoUpdate": true
+    },
+    "claude-mermaid": {
+      "source": {
+        "source": "github",
+        "repo": "veelenga/claude-mermaid"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
