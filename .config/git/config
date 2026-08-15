@@ -61,11 +61,11 @@
 	untrackedCache = true
 
 [diff]
+	algorithm = histogram      # Better diff algorithm
 	colorMoved = default
 	mnemonicprefix = true
-	tool = vscode-diff
-	algorithm = histogram      # Better diff algorithm
 	renames = copies           # Detect both renames and copies
+	tool = vscode-diff
 
 [difftool "vscode-diff"]
 	cmd = code --wait --diff $LOCAL $REMOTE
@@ -75,6 +75,7 @@
 
 [fetch]
 	showForcedUpdates = true
+	writeCommitGraph = true
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -101,6 +102,7 @@
 	strategy = incremental
 
 [merge]
+	conflictStyle = zdiff3
 	tool = vscode-merge
 
 [mergetool "vscode-merge"]
@@ -111,19 +113,20 @@
 	ff = only        # Only allow fast-forward merges
 
 [push]
-	default = current
 	autoSetupRemote = true     # Automatically set up remote tracking
+	default = simple
 	followTags = true          # Push annotated tags with commits
+	useForceIfIncludes = true
 
 [rebase]
-	autoSquash = true          # Auto-arrange fixup/squash commits
-	autoStash = true           # Auto-stash before rebase, pop after
-	updateRefs = true          # Update dependent branches during rebase
-	missingCommitsCheck = warn # Warn about removed commits in interactive rebase
-	# strategyOption = theirs   # Use 'theirs' strategy option by default
+	autoSquash = true           # Auto-arrange fixup/squash commits
+	autoStash = false           # Auto-stash before rebase, pop after
+	updateRefs = true           # Update dependent branches during rebase
+	missingCommitsCheck = error # How to handle removed commits in interactive rebase
+	rescheduleFailedExec = true # 
 
 [rerere]
-	autoupdate = true
+	autoupdate = false
 	enabled = true
 
 [status]
