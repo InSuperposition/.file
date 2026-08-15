@@ -674,6 +674,8 @@ cask "gitcomet"
 cask "go2tv"
 # Web browser
 cask "google-chrome"
+# AI teammates that work across your apps and tools
+cask "grok-bot"
 # Extensible coding agent for the terminal
 cask "grok-build"
 # Speech to text application
