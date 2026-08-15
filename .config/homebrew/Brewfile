@@ -1,6 +1,5 @@
 tap "babashka/brew", trusted: true
 tap "borkdude/brew", trusted: true
-tap "clojurewasm/tap"
 tap "coleam00/archon", trusted: true
 tap "hcavarsan/kftray", trusted: true
 tap "jundot/omlx", "https://github.com/jundot/omlx", trusted: true
@@ -516,8 +515,6 @@ brew "zsh-patina"
 # Native, fast starting Clojure interpreter for scripting.
 brew "borkdude/brew/babashka"
 brew "babashka/brew/neil"
-# JVM-free Clojure runtime in Zig, with a WebAssembly FFI
-brew "clojurewasm/tap/cljw", trusted: true
 # Remote agentic coding platform - control AI assistants from anywhere
 brew "coleam00/archon/archon"
 # LLM inference server optimized for Apple Silicon
