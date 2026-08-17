@@ -1,6 +1,5 @@
 {
   "trustedformulae": [
-    "clojurewasm/tap/cljw",
     "matthart1983/tap/netwatch",
     "modem-dev/tap/hunk"
   ],
