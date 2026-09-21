@@ -1,13 +1,7 @@
 {
-  "trustedformulae": [
-    "harry0703/tap/mangodisk-cli",
-    "modem-dev/tap/hunk"
-  ],
   "trustedtaps": [
     "babashka/brew",
     "borkdude/brew",
-    "bysiber/cleardisk",
-    "cirruslabs/cli",
     "coleam00/archon",
     "hcavarsan/kftray",
     "https://github.com/jundot/omlx",
@@ -26,5 +20,9 @@
   "trustedcasks": [
     "harry0703/tap/mangodisk",
     "terraform-linters/tap/tflint"
+  ],
+  "trustedformulae": [
+    "harry0703/tap/mangodisk-cli",
+    "modem-dev/tap/hunk"
   ]
 }
