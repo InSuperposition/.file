@@ -95,6 +95,27 @@ Mental models to apply while working. Each is a trigger → action, not trivia.
 - use language conventions for naming, data structures and functions.
 - semantic action-based names for functions.
 
+### Lifecycle Trace
+
+For every secret and every long-lived process the plan introduces or touches, trace: bootstrap → process restart → machine reboot → disaster. Name who holds what, and every recurring manual step. A recurring manual step, or a memorized secret with no machine-side storage, is a flaw to fix in the plan — not a feature to document — absent a stated threat-model reason. Plan the operations, not just the feature.
+
+### No code inside configuration files
+
+- **MANDATORY, ALL PROJECTS.** Never embed shell (or any executable code) inside
+  a configuration file — YAML, JSON, TOML, HCL, Dockerfile `RUN` soup, CI
+  pipeline steps, `chainsaw` / `kustomize` / `helm` hooks, `package.json`
+  scripts beyond one-liners, etc. Inlined code cannot be linted, unit-tested,
+  or read with syntax highlighting, and it hides complexity from review.
+- **Declarative first:** before writing any script, check whether a tool — in
+  the stack or not — does the job declaratively. If a new tool would fit,
+  present it as an option with tradeoffs; the user decides whether it enters
+  the stack.
+- **Otherwise extract:** put the code in its own correctly-named file
+  (`verb-noun.sh`), `#!/usr/bin/env bash` + `set -euo pipefail`, shared helpers
+  in a `lib.sh`; the config file *references* it (`command:` / `entrypoint:` /
+  `script: ./path`). Wire it into `shellcheck` and a test (`bats` for shell).
+  One job per file — functional, composable, isolated, testable.
+
 ### Docstrings and Comments
 
 - **MANDATORY**, The **behavior-in-place** is the correct approach in code and tests.
@@ -218,43 +239,3 @@ Mental models to apply while working. Each is a trigger → action, not trivia.
 
 - Clickable URLs for all link references
 - Prefer official docs and source code over third-party tutorials
-
-## Multi-PR Merge Protocol
-
-When merging ≥2 open PRs, serialize. Never parallel-rebase, never
-batch-push, never merge while another PR is in flight.
-
-For each PR in agreed order:
-
-1. `git fetch origin` + `git pull` on local main
-2. `git fetch origin` in PR's worktree
-3. `git rebase origin/main` (or `git rebase --rebase-merges origin/main`
-   if branch absorbed any merged-in stacked PRs — default rebase
-   silently drops second-parent commits of merge nodes)
-4. Local verify: lint clean, format clean, tests green for touched modules
-5. `git push --force-with-lease`
-   - Pre-push safety: if `ahead N behind M`, diff `git log HEAD..origin/<br>`
-     vs `git log origin/<br>..HEAD` by author+subject. Matching = rebase
-     churn (safe). Divergent = STOP, ask user.
-6. Wait for **all** PR CI checks green on GitHub
-7. User merges PR via GitHub UI (do not auto-merge)
-8. Wait for post-merge main CI green
-9. Proceed to next PR
-
-Sanity-check after each rebase: `gh pr diff <N> --name-only` matches
-expected file list. Especially important when a PR carries cherry-picked
-content from a formerly-stacked merged PR.
-
-Anti-patterns to refuse:
-
-- parallel rebases of multiple PRs ahead of merging
-- pushing without `--force-with-lease`
-- "mass-rebase all PRs now, merge later" — invites stale-base churn
-- batched force-push without per-PR CI verify
-- naive `git rebase` on a branch that absorbed a merged-in stacked PR
-  (drops the merged-in commits silently)
-
-# graphify
-
-- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
-When the user types `/graphify`, invoke the Skill tool with `skill: "graphify"` before doing anything else.
