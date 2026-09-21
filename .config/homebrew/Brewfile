@@ -144,8 +144,6 @@ brew "dust"
 brew "duti"
 # Simple command-line tool for creating clusters on Amazon EKS
 brew "eksctl"
-# GNU Emacs text editor
-brew "emacs"
 # Modern, maintained replacement for ls
 brew "eza"
 # Free, open-source local AWS cloud emulator for integration testing
