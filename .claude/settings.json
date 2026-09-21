@@ -1,97 +1,97 @@
 {
-  "env": {},
-  "permissions": {
-    "allow": [],
-    "deny": []
-  },
-  "model": "opus",
-  "hooks": {
-    "PreCompact": [],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/tensor/.claude/hooks/rtk-rewrite.sh"
-          },
-          {
-            "type": "command",
-            "command": "/Users/tensor/.claude/hooks/playwright-cli-filename-guard.sh"
-          }
-        ]
-      }
-    ],
-    "SessionStart": []
-  },
-  "enabledPlugins": {
-    "agent-sdk-dev@claude-plugins-official": true,
-    "claude-code-setup@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "explanatory-output-style@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
-    "hookify@claude-plugins-official": true,
-    "huggingface-skills@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": false,
-    "security-guidance@claude-plugins-official": false,
-    "worktrunk@worktrunk": true,
-    "last30days@last30days-skill": true,
-    "caveman@caveman": true,
-    "andrej-karpathy-skills@karpathy-skills": true,
-    "mattpocock-skills@claude-plugins-official": true,
-    "claude-mermaid@claude-mermaid": true
-  },
-  "extraKnownMarketplaces": {
-    "grepai-skills": {
-      "source": {
-        "source": "github",
-        "repo": "yoanbernabeu/grepai-skills"
-      },
-      "autoUpdate": true
-    },
-    "visual-explainer-marketplace": {
-      "source": {
-        "source": "github",
-        "repo": "nicobailon/visual-explainer"
-      },
-      "autoUpdate": true
-    },
-    "last30days-skill": {
-      "source": {
-        "source": "github",
-        "repo": "mvanhorn/last30days-skill"
-      },
-      "autoUpdate": true
-    },
-    "caveman": {
-      "source": {
-        "source": "github",
-        "repo": "JuliusBrussee/caveman"
-      },
-      "autoUpdate": true
-    },
-    "karpathy-skills": {
-      "source": {
-        "source": "github",
-        "repo": "forrestchang/andrej-karpathy-skills"
-      },
-      "autoUpdate": true
-    },
-    "claude-mermaid": {
-      "source": {
-        "source": "github",
-        "repo": "veelenga/claude-mermaid"
-      }
-    }
-  },
-  "alwaysThinkingEnabled": true,
-  "effortLevel": "high"
+	"env": {},
+	"permissions": {
+		"allow": [],
+		"deny": []
+	},
+	"model": "opus",
+	"hooks": {
+		"PreCompact": [],
+		"PreToolUse": [
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "$HOME/.claude/hooks/rtk-rewrite.sh"
+					},
+					{
+						"type": "command",
+						"command": "$HOME/.claude/hooks/playwright-cli-filename-guard.sh"
+					}
+				]
+			}
+		],
+		"SessionStart": []
+	},
+	"enabledPlugins": {
+		"agent-sdk-dev@claude-plugins-official": true,
+		"claude-code-setup@claude-plugins-official": true,
+		"claude-md-management@claude-plugins-official": true,
+		"code-review@claude-plugins-official": true,
+		"code-simplifier@claude-plugins-official": true,
+		"commit-commands@claude-plugins-official": true,
+		"context7@claude-plugins-official": true,
+		"explanatory-output-style@claude-plugins-official": true,
+		"feature-dev@claude-plugins-official": true,
+		"frontend-design@claude-plugins-official": true,
+		"hookify@claude-plugins-official": true,
+		"huggingface-skills@claude-plugins-official": true,
+		"playground@claude-plugins-official": true,
+		"playwright@claude-plugins-official": true,
+		"plugin-dev@claude-plugins-official": true,
+		"rust-analyzer-lsp@claude-plugins-official": false,
+		"security-guidance@claude-plugins-official": false,
+		"worktrunk@worktrunk": true,
+		"last30days@last30days-skill": true,
+		"caveman@caveman": true,
+		"andrej-karpathy-skills@karpathy-skills": true,
+		"mattpocock-skills@claude-plugins-official": true,
+		"claude-mermaid@claude-mermaid": true
+	},
+	"extraKnownMarketplaces": {
+		"grepai-skills": {
+			"source": {
+				"source": "github",
+				"repo": "yoanbernabeu/grepai-skills"
+			},
+			"autoUpdate": true
+		},
+		"visual-explainer-marketplace": {
+			"source": {
+				"source": "github",
+				"repo": "nicobailon/visual-explainer"
+			},
+			"autoUpdate": true
+		},
+		"last30days-skill": {
+			"source": {
+				"source": "github",
+				"repo": "mvanhorn/last30days-skill"
+			},
+			"autoUpdate": true
+		},
+		"caveman": {
+			"source": {
+				"source": "github",
+				"repo": "JuliusBrussee/caveman"
+			},
+			"autoUpdate": true
+		},
+		"karpathy-skills": {
+			"source": {
+				"source": "github",
+				"repo": "forrestchang/andrej-karpathy-skills"
+			},
+			"autoUpdate": true
+		},
+		"claude-mermaid": {
+			"source": {
+				"source": "github",
+				"repo": "veelenga/claude-mermaid"
+			}
+		}
+	},
+	"alwaysThinkingEnabled": true,
+	"effortLevel": "high"
 }

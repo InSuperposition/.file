@@ -1,3 +1,3 @@
 #!/bin/sh
 
-export PATH="/Users/tensor/.cache/.bun/bin:$PATH"
+export PATH="$HOME/.cache/.bun/bin:$PATH"

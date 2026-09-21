@@ -19,4 +19,4 @@ lms-claude() {
   claude "${ARGS[@]}"
 }
 
-export PATH="$PATH:/Users/tensor/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
