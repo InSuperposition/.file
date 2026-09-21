@@ -41,4 +41,10 @@ eval "$($(brew --prefix)/bin/zsh-patina activate)"
 eval "$(direnv hook zsh)"
 
 # https://tirith.sh/
-eval "$(tirith init --shell zsh)"
+# eval "$(tirith init --shell zsh)"
+
+# https://fnox.jdx.dev/
+# eval "$(fnox activate zsh)"
+
+# https://pitchfork.jdx.dev/
+eval "$(pitchfork activate zsh)"

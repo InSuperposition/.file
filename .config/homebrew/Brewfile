@@ -1,6 +1,7 @@
 tap "babashka/brew", trusted: true
 tap "borkdude/brew", trusted: true
 tap "coleam00/archon", trusted: true
+tap "harry0703/tap"
 tap "hcavarsan/kftray", trusted: true
 tap "jundot/omlx", "https://github.com/jundot/omlx", trusted: true
 tap "matthart1983/tap"
@@ -11,6 +12,7 @@ tap "opencode-ai/tap", trusted: true
 tap "robusta-dev/holmesgpt", trusted: true
 tap "steipete/tap", trusted: true
 tap "teamookla/speedtest", trusted: true
+tap "terraform-linters/tap", trusted: { casks: ["tflint"] }
 tap "terror/tap", trusted: true
 tap "tldev/tap", trusted: true
 tap "wasmcloud/wasmcloud", trusted: true
@@ -26,12 +28,18 @@ brew "openssl@3"
 brew "sqlite"
 # Browser automation CLI for AI agents
 brew "agent-browser"
+# Terminal multiplexer
+brew "tmux"
+# Terminal UI to manage AI coding-agent tmux sessions
+brew "agent-manager"
 # Reactive CLI that generates commit messages for Git and Jujutsu with AI
 brew "aicommit2"
 # AI pair programming in your terminal
 brew "aider"
 # Apple Intelligence from the command-line, with OpenAi-compatible API server
 brew "apfel"
+# Build OCI images from APK packages directly without Dockerfile
+brew "apko"
 # Dependency manager for AI agent configuration
 brew "apm"
 # App Store Connect CLI to manage apps, versions, and screenshots
@@ -48,12 +56,8 @@ brew "backlog-md"
 brew "bagel"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Bash Automated Testing System
-brew "bats-core"
 # TUI for managing Homebrew, Flatpak, and Mac App Store packages
 brew "bbrew"
-# Next-gen compiler infrastructure
-brew "llvm"
 # Music library manager and tagger
 brew "beets"
 # Compiler infrastructure and toolchain library for WebAssembly
@@ -104,6 +108,8 @@ brew "context7-mcp"
 brew "coreutils"
 # Container Signing
 brew "cosign"
+# Tool for interacting with remote images and registries
+brew "crane"
 # Manage AI coding skills and documentation context
 brew "ctx7"
 # Validate and define text-based and dynamic configuration
@@ -180,6 +186,8 @@ brew "gitsign"
 brew "gitui"
 # Autonomous agent orchestrator for long-running coding tasks
 brew "gnhf"
+# GNU version of the tar archiving utility
+brew "gnu-tar"
 # Library for loading images as SDL surfaces and textures
 brew "sdl2_image"
 # Version Control Visualization Tool
@@ -190,12 +198,16 @@ brew "graphviz"
 brew "grpcurl"
 # Grammar Checker for Developers
 brew "harper"
+# Command-line editor for HCL
+brew "hcledit"
 # Kubernetes package manager
 brew "helm"
 # Command-line hex viewer
 brew "hexyl"
 # Client library for huggingface.co hub
 brew "hf"
+# Self-hosted search engine for your browsing history
+brew "hister"
 # HTTP request visualizer with phase-by-phase timing breakdown
 brew "httptap"
 # Adversarial security testing engine, SDK, and CLI for AI agents
@@ -218,12 +230,12 @@ brew "jq"
 brew "just"
 # TUI for decoding and encoding JWT tokens
 brew "jwt-ui"
-# Bootstrapping and management tool for k0s clusters
-brew "k0sctl"
 # Kubernetes CLI To Manage Your Clusters In Style!
 brew "k9s"
 # Simple and fast dashboard for Kubernetes
 brew "kdash"
+# Web search and scraping for agents
+brew "ketch"
 # Run local Kubernetes cluster in Docker
 brew "kind"
 # Tool to move from `docker-compose` to Kubernetes
@@ -248,6 +260,8 @@ brew "lakekeeper"
 brew "lazygit"
 # Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
+# Text-mode disk usage visualization utility
+brew "leaves"
 # Build tool for Clojure
 brew "leiningen"
 # Pager program similar to more
@@ -260,6 +274,8 @@ brew "libimobiledevice"
 brew "lightgbm"
 # Command-line utility to interact with linkerd
 brew "linkerd"
+# Next-gen compiler infrastructure
+brew "llvm"
 # Find what models run on your hardware
 brew "llmfit"
 # Clone of ls with colorful output, file type icons, and more
@@ -290,8 +306,6 @@ brew "mcpsnoop"
 brew "micasa"
 # Minify and secure Docker images
 brew "mintoolkit"
-# Polyglot runtime manager (asdf rust clone)
-brew "mise"
 # Simple tool to make locally trusted development certificates
 brew "mkcert"
 # Tool for smooth Git handover in mob programming sessions
@@ -398,12 +412,16 @@ brew "secretspec"
 brew "sem-cli"
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
+# Autoformat shell script source code
+brew "shfmt"
 # Small local inference server with OpenAI-compatible GGUF endpoints
 brew "shimmy"
 # AI-powered natural language end-to-end testing framework
 brew "shortest"
 # Sync skills across AI CLI tools
 brew "skillshare"
+# Security scanner for AI agent skills
+brew "skillspector"
 # S/MIME signing utility for use with Git
 brew "smimesign"
 # Cross-platform application to monitor your network traffic
@@ -438,6 +456,8 @@ brew "summarize"
 brew "swig"
 # Symbolic link maintenance utility
 brew "symlinks"
+# Netcat-like tool over Tailscale's data plane, without its control plane
+brew "tailcat"
 # Interactive TUI for Homebrew
 brew "taproom"
 # Very fast implementation of tldr in Rust
@@ -446,6 +466,8 @@ brew "tealdeer"
 brew "tektoncd-cli"
 # Record, share and export your terminal as a animated SVG image
 brew "termsvg"
+# Tool to generate documentation from Terraform modules
+brew "terraform-docs"
 # Tool which checks for the support of TLS/SSL ciphers and flaws
 brew "testssl"
 # Define your dev environment as code. For microservice apps on Kubernetes
@@ -454,8 +476,6 @@ brew "tilt"
 brew "timoni"
 # Detect terminal injection, homograph, and pipe-to-shell attacks
 brew "tirith"
-# Terminal multiplexer
-brew "tmux"
 # Manage worktrees without managing worktrees
 brew "treehouse"
 # Modern traceroute/mtr-style TUI with hop stats and ASN/geo enrichment
@@ -500,6 +520,8 @@ brew "xdg-ninja", args: ["HEAD"]
 brew "xleak"
 # JavaScript package manager
 brew "yarn"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
+brew "yq"
 # Terminal coding agent you own
 brew "zero"
 # Rust-first autonomous agent runtime
@@ -517,10 +539,12 @@ brew "borkdude/brew/babashka"
 brew "babashka/brew/neil"
 # Remote agentic coding platform - control AI assistants from anywhere
 brew "coleam00/archon/archon"
+# Safety-first disk cleanup command-line tool
+brew "harry0703/tap/mangodisk-cli", trusted: true
+# TUI application for managing multiple kubectl port-forward configurations
+brew "hcavarsan/kftray/kftui"
 # LLM inference server optimized for Apple Silicon
 brew "jundot/omlx/omlx"
-# Real-time network diagnostics in your terminal — zero config, instant visibility
-brew "matthart1983/tap/netwatch", trusted: true
 # Connect your local process and your cloud environment
 brew "metalbear-co/mirrord/mirrord"
 # Desktop-inspired terminal diff viewer for agent-authored changesets
@@ -587,12 +611,8 @@ cask "context"
 cask "cursor"
 # Reverse-engineered reimplementation of Twilight Princess
 cask "dusklight"
-# UI for running multiple coding agents in parallel
-cask "emdash"
 # Frontend for browsing and launching games from your multi-platform collection
 cask "es-de"
-# Run AI models locally across multiple devices
-cask "exo"
 # Per-application volume mixer, equalizer, and audio router
 cask "finetune"
 # Web browser
@@ -679,20 +699,18 @@ cask "grok-build"
 cask "handy"
 # Open-source desktop AI agent
 cask "hermes-desktop"
+# Homebrew's official GUI
+cask "homebrew-app"
 # Menu bar application that displays the CPU speed limit due to thermal issues
 cask "hot"
 # Free and open-source media player
 cask "iina"
 # Open-source keystroke visualiser
 cask "keycastr"
-# A tray to manage your Kubernetes port-forwarding
-cask "hcavarsan/kftray/kftray"
 # Tool to show what is persistently installed on the computer
 cask "knockknock"
 # Free and open-source media player
 cask "kodi"
-# Free and open-source painting and sketching program
-cask "krita"
 # Audible audiobook manager and liberator
 cask "libation"
 # Discover, download, and run local LLMs
@@ -711,6 +729,8 @@ cask "macshot"
 cask "macusb"
 # AI agent command center
 cask "maestro"
+# Safety-first disk cleaner and disk space analyzer
+cask "harry0703/tap/mangodisk", trusted: true
 # Multi-platform web browser
 cask "microsoft-edge"
 # Middle-click and middle-drag via three-finger trackpad gestures
@@ -723,6 +743,8 @@ cask "mountmate"
 cask "muesli"
 # Read-only disk space visualiser
 cask "neodisk"
+# Network diagnostics tool
+cask "network-weather"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
 # Cloud gaming platform
@@ -737,8 +759,6 @@ cask "orchard"
 cask "overview"
 # Home media server
 cask "plex-media-server"
-# Reports power adapter and battery status
-cask "power-monitor"
 # Easy to use Disk Cleanup Tools
 cask "prettyclean"
 # Third-party Remote Play client for PlayStation consoles
@@ -749,6 +769,8 @@ cask "radix"
 cask "reactotron"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
+# Menu bar app for building LLM prompts from files, clipboard and voice notes
+cask "relay"
 # Menu bar dashboard for GitHub repository health
 cask "steipete/tap/repobar"
 # Sketch and take handwritten notes
@@ -761,6 +783,8 @@ cask "rustdesk"
 cask "sculptor"
 # System monitor for Apple Silicon with ANE, Media Engine and bandwidth tracking
 cask "siliconscope"
+# Manage, sync, and organise AI agent skills across coding tools
+cask "skills-manager"
 # Video game console emulator
 cask "snes9x"
 # Dictation and transcription app with AI-powered editing
@@ -783,10 +807,14 @@ cask "tablepro"
 cask "tailscale-app"
 # Native GUI for Homebrew package management
 cask "taphouse"
+# Visual workspace for editable LLM context graphs
+cask "thoughtdag"
 # Desktop application to install, manage, and run MCP servers
 cask "toolhive-studio"
 # Paste-once, run-once clipboard cleaner for terminal snippets
 cask "steipete/tap/trimmy"
+# Desktop application for Unsloth Studio
+cask "unsloth"
 # Virtual machines UI using QEMU
 cask "utm"
 # Open-source code editor
@@ -801,10 +829,6 @@ cask "wailbrew"
 cask "whatcable"
 # Network protocol analyzer
 cask "wireshark-app"
-# Open-source version of the X.Org X Window System
-cask "xquartz"
-# Video communication and virtual meeting platform
-cask "zoom"
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
@@ -823,6 +847,7 @@ vscode "betterthantomorrow.joyride"
 vscode "bierner.emojisense"
 vscode "biomejs.biome"
 vscode "bowlerr.sqlite-intelliview-vscode"
+vscode "caniko.pkl-lsp"
 vscode "charliermarsh.ruff"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"
@@ -847,6 +872,7 @@ vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
 vscode "google.colab"
 vscode "google.gemini-cli-vscode-ide-companion"
+vscode "hashicorp.hcl"
 vscode "hediet.vscode-drawio"
 vscode "helixdb.helixql"
 vscode "immanueltikhonov.droast"
@@ -966,6 +992,7 @@ cargo "cargo-sweep"
 cargo "cargo-watch"
 cargo "grcov"
 cargo "krokiet"
+uv "browser-use"
 uv "graphifyy"
 uv "headroom-ai[all]"
-npm "corepack"
+npm "@nanonets/graft"

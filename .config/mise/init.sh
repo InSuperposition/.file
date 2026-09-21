@@ -1,3 +1,3 @@
 #!/bin/sh
 
-eval "$(mise activate zsh)"
+eval "$(/Users/tensor/.local/bin/mise activate zsh)"

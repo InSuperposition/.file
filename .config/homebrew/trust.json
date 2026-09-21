@@ -1,6 +1,6 @@
 {
   "trustedformulae": [
-    "matthart1983/tap/netwatch",
+    "harry0703/tap/mangodisk-cli",
     "modem-dev/tap/hunk"
   ],
   "trustedtaps": [
@@ -22,5 +22,9 @@
     "wasmcloud/wasmcloud",
     "ymtdzzz/tap",
     "yoanbernabeu/tap"
+  ],
+  "trustedcasks": [
+    "harry0703/tap/mangodisk",
+    "terraform-linters/tap/tflint"
   ]
 }
