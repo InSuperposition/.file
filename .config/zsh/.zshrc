@@ -47,4 +47,4 @@ eval "$(direnv hook zsh)"
 # eval "$(fnox activate zsh)"
 
 # https://pitchfork.jdx.dev/
-eval "$(pitchfork activate zsh)"
+# eval "$(pitchfork activate zsh)"
