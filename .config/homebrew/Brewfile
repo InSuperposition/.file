@@ -272,8 +272,6 @@ brew "lfk"
 brew "libimobiledevice"
 # Fast, distributed, high performance gradient boosting framework
 brew "lightgbm"
-# Command-line utility to interact with linkerd
-brew "linkerd"
 # Find what models run on your hardware
 brew "llmfit"
 # Clone of ls with colorful output, file type icons, and more
