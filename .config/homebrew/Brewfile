@@ -4,7 +4,7 @@ tap "coleam00/archon", trusted: true
 tap "harry0703/tap"
 tap "hcavarsan/kftray", trusted: true
 tap "jundot/omlx", "https://github.com/jundot/omlx", trusted: true
-tap "matthart1983/tap"
+tap "matthart1983/tap", trusted: true
 tap "metalbear-co/mirrord", trusted: true
 tap "modem-dev/tap"
 tap "mongodb/brew", trusted: true
@@ -274,8 +274,6 @@ brew "libimobiledevice"
 brew "lightgbm"
 # Command-line utility to interact with linkerd
 brew "linkerd"
-# Next-gen compiler infrastructure
-brew "llvm"
 # Find what models run on your hardware
 brew "llmfit"
 # Clone of ls with colorful output, file type icons, and more
@@ -490,8 +488,6 @@ brew "tweakcc"
 brew "vibecheck"
 # CLI Semantic Coding Agent
 brew "vtcode"
-# Lightweight, high-performance, and extensible WebAssembly runtime
-brew "wasmedge"
 # Security-oriented runtime that runs WebAssembly Components via MCP
 brew "wassette"
 # Watch files and take action when they change
