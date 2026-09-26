@@ -1,4 +1,5 @@
-export ZDOTDIR="$HOME/.config/zsh"
+ZDOTDIR="$HOME/.config/zsh"
+typeset +x ZDOTDIR
 
 # Make user-installed and mise-managed commands available to every zsh,
 # including non-interactive SSH commands.
@@ -21,3 +22,5 @@ fi
 
 path=($extra_path $path)
 export PATH
+
+source "$ZDOTDIR/init.sh"

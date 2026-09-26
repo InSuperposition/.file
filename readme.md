@@ -20,6 +20,11 @@ export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
 The actual file also adds Homebrew paths when they exist and removes duplicate
 PATH entries.
 
+For shared XDG/history values in interactive and non-interactive shells, see
+the [Zsh environment fix guide](docs/zsh_environment_setup.md), including the
+exact files to change and complete before-and-after contents. Its proposed
+configuration changes are not applied automatically.
+
 ### SSH access to the Herdr host
 
 Start Herdr manually in Mini-me's authenticated local Terminal, then attach

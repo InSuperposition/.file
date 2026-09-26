@@ -1,15 +1,12 @@
 #!/bin/zsh
 
-# this file loads the $XDG_*_HOME, general environment variables and configurations in terminal sessions
-source $HOME/.config/.file/init.sh
+# Restore shared settings after macOS startup, then initialize interactive tools.
+source "$ZDOTDIR/init.sh"
+source "$HOME/.config/.file/init.sh"
 
 # Ensure the history parent directory exists before zsh tries to write HISTFILE.
 [[ ! -d "$XDG_STATE_HOME/zsh" ]] && mkdir -p "$XDG_STATE_HOME/zsh"
 
-# uses XDG Base Directory Specification for config, cache, data, and state directories
-export HISTFILE=$XDG_STATE_HOME/zsh/.zsh_history
-export HISTSIZE=10000
-export SAVEHIST=10000
 setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
