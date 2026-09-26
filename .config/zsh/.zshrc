@@ -3,6 +3,9 @@
 # this file loads the $XDG_*_HOME, general environment variables and configurations in terminal sessions
 source $HOME/.config/.file/init.sh
 
+# Ensure the history parent directory exists before zsh tries to write HISTFILE.
+[[ ! -d "$XDG_STATE_HOME/zsh" ]] && mkdir -p "$XDG_STATE_HOME/zsh"
+
 # uses XDG Base Directory Specification for config, cache, data, and state directories
 export HISTFILE=$XDG_STATE_HOME/zsh/.zsh_history
 export HISTSIZE=10000
@@ -29,14 +32,15 @@ else
     compinit -d "$ZSH_COMPDUMP" -C
 fi
 
+# source "$(brew --prefix)/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+eval "$($(brew --prefix)/bin/zsh-patina activate)"
+
 ZSHRC_PATH="$XDG_CONFIG_HOME/zsh/.zshrc"
 
 alias ez="code $ZSHRC_PATH"
 alias sz="source $ZSHRC_PATH"
 
 eval "$(atuin init zsh)"
-# source "$(brew --prefix)/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-eval "$($(brew --prefix)/bin/zsh-patina activate)"
 
 eval "$(direnv hook zsh)"
 

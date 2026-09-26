@@ -360,8 +360,6 @@ brew "pdfcrack"
 brew "pgvector"
 # CLI tool for seamless parallel development with Git worktrees
 brew "phantom"
-# Execute binaries from Python packages in isolated environments
-brew "pipx"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # CLI for Playwright: record/generate code, inspect selectors, take screenshots
@@ -691,6 +689,8 @@ cask "grok-build"
 cask "handy"
 # Open-source desktop AI agent
 cask "hermes-desktop"
+# Tool to run Windows games
+cask "highball"
 # Homebrew's official GUI
 cask "homebrew-app"
 # Menu bar application that displays the CPU speed limit due to thermal issues
@@ -743,6 +743,8 @@ cask "nordvpn"
 cask "nvidia-geforce-now"
 # Utility for launching applications and containers on remote Linux systems
 cask "nvidia-sync"
+# Instant actions for selected text
+cask "openclip"
 # Replacement for Docker Desktop
 cask "orbstack"
 # Native GUI for Apple Containers
@@ -821,6 +823,8 @@ cask "wailbrew"
 cask "whatcable"
 # Network protocol analyzer
 cask "wireshark-app"
+# On-device voice dictation
+cask "yap-app"
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
@@ -929,6 +933,7 @@ vscode "naumovs.color-highlight"
 vscode "nefrob.vscode-just-syntax"
 vscode "oderwat.indent-rainbow"
 vscode "openai.chatgpt"
+vscode "openai.codex-audio"
 vscode "opentofu.vscode-opentofu"
 vscode "orta.vscode-jest"
 vscode "oven.bun-vscode"

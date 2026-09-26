@@ -45,6 +45,9 @@
 	sort = -committerdate
 	autoSetupMerge = simple    # Only track same-named remote branches
 
+[credential]
+	helper = osxkeychain
+
 [column]
 	ui = auto                  # Use columns when output is to terminal
 	branch = auto              # Columnize branch list

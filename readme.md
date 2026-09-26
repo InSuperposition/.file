@@ -8,11 +8,32 @@
 
 #### `zsh`
 
-This repo's .zshenv changes zsh's config to the following
+This repo's `.zshenv` redirects zsh configuration and makes user-installed,
+Mise-managed, and Homebrew commands available to interactive and
+non-interactive shells.
 
 ```sh
-export ZDOTDIR=$HOME/.config/zsh
+export ZDOTDIR="$HOME/.config/zsh"
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
 ```
+
+The actual file also adds Homebrew paths when they exist and removes duplicate
+PATH entries.
+
+### SSH access to the Herdr host
+
+Start Herdr manually in Mini-me's authenticated local Terminal, then attach
+from Peterson. Claude and Git use the host's credentials inside Herdr panes.
+For the step-by-step workflow, start with the
+[Herdr + Claude quick-start](docs/herdr_claude_quickstart.md).
+Use the [SSH, Herdr, Claude, and Git setup guide](docs/ssh-herdr-setup.md)
+for setup and acceptance checks. Its LaunchAgent appendix is for a future
+session, not an installed background service.
+
+Optional research, not enabled by this setup:
+
+- [Claude subscription tokens with fnox + age](docs/claude_fnox_age.md)
+- [fnox and SOPS opportunities for this repo](docs/secrets_fnox_sops.md)
 
 ### `.file` repo Installation
 
