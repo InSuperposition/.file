@@ -1,1 +1,0 @@
-/Users/tensor/.file/.claude/skills/gstack/gstack-upgrade/SKILL.md

@@ -1,1 +1,0 @@
-/Users/tensor/.file/.claude/skills/gstack/deslop-shared-libs/SKILL.md
