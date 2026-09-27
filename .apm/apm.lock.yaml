@@ -1,0 +1,383 @@
+lockfile_version: '1'
+apm_version: 0.32.0
+dependencies:
+- repo_url: herdrdev/herdr
+  name: herdr
+  host: github.com
+  resolved_commit: fff6c820aa45f4eabb9b2e0456326dc74cca5a25
+  version: unknown
+  package_type: skill_bundle
+  deployed_files:
+  - .agents/skills/herdr
+  - .agents/skills/herdr/SKILL.md
+  - .file/.claude/skills/herdr
+  - .file/.claude/skills/herdr/SKILL.md
+  - .grok/skills/herdr
+  - .grok/skills/herdr/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/herdr/SKILL.md: sha256:03855a7a1f9d0aa1ba6444fed2e4971adf796e91e73001d8f2472f5f9e5f659f
+    .file/.claude/skills/herdr/SKILL.md: sha256:03855a7a1f9d0aa1ba6444fed2e4971adf796e91e73001d8f2472f5f9e5f659f
+    .grok/skills/herdr/SKILL.md: sha256:03855a7a1f9d0aa1ba6444fed2e4971adf796e91e73001d8f2472f5f9e5f659f
+  content_hash: sha256:1432b48d3db7ba0514be7b60b6a748a843ef2c9e6bcde5ac93e23ce42d8d12bf
+  skill_subset:
+  - herdr
+- repo_url: lightpanda-io/agent-skill
+  name: 4cee9af721ffc917
+  host: github.com
+  resolved_commit: 090c08680dc66a258e8f5138476556027e930e3d
+  version: 090c086
+  package_type: hybrid
+  deployed_files:
+  - .agents/skills/agent-skill
+  - .agents/skills/agent-skill/.claude-plugin/marketplace.json
+  - .agents/skills/agent-skill/.gitignore
+  - .agents/skills/agent-skill/LICENSE
+  - .agents/skills/agent-skill/README.md
+  - .agents/skills/agent-skill/SKILL.md
+  - .agents/skills/agent-skill/apm.yml
+  - .agents/skills/agent-skill/pandascript/SKILL.md
+  - .agents/skills/agent-skill/scripts/install.sh
+  - .file/.claude/skills/agent-skill
+  - .file/.claude/skills/agent-skill/.claude-plugin/marketplace.json
+  - .file/.claude/skills/agent-skill/.gitignore
+  - .file/.claude/skills/agent-skill/LICENSE
+  - .file/.claude/skills/agent-skill/README.md
+  - .file/.claude/skills/agent-skill/SKILL.md
+  - .file/.claude/skills/agent-skill/apm.yml
+  - .file/.claude/skills/agent-skill/pandascript/SKILL.md
+  - .file/.claude/skills/agent-skill/scripts/install.sh
+  - .grok/skills/agent-skill
+  - .grok/skills/agent-skill/.claude-plugin/marketplace.json
+  - .grok/skills/agent-skill/.gitignore
+  - .grok/skills/agent-skill/LICENSE
+  - .grok/skills/agent-skill/README.md
+  - .grok/skills/agent-skill/SKILL.md
+  - .grok/skills/agent-skill/apm.yml
+  - .grok/skills/agent-skill/pandascript/SKILL.md
+  - .grok/skills/agent-skill/scripts/install.sh
+  deployed_file_hashes:
+    .agents/skills/agent-skill/.claude-plugin/marketplace.json: sha256:47a07498a97f58fb14af41fe04266af0ee4b060438434576d8e71c63caf780a4
+    .agents/skills/agent-skill/.gitignore: sha256:3da1e6f1afd3d0279e5711f608b96562109ec55a83622b71270c0491af5b975d
+    .agents/skills/agent-skill/LICENSE: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+    .agents/skills/agent-skill/README.md: sha256:e85ca5fa0f74e7ef458c9c67be11298d2ae6561a0ffe12ac9f79b7019916bb3a
+    .agents/skills/agent-skill/SKILL.md: sha256:f75121f4270c822688aab8dad3264036e4f2dce2cce7d9c6424c1cfb9e36baba
+    .agents/skills/agent-skill/apm.yml: sha256:7cdc7017a1d6d3eba0ebc58544b9932541658e7963b391b397cc39aefd5b0a35
+    .agents/skills/agent-skill/pandascript/SKILL.md: sha256:e163426d7026e4c931cefa53fc1ddf60656953c0a1d5aac93f60d8233a759ea0
+    .agents/skills/agent-skill/scripts/install.sh: sha256:031cd6b5d276500d8a097807bb80cba30800ba2362db16363d025530bb94bc4d
+    .file/.claude/skills/agent-skill/.claude-plugin/marketplace.json: sha256:47a07498a97f58fb14af41fe04266af0ee4b060438434576d8e71c63caf780a4
+    .file/.claude/skills/agent-skill/.gitignore: sha256:3da1e6f1afd3d0279e5711f608b96562109ec55a83622b71270c0491af5b975d
+    .file/.claude/skills/agent-skill/LICENSE: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+    .file/.claude/skills/agent-skill/README.md: sha256:e85ca5fa0f74e7ef458c9c67be11298d2ae6561a0ffe12ac9f79b7019916bb3a
+    .file/.claude/skills/agent-skill/SKILL.md: sha256:f75121f4270c822688aab8dad3264036e4f2dce2cce7d9c6424c1cfb9e36baba
+    .file/.claude/skills/agent-skill/apm.yml: sha256:7cdc7017a1d6d3eba0ebc58544b9932541658e7963b391b397cc39aefd5b0a35
+    .file/.claude/skills/agent-skill/pandascript/SKILL.md: sha256:e163426d7026e4c931cefa53fc1ddf60656953c0a1d5aac93f60d8233a759ea0
+    .file/.claude/skills/agent-skill/scripts/install.sh: sha256:031cd6b5d276500d8a097807bb80cba30800ba2362db16363d025530bb94bc4d
+    .grok/skills/agent-skill/.claude-plugin/marketplace.json: sha256:47a07498a97f58fb14af41fe04266af0ee4b060438434576d8e71c63caf780a4
+    .grok/skills/agent-skill/.gitignore: sha256:3da1e6f1afd3d0279e5711f608b96562109ec55a83622b71270c0491af5b975d
+    .grok/skills/agent-skill/LICENSE: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+    .grok/skills/agent-skill/README.md: sha256:e85ca5fa0f74e7ef458c9c67be11298d2ae6561a0ffe12ac9f79b7019916bb3a
+    .grok/skills/agent-skill/SKILL.md: sha256:f75121f4270c822688aab8dad3264036e4f2dce2cce7d9c6424c1cfb9e36baba
+    .grok/skills/agent-skill/apm.yml: sha256:7cdc7017a1d6d3eba0ebc58544b9932541658e7963b391b397cc39aefd5b0a35
+    .grok/skills/agent-skill/pandascript/SKILL.md: sha256:e163426d7026e4c931cefa53fc1ddf60656953c0a1d5aac93f60d8233a759ea0
+    .grok/skills/agent-skill/scripts/install.sh: sha256:031cd6b5d276500d8a097807bb80cba30800ba2362db16363d025530bb94bc4d
+  content_hash: sha256:638122999c6b88e3e6f03f8167e86d70a60f8e1d0ab39ed92b1f7ca45bd813ad
+  skill_subset:
+  - lightpanda
+deployments:
+- kind: project-relative
+  target: codex
+  value: .agents/skills/agent-skill
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/agent-skill/.claude-plugin/marketplace.json
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:47a07498a97f58fb14af41fe04266af0ee4b060438434576d8e71c63caf780a4
+- kind: project-relative
+  target: codex
+  value: .agents/skills/agent-skill/.gitignore
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:3da1e6f1afd3d0279e5711f608b96562109ec55a83622b71270c0491af5b975d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/agent-skill/LICENSE
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+- kind: project-relative
+  target: codex
+  value: .agents/skills/agent-skill/README.md
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:e85ca5fa0f74e7ef458c9c67be11298d2ae6561a0ffe12ac9f79b7019916bb3a
+- kind: project-relative
+  target: codex
+  value: .agents/skills/agent-skill/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:f75121f4270c822688aab8dad3264036e4f2dce2cce7d9c6424c1cfb9e36baba
+- kind: project-relative
+  target: codex
+  value: .agents/skills/agent-skill/apm.yml
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:7cdc7017a1d6d3eba0ebc58544b9932541658e7963b391b397cc39aefd5b0a35
+- kind: project-relative
+  target: codex
+  value: .agents/skills/agent-skill/pandascript/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:e163426d7026e4c931cefa53fc1ddf60656953c0a1d5aac93f60d8233a759ea0
+- kind: project-relative
+  target: codex
+  value: .agents/skills/agent-skill/scripts/install.sh
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:031cd6b5d276500d8a097807bb80cba30800ba2362db16363d025530bb94bc4d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/herdr
+  runtime: null
+  scope: project
+  owners:
+  - herdrdev/herdr
+  active_owner: herdrdev/herdr
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/herdr/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - herdrdev/herdr
+  active_owner: herdrdev/herdr
+  content_hash: sha256:03855a7a1f9d0aa1ba6444fed2e4971adf796e91e73001d8f2472f5f9e5f659f
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/agent-skill
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: null
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/agent-skill/.claude-plugin/marketplace.json
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:47a07498a97f58fb14af41fe04266af0ee4b060438434576d8e71c63caf780a4
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/agent-skill/.gitignore
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:3da1e6f1afd3d0279e5711f608b96562109ec55a83622b71270c0491af5b975d
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/agent-skill/LICENSE
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/agent-skill/README.md
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:e85ca5fa0f74e7ef458c9c67be11298d2ae6561a0ffe12ac9f79b7019916bb3a
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/agent-skill/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:f75121f4270c822688aab8dad3264036e4f2dce2cce7d9c6424c1cfb9e36baba
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/agent-skill/apm.yml
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:7cdc7017a1d6d3eba0ebc58544b9932541658e7963b391b397cc39aefd5b0a35
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/agent-skill/pandascript/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:e163426d7026e4c931cefa53fc1ddf60656953c0a1d5aac93f60d8233a759ea0
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/agent-skill/scripts/install.sh
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:031cd6b5d276500d8a097807bb80cba30800ba2362db16363d025530bb94bc4d
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/herdr
+  runtime: null
+  scope: project
+  owners:
+  - herdrdev/herdr
+  active_owner: herdrdev/herdr
+  content_hash: null
+- kind: project-relative
+  target: grok-build
+  value: .grok/skills/herdr/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - herdrdev/herdr
+  active_owner: herdrdev/herdr
+  content_hash: sha256:03855a7a1f9d0aa1ba6444fed2e4971adf796e91e73001d8f2472f5f9e5f659f
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/agent-skill
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: null
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/agent-skill/.claude-plugin/marketplace.json
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:47a07498a97f58fb14af41fe04266af0ee4b060438434576d8e71c63caf780a4
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/agent-skill/.gitignore
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:3da1e6f1afd3d0279e5711f608b96562109ec55a83622b71270c0491af5b975d
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/agent-skill/LICENSE
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/agent-skill/README.md
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:e85ca5fa0f74e7ef458c9c67be11298d2ae6561a0ffe12ac9f79b7019916bb3a
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/agent-skill/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:f75121f4270c822688aab8dad3264036e4f2dce2cce7d9c6424c1cfb9e36baba
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/agent-skill/apm.yml
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:7cdc7017a1d6d3eba0ebc58544b9932541658e7963b391b397cc39aefd5b0a35
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/agent-skill/pandascript/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:e163426d7026e4c931cefa53fc1ddf60656953c0a1d5aac93f60d8233a759ea0
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/agent-skill/scripts/install.sh
+  runtime: null
+  scope: project
+  owners:
+  - lightpanda-io/agent-skill
+  active_owner: lightpanda-io/agent-skill
+  content_hash: sha256:031cd6b5d276500d8a097807bb80cba30800ba2362db16363d025530bb94bc4d
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/herdr
+  runtime: null
+  scope: project
+  owners:
+  - herdrdev/herdr
+  active_owner: herdrdev/herdr
+  content_hash: null
+- kind: project-relative
+  target: legacy
+  value: .file/.claude/skills/herdr/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - herdrdev/herdr
+  active_owner: herdrdev/herdr
+  content_hash: sha256:03855a7a1f9d0aa1ba6444fed2e4971adf796e91e73001d8f2472f5f9e5f659f

@@ -1,0 +1,22 @@
+name: tensor
+version: 1.0.0
+description: APM project for tensor
+author: InSuperposition
+# Which agent platforms to deploy to.
+# Resolution order: --target flag > this field > auto-detect from filesystem.
+# Accepted values: agent-skills, antigravity, claude, codex, copilot, cursor, gemini, grok-build, hermes, kiro, opencode, vscode, windsurf
+targets:
+  - claude
+  - codex
+  - grok-build
+dependencies:
+  apm:
+    - git: herdrdev/herdr
+      skills:
+        - herdr
+    - git: lightpanda-io/agent-skill
+      skills:
+        - lightpanda
+  mcp: []
+includes: auto
+scripts: {}
