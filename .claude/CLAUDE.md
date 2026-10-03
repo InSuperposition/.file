@@ -209,7 +209,7 @@ For every secret and every long-lived process the plan introduces or touches, tr
 
 ### Output Format
 
-** use for all Markdown output ** - plans, CLAUDE.md. README.md, etc
+**use for all Markdown output** - plans, CLAUDE.md. README.md, etc
 
 - Abstract at beginning of output
 - set goals

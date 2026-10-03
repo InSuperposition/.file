@@ -190,7 +190,7 @@ Prefer narrow tables with few columns.
 Example:
 
 | Part | Responsibility | Owns state? |
-|---|---|---|
+| --- | --- | --- |
 | API | Accept requests | No |
 | Service | Apply domain rules | Usually |
 | Database | Persist data | Yes |

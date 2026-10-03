@@ -1,6 +1,6 @@
 name: tensor
 version: 1.0.0
-description: APM project for tensor
+description: .file skills
 author: InSuperposition
 # Which agent platforms to deploy to.
 # Resolution order: --target flag > this field > auto-detect from filesystem.
@@ -17,6 +17,9 @@ dependencies:
     - git: lightpanda-io/agent-skill
       skills:
         - lightpanda
+    - git: vectorize-io/hindsight
+      skills:
+        - hindsight
   mcp: []
 includes: auto
 scripts: {}
